@@ -10,11 +10,12 @@ export default function UploadZone({}: Props) {
 
   return (
     <UploadButton
-      endpoint="imageUploader"
+      endpoint="videoUploader"
       onClientUploadComplete={(res) => {
-        const [fileId] = res;
-
-        router.push(`/images/${fileId}`);
+        if (typeof res === "undefined") return;
+        const fileId = res[0].serverData?.fileId;
+        if (typeof fileId === "undefined") return;
+        router.push(`/videos/${fileId}`);
       }}
       onUploadError={(error: Error) => {}}
     />

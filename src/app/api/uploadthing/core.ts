@@ -6,7 +6,7 @@ const f = createUploadthing();
 const auth = (req: Request) => ({ id: "fakeId" });
 
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "512MB" } })
+  videoUploader: f({ image: { maxFileSize: "512MB" } })
     .middleware(async ({ req }) => {
       const user = await auth(req);
       if (!user) throw new Error("Unauthorized");
@@ -22,12 +22,10 @@ export const ourFileRouter = {
           },
         });
 
-        return { uploadedBy: metadata.userId, fileId: uploadedFile.id };
+        return { fileId: uploadedFile.id };
       } catch (error) {
         console.error(error);
       }
-
-      return {};
     }),
 } satisfies FileRouter;
 
