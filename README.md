@@ -2,10 +2,10 @@
 
 ## Tech stack
 1. Next.js
-2. Video hosting: CloudFlare
+2. Video hosting: Uploadthing
 3. Video player: Video.js
 4. Authentication: NextAuth.js
-5. Database: Prisma, Postgres, Neon
+5. Database: Prisma, Mongo, PlanetScale
 6. Styling: Tailwind CSS
 7. Deployment: Vercel
 8. Cache: Redis, Upstash
@@ -18,6 +18,4 @@
 
 ## Work progress
 - [x] Setup Next.js
-- [] Setup CloudFlare
-- [] Setup Video.js
-- [] Create page with video player from CloudFlare
+- [] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
