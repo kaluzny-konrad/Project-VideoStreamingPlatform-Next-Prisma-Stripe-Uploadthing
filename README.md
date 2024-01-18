@@ -20,15 +20,13 @@
 - [x] Setup Next.js
 - [X] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
 - [X] SetUp Video infra: UploadThing with Video component
-- [ ] SetUp Deployment: Vercel
-- [ ] SetUp CI/CD: Github Actions
+- [X] SetUp Deployment: Vercel
 - [ ] SetUp Auth: NextAuth.js
 - [ ] SetUp State: Trpc, Zod, Tanstack Query
 - [ ] SetUp GUI: Shadcn/ui, Sonner, Tailwind CSS
 - [ ] SetUp Payments: Stripe
 - [ ] SetUp Cache: Redis, Upstash
 - [ ] SetUp Mailing: SendGrid
-- [ ] SetUp Testing: Jest, Cypress
 - [ ] Features: Layout
 - [ ] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
@@ -41,6 +39,8 @@
 - [ ] Features: Course page - list of videos
 - [ ] Features: Course page - comments
 - [ ] Improve GUI: Styling
+- [ ] SetUp Testing: Jest, Cypress
+- [ ] SetUp CI/CD: Github Actions
 
 ## Upgrade commands:
 
