@@ -24,11 +24,11 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  userId            String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([userId])
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -36,8 +36,9 @@ model Session {
   sessionToken String   @unique
   expires      DateTime
 
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }
 
@@ -49,19 +50,69 @@ model User {
   username      String?   @unique
   image         String?
 
-  accounts Account[]
-  sessions Session[]
-  videos Video[]
+  Accounts Account[]
+  Sessions Session[]
+
+  CoursesOwnedByUser Course[]
+  OrdersPlaced       Order[]
 }
 
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  price       Decimal
+  image       String
+
+  priceId         String
+  stripeProductId String
+
+  OrdersWithProduct Order[]
+  Course            Course[]
+}
+
+model Order {
+  id        String      @id @default(cuid())
+  total     Decimal
+  currency  String
+  status    OrderStatus
+  createdAt DateTime    @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  ProductsInOrder Product[]
+
+  @@index([userId])
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  CANCELLED
+  REFUNDED
+}
+
+model Course {
+  id String @id @default(cuid())
+
+  Product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  VideosIncluded   Video[]
+  UsersOwnedCourse User[]
+
+  @@index([productId])
+}
 
 model Video {
-  id   Int    @id @default(autoincrement())
+  id   String @id @default(cuid())
   key  String @unique
   name String
   url  String
 
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  @@index([userId])
+  Course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
+  @@index([courseId])
 }

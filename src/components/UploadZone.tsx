@@ -1,12 +1,19 @@
 "use client";
 
+import { db } from "@/db";
 import { UploadButton } from "@/lib/uploadthing";
-import { useRouter } from "next/navigation";
+import { trpc } from "@/server/client";
 
-type Props = {};
+type Props = {
+  courseId: string;
+};
 
-export default function UploadZone({}: Props) {
-  const router = useRouter();
+export default function UploadZone({ courseId }: Props) {
+  const { mutate: addVideo } = trpc.product.addVideoToCourse.useMutation({
+    onSuccess: (res) => {
+      console.log("res", res);
+    },
+  });
 
   return (
     <UploadButton
@@ -15,7 +22,7 @@ export default function UploadZone({}: Props) {
         if (typeof res === "undefined") return;
         const fileId = res[0].serverData?.fileId;
         if (typeof fileId === "undefined") return;
-        router.push(`/videos/${fileId}`);
+        addVideo({ courseId, videoId: fileId });
       }}
       onUploadError={(error: Error) => {}}
     />

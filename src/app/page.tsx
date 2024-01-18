@@ -7,6 +7,7 @@ export default function Home() {
       <div className="flex flex-col gap-2">
         <Link href="/upload/add">Upload Add Page</Link>
         <Link href="/trpctest">Trpc Test Page</Link>
+        <Link href="/stripetest">Stripe Payment Test</Link>
       </div>
     </main>
   );
