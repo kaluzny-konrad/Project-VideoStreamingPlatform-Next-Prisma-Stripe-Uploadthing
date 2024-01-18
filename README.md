@@ -25,12 +25,13 @@
 - [x] SetUp Deployment: Vercel
 - [X] SetUp Auth: NextAuth.js
 - [X] SetUp State: Trpc, Zod, Tanstack Query
-- [ ] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS
+- [X] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
 - [ ] SetUp Payments: Stripe
 - [ ] SetUp Cache: Redis, Upstash
 - [ ] SetUp Mailing: SendGrid
 - [ ] Features: Login/Logout context
-- [ ] Features: Layout
+- [ ] Features: Layout (Navbar, Footer)
+- [ ] Features: Meta data
 - [ ] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
 - [ ] Features: Upload Course
