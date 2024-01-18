@@ -1,9 +1,13 @@
-import React from 'react'
+import UploadZone from "@/components/UploadZone";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 export default function page({}: Props) {
   return (
-    <div>page</div>
-  )
+    <div>
+      <p>Upload zone:</p>
+      <UploadZone />
+    </div>
+  );
 }
