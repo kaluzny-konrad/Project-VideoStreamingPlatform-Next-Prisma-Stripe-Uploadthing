@@ -29,6 +29,7 @@
 - [ ] SetUp Payments: Stripe
 - [ ] SetUp Cache: Redis, Upstash
 - [ ] SetUp Mailing: SendGrid
+- [ ] Features: Login/Logout context
 - [ ] Features: Layout
 - [ ] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
@@ -52,7 +53,7 @@
 
 ### @latest:
 
-`npm install @prisma/client@latest @uploadthing/react@latest next@latest react@latest react-dom@latest tailwindcss-animate@latest uploadthing@latest @next/bundle-analyzer@latest @next-auth/prisma-adapter@latest`
+`npm install @prisma/client@latest @uploadthing/react@latest next@latest react@latest react-dom@latest tailwindcss-animate@latest uploadthing@latest @next/bundle-analyzer@latest @next-auth/prisma-adapter@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest`
 
 ### dev with @latest:
 

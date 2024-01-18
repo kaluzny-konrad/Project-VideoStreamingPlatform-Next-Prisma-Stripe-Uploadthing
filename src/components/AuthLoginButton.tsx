@@ -5,7 +5,7 @@ import { useState } from "react";
 
 type Props = {};
 
-export default function AuthButton({}: Props) {
+export default function AuthLoginButton({}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginWithGoogle = async () => {

@@ -1,5 +1,5 @@
 import { Video } from "@prisma/client";
-import { db } from "@/lib/db";
+import { db } from "@/db";
 import VideoPlayer from "@/components/VideoPlayer";
 
 type Props = {

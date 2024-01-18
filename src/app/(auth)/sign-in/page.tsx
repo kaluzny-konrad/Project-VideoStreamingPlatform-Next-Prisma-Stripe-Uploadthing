@@ -1,9 +1,9 @@
-import AuthButton from '@/components/AuthButton'
+import AuthLoginButton from '@/components/AuthLoginButton'
 
 type Props = {}
 
 export default function page({}: Props) {
   return (
-    <AuthButton />
+    <AuthLoginButton />
   )
 }
