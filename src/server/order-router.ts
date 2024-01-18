@@ -54,19 +54,26 @@ export const orderRouter = router({
         },
       });
 
-      const stripeSession = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: filteredProducts.map((prod) => ({
-          price: prod.priceId,
-          quantity: 1,
-        })),
-        mode: "payment",
-        billing_address_collection: "auto",
-        success_url: `${process.env.NEXT_PUBLIC_URL}/order/${order.id}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_URL}/order/${order.id}`,
-      });
+      try {
+        const stripeSession = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items: filteredProducts.map((prod) => ({
+            price: prod.priceId,
+            quantity: 1,
+          })),
+          mode: "payment",
+          billing_address_collection: "auto",
+          success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/order/${order.id}`,
+          cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/order/${order.id}`,
+        });
 
-      return { url: stripeSession.url };
+        return { url: stripeSession.url };
+      } catch (error) {
+        console.error(error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
     }),
 
   pollOrderStatus: publicProcedure

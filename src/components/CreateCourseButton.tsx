@@ -1,14 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { trpc } from "@/server/client";
 
 type Props = {};
 
 export default function CreateCourseButton({}: Props) {
+  const route = useRouter();
+
   const { mutate: createCourse } = trpc.product.createCourse.useMutation({
     onSuccess: (res) => {
-      console.log("res", res);
+      route.refresh();
     },
   });
 

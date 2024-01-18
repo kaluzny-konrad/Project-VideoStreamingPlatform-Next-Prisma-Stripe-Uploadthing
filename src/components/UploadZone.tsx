@@ -1,6 +1,5 @@
 "use client";
 
-import { db } from "@/db";
 import { UploadButton } from "@/lib/uploadthing";
 import { trpc } from "@/server/client";
 
