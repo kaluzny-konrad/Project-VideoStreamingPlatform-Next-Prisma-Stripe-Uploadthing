@@ -18,4 +18,26 @@
 
 ## Work progress
 - [x] Setup Next.js
-- [] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
+- [X] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
+- [X] SetUp Video infra: UploadThing with Video component
+- [ ] SetUp Deployment: Vercel
+- [ ] SetUp CI/CD: Github Actions
+- [ ] SetUp Auth: NextAuth.js
+- [ ] SetUp State: Trpc, Zod, Tanstack Query
+- [ ] SetUp GUI: Shadcn/ui, Sonner, Tailwind CSS
+- [ ] SetUp Payments: Stripe
+- [ ] SetUp Cache: Redis, Upstash
+- [ ] SetUp Mailing: SendGrid
+- [ ] SetUp Testing: Jest, Cypress
+- [ ] Features: Layout
+- [ ] Features: Some headers Main Page
+- [ ] Features: Upload Courses list
+- [ ] Features: Upload Course
+- [ ] Features: Uploaded Course - stats
+- [ ] Features: Uploaded Course - edit course
+- [ ] Features: Courses list row
+- [ ] Features: Courses Page
+- [ ] Features: Course page - video
+- [ ] Features: Course page - list of videos
+- [ ] Features: Course page - comments
+- [ ] Improve GUI: Styling
