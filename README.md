@@ -41,3 +41,14 @@
 - [ ] Features: Course page - list of videos
 - [ ] Features: Course page - comments
 - [ ] Improve GUI: Styling
+
+## Upgrade commands:
+
+### @next:
+`npm install @vidstack/react@next`
+
+### @latest:
+`npm install @prisma/client@latest @uploadthing/react@latest next@latest react@latest react-dom@latest tailwindcss-animate@latest uploadthing@latest`
+
+### dev with @latest:
+`npm install --save-dev @types/node@latest @types/react@latest @types/react-dom@latest autoprefixer@latest eslint@latest eslint-config-next@latest postcss@latest prisma@latest tailwindcss@latest typescript@latest`
