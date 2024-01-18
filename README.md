@@ -23,7 +23,7 @@
 - [x] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
 - [x] SetUp Video infra: UploadThing with Video component
 - [x] SetUp Deployment: Vercel
-- [ ] SetUp Auth: NextAuth.js
+- [X] SetUp Auth: NextAuth.js
 - [ ] SetUp State: Trpc, Zod, Tanstack Query
 - [ ] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS
 - [ ] SetUp Payments: Stripe
