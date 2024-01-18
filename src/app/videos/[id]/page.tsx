@@ -13,7 +13,7 @@ export default async function page({ params }: Props) {
 
   const video = (await db.video.findFirst({
     where: {
-      id: parseInt(id),
+      id: id,
     },
   })) as unknown as Video;
 
