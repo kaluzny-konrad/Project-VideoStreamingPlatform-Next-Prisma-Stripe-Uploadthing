@@ -1,8 +1,6 @@
-import VideoPlayer from "@/components/VideoPlayer";
-import { db } from "@/lib/db";
 import { Video } from "@prisma/client";
-import Image from "next/image";
-import React from "react";
+import { db } from "@/lib/db";
+import VideoPlayer from "@/components/VideoPlayer";
 
 type Props = {
   params: {

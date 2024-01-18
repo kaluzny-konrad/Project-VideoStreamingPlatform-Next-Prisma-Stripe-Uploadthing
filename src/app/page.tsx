@@ -1,5 +1,4 @@
 import UploadZone from '@/components/UploadZone'
-import Image from 'next/image'
 
 export default function Home() {
   return (

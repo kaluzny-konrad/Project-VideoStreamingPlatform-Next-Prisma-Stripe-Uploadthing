@@ -4,7 +4,6 @@ import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
 
 import {
-  DefaultAudioLayout,
   defaultLayoutIcons,
   DefaultVideoLayout,
 } from "@vidstack/react/player/layouts/default";
@@ -42,7 +41,6 @@ export default function VideoPlayer({ props }: Props) {
         ref={ref}
       >
         <MediaProvider />
-        <DefaultAudioLayout icons={defaultLayoutIcons} />
         <DefaultVideoLayout icons={defaultLayoutIcons} />
       </MediaPlayer>
     </div>

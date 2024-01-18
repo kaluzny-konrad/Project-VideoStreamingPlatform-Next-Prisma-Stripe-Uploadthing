@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
+    "analyze": "npx cross-env ANALYZE=true npm run build",
     "postinstall": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^14.0.4",
     "@prisma/client": "^5.8.1",
     "@uploadthing/react": "^6.1.0",
     "@vidstack/react": "^1.9.8",
