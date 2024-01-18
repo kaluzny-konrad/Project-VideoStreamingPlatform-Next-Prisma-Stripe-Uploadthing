@@ -24,7 +24,7 @@
 - [x] SetUp Video infra: UploadThing with Video component
 - [x] SetUp Deployment: Vercel
 - [X] SetUp Auth: NextAuth.js
-- [ ] SetUp State: Trpc, Zod, Tanstack Query
+- [X] SetUp State: Trpc, Zod, Tanstack Query
 - [ ] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS
 - [ ] SetUp Payments: Stripe
 - [ ] SetUp Cache: Redis, Upstash
