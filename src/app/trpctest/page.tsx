@@ -1,5 +1,3 @@
-import AuthLoginButton from "@/components/AuthLoginButton";
-import AuthLogoutButton from "@/components/AuthLogoutButton";
 import TrpcTest from "@/components/TrpcTest";
 import { getAuthSession } from "@/lib/auth";
 import React from "react";
@@ -17,7 +15,6 @@ export default async function page({}: Props) {
       <div>
         <TrpcTest />
       </div>
-      <div>{user ? <AuthLogoutButton /> : <AuthLoginButton />}</div>
     </div>
   );
 }
