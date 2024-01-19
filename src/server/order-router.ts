@@ -4,6 +4,7 @@ import { z } from "zod";
 import { stripe } from "../lib/stripe";
 import { db } from "@/db";
 import { OrderStatus } from "@prisma/client";
+import { absoluteUrl } from "@/lib/utils";
 
 export const orderRouter = router({
   createSession: privateProcedure
@@ -55,16 +56,21 @@ export const orderRouter = router({
       });
 
       try {
+        const billingUrl = absoluteUrl(`/order/${order.id}`);
         const stripeSession = await stripe.checkout.sessions.create({
-          payment_method_types: ["card"],
+          success_url: billingUrl,
+          cancel_url: billingUrl,
+          payment_method_types: ["card", "paypal"],
+          mode: "payment",
+          billing_address_collection: "auto",
           line_items: filteredProducts.map((prod) => ({
             price: prod.priceId,
             quantity: 1,
           })),
-          mode: "payment",
-          billing_address_collection: "auto",
-          success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/order/${order.id}`,
-          cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/order/${order.id}`,
+          metadata: {
+            userId: user.id,
+            orderId: order.id,
+          },
         });
 
         return { url: stripeSession.url };

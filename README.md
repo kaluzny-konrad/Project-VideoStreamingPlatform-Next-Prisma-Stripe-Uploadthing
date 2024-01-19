@@ -26,9 +26,12 @@
 - [X] SetUp Auth: NextAuth.js
 - [X] SetUp State: Trpc, Zod, Tanstack Query
 - [X] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
-- [ ] SetUp Payments: Stripe
+- [X] SetUp Payments: Stripe
+- [ ] Fix: Decimal price type issue
 - [ ] SetUp Cache: Redis, Upstash
 - [ ] SetUp Mailing: SendGrid
+- [ ] SetUp Testing: Jest, Cypress
+- [ ] SetUp CI/CD: Github Actions
 - [ ] Features: Login/Logout context
 - [ ] Features: Layout (Navbar, Footer)
 - [ ] Features: Meta data
@@ -43,8 +46,6 @@
 - [ ] Features: Course page - list of videos
 - [ ] Features: Course page - comments
 - [ ] Improve GUI: Styling
-- [ ] SetUp Testing: Jest, Cypress
-- [ ] SetUp CI/CD: Github Actions
 
 ## Upgrade commands:
 

@@ -2,6 +2,7 @@
 
 import { UploadButton } from "@/lib/uploadthing";
 import { trpc } from "@/server/client";
+import { toast } from "sonner";
 
 type Props = {
   courseId: string;
@@ -10,7 +11,7 @@ type Props = {
 export default function UploadZone({ courseId }: Props) {
   const { mutate: addVideo } = trpc.product.addVideoToCourse.useMutation({
     onSuccess: (res) => {
-      console.log("res", res);
+      toast.success("Video added to course");
     },
   });
 
