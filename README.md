@@ -28,7 +28,7 @@
 - [X] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
 - [X] SetUp Payments: Stripe
 - [X] Fix: Decimal price type issue (price should be Int * 100, not decimal)
-- [ ] Features: Login/Logout context
+- [X] Features: Login/Logout context
 - [ ] Features: Layout (Navbar, Footer)
 - [ ] Features: Meta data
 - [ ] Features: Some headers Main Page
@@ -87,3 +87,14 @@ effect: DATABASE_URL in .env
 - Redirect URI: <http://localhost:3000/api/auth/callback/google>
 
 effect: secret to .env.local
+
+### Stripe:
+
+1. Create account and secret key:
+<https://dashboard.stripe.com/>
+
+2. Create webhook for `checkout.session.completed`
+
+3. Test webhook with localtunnel.
+
+effect: secret and webhook secret to .env.local

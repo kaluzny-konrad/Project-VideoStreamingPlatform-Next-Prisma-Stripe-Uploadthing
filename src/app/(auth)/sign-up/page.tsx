@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ChevronLeftIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import AuthSignIn from "@/components/AuthSignIn";
+import AuthSignUp from "@/components/AuthSignUp";
 import { buttonVariants } from "@/components/ui/button";
 
 type Props = {};
@@ -14,7 +14,7 @@ export default function page({}: Props) {
         Home
       </Link>
 
-      <AuthSignIn />
+      <AuthSignUp />
     </div>
   );
 }
