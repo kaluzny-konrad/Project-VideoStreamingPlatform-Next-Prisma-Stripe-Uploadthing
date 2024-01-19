@@ -61,7 +61,7 @@ model Product {
   id          String  @id @default(cuid())
   name        String
   description String
-  price       Decimal
+  price       Int
   image       String
 
   priceId         String
@@ -73,7 +73,7 @@ model Product {
 
 model Order {
   id        String      @id @default(cuid())
-  total     Decimal
+  total     Int
   currency  String
   status    OrderStatus
   createdAt DateTime    @default(now())

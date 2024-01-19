@@ -21,8 +21,8 @@ export const productRouter = router({
       const stripeProduct = await stripe.products.create({
         name: name,
         default_price_data: {
-          currency: "usd", // ToDo: Make this dynamic
-          unit_amount: Math.round(price * 100),
+          currency: "PLN",
+          unit_amount: price,
         },
       });
 

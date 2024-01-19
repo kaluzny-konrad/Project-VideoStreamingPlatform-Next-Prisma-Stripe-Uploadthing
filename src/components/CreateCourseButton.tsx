@@ -18,7 +18,7 @@ export default function CreateCourseButton({}: Props) {
   const dummyCourseData = {
     name: "dummy course",
     description: "dummy course description",
-    price: 100,
+    price: 10000,
     image: "dummy course image",
   };
 

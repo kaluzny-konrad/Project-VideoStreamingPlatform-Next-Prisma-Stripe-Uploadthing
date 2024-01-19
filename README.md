@@ -27,11 +27,7 @@
 - [X] SetUp State: Trpc, Zod, Tanstack Query
 - [X] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
 - [X] SetUp Payments: Stripe
-- [ ] Fix: Decimal price type issue
-- [ ] SetUp Cache: Redis, Upstash
-- [ ] SetUp Mailing: SendGrid
-- [ ] SetUp Testing: Jest, Cypress
-- [ ] SetUp CI/CD: Github Actions
+- [X] Fix: Decimal price type issue (price should be Int * 100, not decimal)
 - [ ] Features: Login/Logout context
 - [ ] Features: Layout (Navbar, Footer)
 - [ ] Features: Meta data
@@ -46,6 +42,10 @@
 - [ ] Features: Course page - list of videos
 - [ ] Features: Course page - comments
 - [ ] Improve GUI: Styling
+- [ ] SetUp Testing: Jest, Cypress
+- [ ] SetUp CI/CD: Github Actions
+- [ ] SetUp Mailing: SendGrid
+- [ ] SetUp Cache: Redis, Upstash (?)
 
 ## Upgrade commands:
 

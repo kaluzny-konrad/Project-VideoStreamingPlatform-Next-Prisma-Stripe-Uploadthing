@@ -31,7 +31,7 @@ export default async function page({ params }: Props) {
   const products = order.ProductsInOrder as Product[];
 
   const orderTotal = products.reduce((acc, product) => {
-    return acc + Number(product.price); // ToDo: fix to decimal
+    return acc + product.price;
   }, 0);
 
   const user = await db.user.findUnique({

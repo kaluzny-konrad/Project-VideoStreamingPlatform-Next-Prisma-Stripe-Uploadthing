@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import PaymentButton from "@/components/PaymentButton";
+import { formatPrice } from "@/lib/utils";
 
 type Props = {};
 
@@ -20,7 +21,7 @@ export default async function page({}: Props) {
           <li className="mt-8" key={product.id}>
             <p>Id: {product.id}</p>
             <p>Name: {product.name}</p>
-            <p>Price: {Number(product.price)}</p>
+            <p>Price: {formatPrice(product.price)}</p>
             <p>Image: {product.image}</p>
             <p>priceId: {product.priceId}</p>
             <p>stripeProductId: {product.stripeProductId}</p>

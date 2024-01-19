@@ -48,9 +48,9 @@ export const orderRouter = router({
             connect: productIds.map((id) => ({ id })),
           },
           total: filteredProducts.reduce((acc, curr) => {
-            return acc + Number(curr.price); // ToDo: fix to decimal
+            return acc + curr.price;
           }, 0),
-          currency: "usd", // ToDo: fix to dynamic
+          currency: "PLN",
           status: OrderStatus.CREATED,
         },
       });
