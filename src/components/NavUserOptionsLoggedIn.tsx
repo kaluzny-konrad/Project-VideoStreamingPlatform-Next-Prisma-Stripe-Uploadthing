@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   DropdownMenu,
@@ -7,13 +7,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link } from "lucide-react";
 import UserAvatar from "./UserAvatar";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type Props = {
   user: {
-    username: string | null | undefined;
     email: string | null | undefined;
     image: string | null | undefined;
   };
@@ -25,7 +24,7 @@ export default function NavUserOptionsLoggedIn({ user }: Props) {
       <DropdownMenuTrigger className="flex items-center gap-2">
         <UserAvatar
           user={{
-            name: user.username || null,
+            name: user.email || null,
             image: user.image || null,
           }}
           className="h-8 w-8"
@@ -34,7 +33,6 @@ export default function NavUserOptionsLoggedIn({ user }: Props) {
       <DropdownMenuContent className="bg-white" align="end">
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            {user.username && <p className="font-medium">{user.username}</p>}
             {user.email && (
               <p className="w-[200px] truncate text-sm text-zinc-700">
                 {user.email}
@@ -46,7 +44,9 @@ export default function NavUserOptionsLoggedIn({ user }: Props) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <Link href={"/"}>Main Page</Link>
+          <Link href={"/"} className="cursor-pointer">
+            Main Page
+          </Link>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />

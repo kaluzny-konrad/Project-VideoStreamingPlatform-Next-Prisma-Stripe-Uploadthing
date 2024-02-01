@@ -10,14 +10,12 @@ export default async function NavUserOptions({}: Props) {
   if (!session?.user) return <NavUserOptionsLoggedOut />;
 
   const user = session?.user;
-  const username = user?.username;
   const email = user?.email;
   const image = user?.image;
 
   return (
     <NavUserOptionsLoggedIn
       user={{
-        username: username,
         email: email,
         image: image,
       }}
