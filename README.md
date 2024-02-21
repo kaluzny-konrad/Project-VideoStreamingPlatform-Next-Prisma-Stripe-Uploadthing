@@ -32,7 +32,7 @@
 - [X] Features: Layout (Navbar, Footer)
 - [X] Features: Meta data
 - [X] Refactor: Change Database provider to Supabase https://supabase.com/partners/integrations/prisma
-- [ ] Features: Some headers Main Page
+- [X] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
 - [ ] Features: Upload Course
 - [ ] Features: Uploaded Course - stats
