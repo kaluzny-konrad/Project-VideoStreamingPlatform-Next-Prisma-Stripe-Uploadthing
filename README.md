@@ -6,7 +6,7 @@
 2. Video hosting: Uploadthing
 3. Video player: Video.js
 4. Authentication: NextAuth.js
-5. Database: Prisma, Mongo, PlanetScale
+5. Database: Prisma, Mongo, Supabase
 6. Styling: Tailwind CSS
 7. Deployment: Vercel
 8. Cache: Redis, Upstash
@@ -31,6 +31,7 @@
 - [X] Features: Login/Logout context
 - [X] Features: Layout (Navbar, Footer)
 - [X] Features: Meta data
+- [X] Refactor: Change Database provider to Supabase
 - [ ] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
 - [ ] Features: Upload Course
