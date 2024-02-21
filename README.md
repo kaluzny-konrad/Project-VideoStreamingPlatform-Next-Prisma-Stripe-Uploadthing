@@ -30,7 +30,7 @@
 - [X] Fix: Decimal price type issue (price should be Int * 100, not decimal)
 - [X] Features: Login/Logout context
 - [X] Features: Layout (Navbar, Footer)
-- [ ] Features: Meta data
+- [X] Features: Meta data
 - [ ] Features: Some headers Main Page
 - [ ] Features: Upload Courses list
 - [ ] Features: Upload Course
