@@ -50,12 +50,18 @@ model User {
   emailVerified DateTime?
   username      String?   @unique
   image         String?
+  role          Role?
 
   Accounts Account[]
   Sessions Session[]
 
   CoursesOwnedByUser Course[]
   OrdersPlaced       Order[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model Product {

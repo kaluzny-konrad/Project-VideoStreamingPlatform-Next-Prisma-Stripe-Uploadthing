@@ -22,8 +22,8 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
-          <main className="relative flex flex-col min-h-screen">
-            <div className="flex-grow flex-1">{children}</div>
+          <main className="relative flex flex-col min-h-screen mt-12">
+            <div className="flex-grow flex-1 mx-auto">{children}</div>
           </main>
           <Footer />
           <Toaster />
