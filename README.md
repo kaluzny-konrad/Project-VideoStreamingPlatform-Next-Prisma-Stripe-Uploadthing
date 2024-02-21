@@ -33,6 +33,7 @@
 - [X] Features: Meta data
 - [X] Refactor: Change Database provider to Supabase https://supabase.com/partners/integrations/prisma
 - [X] Features: Some headers Main Page
+- [ ] SetUp Logs: Add logs to the app
 - [ ] Features: Upload Courses list
 - [ ] Features: Upload Course
 - [ ] Features: Uploaded Course - stats
