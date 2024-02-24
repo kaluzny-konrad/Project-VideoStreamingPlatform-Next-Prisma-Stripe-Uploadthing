@@ -11,11 +11,11 @@ export default function Footer({}: Props) {
   const pathname = usePathname();
 
   return (
-    <footer className="bg-white flex-grow-0">
+    <footer className="flex-grow-0 bg-white">
       <WrapperMaxWidth>
-        <div className="border-t border-gray-200">
+        <div className="">
           {pathsToMinimize.includes(pathname) ? null : (
-            <div className="pb-8 pt-16">
+            <div className="pt-16 pb-8">
               <div className="flex justify-center">Your logo here</div>
             </div>
           )}
@@ -28,7 +28,7 @@ export default function Footer({}: Props) {
             </p>
           </div>
 
-          <div className="mt-4 flex items-center justify-center md:mt-0">
+          <div className="flex items-center justify-center mt-4 md:mt-0">
             <div className="flex space-x-8">
               <Link
                 href="#"

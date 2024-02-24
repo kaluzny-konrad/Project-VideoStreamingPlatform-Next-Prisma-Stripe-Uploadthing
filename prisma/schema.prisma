@@ -108,6 +108,7 @@ model Course {
 
   VideosIncluded   Video[]
   UsersOwnedCourse User[]
+  ImagesIncluded   Image[]
 
   @@index([productId])
 }
@@ -117,6 +118,17 @@ model Video {
   key  String @unique
   name String
   url  String
+
+  Course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
+  @@index([courseId])
+}
+
+model Image {
+  id     String   @id @default(cuid())
+  key    String   @unique
+  url    String
 
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String

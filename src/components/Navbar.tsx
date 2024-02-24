@@ -9,10 +9,10 @@ type Props = {};
 
 export default function Navbar({}: Props) {
   return (
-    <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
+    <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
       <header className="relative bg-white">
         <WrapperMaxWidth>
-          <div className="border-b border-gray-200 flex justify-between p-4">
+          <div className="flex justify-between p-4">
             <div className="lg:hidden">
               <NavMobileHamburger />
             </div>

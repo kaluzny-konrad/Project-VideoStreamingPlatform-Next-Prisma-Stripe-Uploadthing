@@ -8,7 +8,7 @@ type Props = {
   courseId: string;
 };
 
-export default function UploadZone({ courseId }: Props) {
+export default function UploadVideoZone({ courseId }: Props) {
   const { mutate: addVideo } = trpc.product.addVideoToCourse.useMutation({
     onSuccess: (res) => {
       toast.success("Video added to course");

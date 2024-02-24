@@ -1,5 +1,5 @@
 import CreateCourseButton from "@/components/CreateCourseButton";
-import UploadZone from "@/components/UploadZone";
+import UploadVideoZone from "@/components/UploadZone";
 import { db } from "@/db";
 import React from "react";
 
@@ -17,7 +17,7 @@ export default async function page({}: Props) {
       <p>Upload zone:</p>
       {course && (
         <>
-          <UploadZone courseId={course.id} />
+          <UploadVideoZone courseId={course.id} />
         </>
       )}
     </div>
