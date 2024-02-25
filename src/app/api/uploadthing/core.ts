@@ -28,9 +28,10 @@ const onVideoUploadComplete = async ({
     const uploadedFile = await db.video.create({
       data: {
         key: file.key,
-        name: file.name,
+        fileName: file.name,
         url: file.url,
         courseId: "",
+        videoName: file.name,
       },
     });
 

@@ -1,6 +1,6 @@
 import PaymentStatus from "@/components/PaymentStatus";
 import { db } from "@/db";
-import { OrderStatus, Product } from "@prisma/client";
+import { Course, OrderStatus } from "@prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
 
@@ -20,7 +20,7 @@ export default async function page({ params }: Props) {
       id,
     },
     include: {
-      ProductsInOrder: true,
+      CoursesInOrder: true,
     },
   });
 
@@ -28,7 +28,7 @@ export default async function page({ params }: Props) {
     return notFound();
   }
 
-  const products = order.ProductsInOrder as Product[];
+  const products = order.CoursesInOrder as Course[];
 
   const orderTotal = products.reduce((acc, product) => {
     return acc + product.price;

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { buttonVariants } from "./ui/button";
+import NavDesktopLoggedItems from "./NavDesktopLoggedItems";
 
 type Props = {};
 
@@ -10,6 +11,7 @@ export default function NavDesktopItems({}: Props) {
       <Link href={"/courses"} className={buttonVariants({ variant: "ghost" })}>
         Courses
       </Link>
+      <NavDesktopLoggedItems />
     </div>
   );
 }

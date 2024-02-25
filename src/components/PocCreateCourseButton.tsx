@@ -6,10 +6,10 @@ import { trpc } from "@/server/client";
 
 type Props = {};
 
-export default function CreateCourseButton({}: Props) {
+export default function PocCreateCourseButton({}: Props) {
   const route = useRouter();
 
-  const { mutate: createCourse } = trpc.product.createCourse.useMutation({
+  const { mutate: createCourse } = trpc.course.createCourse.useMutation({
     onSuccess: (res) => {
       route.refresh();
     },
@@ -18,8 +18,8 @@ export default function CreateCourseButton({}: Props) {
   const dummyCourseData = {
     name: "dummy course",
     description: "dummy course description",
-    price: 10000,
-    image: "dummy course image",
+    price: "10000",
+    mainImageId: "asdbc",
   };
 
   return (

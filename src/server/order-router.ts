@@ -10,44 +10,44 @@ export const orderRouter = router({
   createSession: privateProcedure
     .input(
       z.object({
-        productIds: z.array(z.string()),
+        courseIds: z.array(z.string()),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      let { productIds } = input;
+      let { courseIds } = input;
       const { user } = ctx;
 
-      if (productIds.length === 0) {
+      if (courseIds.length === 0) {
         throw new TRPCError({
           code: "BAD_REQUEST",
         });
       }
 
-      const products = await db.product.findMany({
+      const courses = await db.course.findMany({
         where: {
           id: {
-            in: productIds,
+            in: courseIds,
           },
         },
       });
 
-      const filteredProducts = products.filter((prod) => Boolean(prod.priceId));
+      const filteredCourses = courses.filter((prod) => Boolean(prod.priceId));
 
-      if (filteredProducts.length === 0) {
+      if (filteredCourses.length === 0) {
         throw new TRPCError({
           code: "BAD_REQUEST",
         });
       }
 
-      productIds = filteredProducts.map((prod) => prod.id);
+      courseIds = filteredCourses.map((prod) => prod.id);
 
       const order = await db.order.create({
         data: {
           userId: user.id,
-          ProductsInOrder: {
-            connect: productIds.map((id) => ({ id })),
+          CoursesInOrder: {
+            connect: courseIds.map((id) => ({ id })),
           },
-          total: filteredProducts.reduce((acc, curr) => {
+          total: filteredCourses.reduce((acc, curr) => {
             return acc + curr.price;
           }, 0),
           currency: "PLN",
@@ -63,7 +63,7 @@ export const orderRouter = router({
           payment_method_types: ["card", "paypal"],
           mode: "payment",
           billing_address_collection: "auto",
-          line_items: filteredProducts.map((prod) => ({
+          line_items: filteredCourses.map((prod) => ({
             price: prod.priceId,
             quantity: 1,
           })),

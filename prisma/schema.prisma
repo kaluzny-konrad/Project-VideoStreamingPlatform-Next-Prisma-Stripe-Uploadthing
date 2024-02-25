@@ -61,21 +61,24 @@ model User {
 
 enum Role {
   USER
+  CREATOR
   ADMIN
 }
 
-model Product {
+model Course {
   id          String @id @default(cuid())
   name        String
   description String
   price       Int
-  image       String
+  imageId       String
+  creatorId   String
 
   priceId         String
   stripeProductId String
 
-  OrdersWithProduct Order[]
-  Course            Course[]
+  OrdersWithCourse Order[]
+  VideosIncluded   Video[]
+  UsersOwnedCourse User[]
 }
 
 model Order {
@@ -88,7 +91,7 @@ model Order {
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
-  ProductsInOrder Product[]
+  CoursesInOrder Course[]
 
   @@index([userId])
 }
@@ -100,23 +103,12 @@ enum OrderStatus {
   REFUNDED
 }
 
-model Course {
-  id String @id @default(cuid())
-
-  Product   Product @relation(fields: [productId], references: [id])
-  productId String
-
-  VideosIncluded   Video[]
-  UsersOwnedCourse User[]
-  ImagesIncluded   Image[]
-
-  @@index([productId])
-}
 
 model Video {
   id   String @id @default(cuid())
   key  String @unique
-  name String
+  videoName String
+  fileName  String
   url  String
 
   Course   Course @relation(fields: [courseId], references: [id])
@@ -126,12 +118,7 @@ model Video {
 }
 
 model Image {
-  id     String   @id @default(cuid())
-  key    String   @unique
-  url    String
-
-  Course   Course @relation(fields: [courseId], references: [id])
-  courseId String
-
-  @@index([courseId])
+  id  String @id @default(cuid())
+  key String @unique
+  url String
 }

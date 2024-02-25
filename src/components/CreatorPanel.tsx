@@ -6,16 +6,16 @@ import Link from "next/link";
 
 type Props = {};
 
-export default function AdminPanel({}: Props) {
+export default function CreatorPanel({}: Props) {
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">
-      <h2 className="mb-6 text-lg font-bold text-slate-800">Admin Panel</h2>
+      <h2 className="mb-6 text-lg font-bold text-slate-800">Creator Panel</h2>
       <p className="mb-2 text-xs font-light uppercase text-slate-400">
         Main menu
       </p>
       <div className="flex flex-col">
         <Link
-          href={"/admin"}
+          href={"/creator"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "justify-start w-full"
@@ -25,7 +25,7 @@ export default function AdminPanel({}: Props) {
           Dashboard
         </Link>
         <Link
-          href={"/admin/courses"}
+          href={"/creator/courses"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "justify-start w-full"
@@ -35,7 +35,7 @@ export default function AdminPanel({}: Props) {
           List of courses
         </Link>
         <Link
-          href={"/admin/courses/add"}
+          href={"/creator/courses/add"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "justify-start w-full"

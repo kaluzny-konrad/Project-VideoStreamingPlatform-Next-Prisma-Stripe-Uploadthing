@@ -69,7 +69,7 @@ async function handleCheckoutSessionCompletedEvent(event: Stripe.Event) {
   const order = await db.order.findFirst({
     where: { id: session?.metadata?.orderId },
     include: {
-      ProductsInOrder: true,
+      CoursesInOrder: true,
     },
   });
 
@@ -79,17 +79,7 @@ async function handleCheckoutSessionCompletedEvent(event: Stripe.Event) {
     return new Response(message, { status: 400 });
   }
 
-  const productIds = order.ProductsInOrder.map((product) => product.id);
-
-  const courses = await db.course.findMany({
-    where: {
-      productId: {
-        in: productIds,
-      },
-    },
-  });
-
-  const courseIds = courses.map((course) => course.id);
+  const courseIds = order.CoursesInOrder.map((course) => course.id);
 
   try {
     await db.order.update({

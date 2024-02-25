@@ -5,7 +5,7 @@ import React from "react";
 
 type Props = {};
 
-export default function TrpcTest({}: Props) {
+export default function PocTrpcTest({}: Props) {
   const {
     data: publicTest,
     isLoading: publicLoading,

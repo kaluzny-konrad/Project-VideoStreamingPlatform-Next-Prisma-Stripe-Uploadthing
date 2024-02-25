@@ -1,11 +1,11 @@
-import AllCoursesList from "@/components/AllCoursesList";
+import PocCoursesPublicList from "@/components/PocCoursesPublicList";
 
 type Props = {};
 
 export default function page({}: Props) {
   return (
     <>
-      <AllCoursesList />
+      <PocCoursesPublicList />
     </>
   );
 }

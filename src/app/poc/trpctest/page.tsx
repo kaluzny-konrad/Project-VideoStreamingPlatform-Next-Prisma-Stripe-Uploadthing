@@ -1,4 +1,4 @@
-import TrpcTest from "@/components/TrpcTest";
+import PocTrpcTest from "@/components/PocTrpcTest";
 import { getAuthSession } from "@/lib/auth";
 import React from "react";
 
@@ -13,7 +13,7 @@ export default async function page({}: Props) {
       <div>{user ? <h1>{user.email}</h1> : null}</div>
 
       <div>
-        <TrpcTest />
+        <PocTrpcTest />
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ import UploadImageZone from "./UploadImageZone";
 
 type Props = {};
 
-export default function AddCourseForm({}: Props) {
+export default function CreatorCourseAddForm({}: Props) {
   const router = useRouter();
   const [imageId, setImageId] = useState<string>("" as string);
 
@@ -27,8 +27,8 @@ export default function AddCourseForm({}: Props) {
     defaultValues: {
       name: "",
       description: "",
-      price: 0,
-      image: "",
+      price: "0",
+      mainImageId: "",
     },
   });
 
@@ -36,25 +36,28 @@ export default function AddCourseForm({}: Props) {
     if (Object.keys(errors).length) {
       for (const [key, value] of Object.entries(errors)) {
         toast.error(`Something went wrong: ${value.message}`);
+        console.error(errors);
       }
     }
   }, [errors]);
 
   async function onSubmit(data: CourseCreationRequest) {
-    data.image = imageId;
+    console.log(data);
     createCourse(data);
   }
 
-  const { mutate: createCourse } = trpc.product.createCourse.useMutation({
+  const { mutate: createCourse } = trpc.course.createCourse.useMutation({
     onSuccess: (res) => {
-      router.push("/admin/courses");
+      router.push(`/creator/courses/${res.id}`);
     },
     onError: (err) => {
       toast.error(`Something went wrong.`);
+      console.error(err);
     },
   });
 
   const imageUploaded = (args: { imageId: string }) => {
+    console.log(args);
     setImageId(args.imageId);
   };
 
@@ -74,7 +77,16 @@ export default function AddCourseForm({}: Props) {
           <input type="number" id="price" {...register("price")} />
         </div>
 
-        <UploadImageZone imageUploaded={imageUploaded}/>
+        <UploadImageZone imageUploaded={imageUploaded} />
+        <div>
+          <label htmlFor="mainImageId">Main image</label>
+          <input
+            type="text"
+            id="mainImageId"
+            value={imageId}
+            {...register("mainImageId")}
+          />
+        </div>
 
         <div>
           <button type="submit">Create course</button>

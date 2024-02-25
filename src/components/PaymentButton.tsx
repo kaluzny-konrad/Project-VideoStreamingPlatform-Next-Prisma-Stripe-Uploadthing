@@ -4,10 +4,10 @@ import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  productIds: string[];
+  courseIds: string[];
 };
 
-export default function PaymentButton({ productIds }: Props) {
+export default function PaymentButton({ courseIds }: Props) {
   const router = useRouter();
   const { mutate: createCheckoutSession, isLoading } =
     trpc.order.createSession.useMutation({
@@ -17,7 +17,7 @@ export default function PaymentButton({ productIds }: Props) {
     });
 
   return (
-    <button onClick={() => createCheckoutSession({ productIds })}>
+    <button onClick={() => createCheckoutSession({ courseIds })}>
       Buy something
     </button>
   );

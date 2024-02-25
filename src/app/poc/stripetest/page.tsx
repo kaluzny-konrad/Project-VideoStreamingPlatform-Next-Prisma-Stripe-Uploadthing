@@ -5,31 +5,30 @@ import { formatPrice } from "@/lib/utils";
 type Props = {};
 
 export default async function page({}: Props) {
-  const products = await db.product.findMany({
+  const courses = await db.course.findMany({
     include: {
-      OrdersWithProduct: true,
-      Course: true,
+      OrdersWithCourse: true,
     },
   });
-  const productIds = products.map((product) => product.id);
+  const courseIds = courses.map((course) => course.id);
 
   return (
     <div>
       <h1>Stripe Payment Test</h1>
       <ul>
-        {products.map((product) => (
-          <li className="mt-8" key={product.id}>
-            <p>Id: {product.id}</p>
-            <p>Name: {product.name}</p>
-            <p>Price: {formatPrice(product.price)}</p>
-            <p>Image: {product.image}</p>
-            <p>priceId: {product.priceId}</p>
-            <p>stripeProductId: {product.stripeProductId}</p>
-            {product.OrdersWithProduct && (
+        {courses.map((course) => (
+          <li className="mt-8" key={course.id}>
+            <p>Id: {course.id}</p>
+            <p>Name: {course.name}</p>
+            <p>Price: {formatPrice(course.price)}</p>
+            <p>Image: {course.imageId}</p>
+            <p>priceId: {course.priceId}</p>
+            <p>stripeProductId: {course.stripeProductId}</p>
+            {course.OrdersWithCourse && (
               <>
                 <p>
-                  OrdersWithProduct:{" "}
-                  {product.OrdersWithProduct.map((order) => (
+                  OrdersWithCourse:{" "}
+                  {course.OrdersWithCourse.map((order) => (
                     <p key={order.id}>{order.id}</p>
                   ))}
                 </p>
@@ -38,12 +37,12 @@ export default async function page({}: Props) {
           </li>
         ))}
       </ul>
-      {productIds.length > 0 ? (
+      {courseIds.length > 0 ? (
         <div className="mt-8">
-          <PaymentButton productIds={productIds} />
+          <PaymentButton courseIds={courseIds} />
         </div>
       ) : (
-        <p>No products</p>
+        <p>No courses</p>
       )}
     </div>
   );

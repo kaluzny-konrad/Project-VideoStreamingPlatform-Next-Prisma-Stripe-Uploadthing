@@ -20,7 +20,7 @@ export default async function page({ params }: Props) {
   return (
     <div className="flex flex-col md:flex-row">
       <div className="md:w-3/4">
-        <VideoPlayer props={{ title: video.name, url: video.url }} />
+        <VideoPlayer props={{ title: video.fileName, url: video.url }} />
       </div>
     </div>
   );
