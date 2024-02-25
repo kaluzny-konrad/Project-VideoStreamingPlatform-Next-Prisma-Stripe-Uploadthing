@@ -1,6 +1,5 @@
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { db } from "@/db";
 import { CourseValidator } from "@/lib/validators/course";
 import { stripe } from "../lib/stripe";
@@ -9,12 +8,34 @@ import {
   DeleteVideoValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
-import { Input } from "postcss";
+import { CourseOnList } from "@/types/course";
+import { formatTimeToNow, shrinkDescription } from "@/lib/utils";
 
 export const courseRouter = router({
-  getCourses: publicProcedure.query(async () => {
+  getCoursesListView: publicProcedure.query(async () => {
     const courses = await db.course.findMany({});
-    return courses;
+    const images = await db.image.findMany({
+      where: {
+        id: {
+          in: courses.map((course) => course.imageId),
+        },
+      },
+    });
+
+    const coursesOnList = courses.map((course) => {
+      const image = images.find((image) => image.id === course.imageId);
+      const courseOnList: CourseOnList = {
+        id: course.id,
+        name: course.name,
+        description: shrinkDescription(course.description, 120),
+        price: course.price,
+        imageUrl: image?.url || "",
+        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
+      };
+      return courseOnList;
+    });
+
+    return coursesOnList;
   }),
 
   createCourse: privateProcedure
