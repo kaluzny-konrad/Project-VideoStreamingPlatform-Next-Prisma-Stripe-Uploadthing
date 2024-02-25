@@ -80,8 +80,8 @@ model Course {
   VideosIncluded   Video[]
   UsersOwnedCourse User[]
 
-  Category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
+  Category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
 
   @@index([categoryId])
 }

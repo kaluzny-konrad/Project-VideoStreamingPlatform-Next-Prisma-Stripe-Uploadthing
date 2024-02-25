@@ -1,7 +1,10 @@
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/db";
-import { CourseValidator } from "@/lib/validators/course";
+import {
+  CourseCreateValidator,
+  CourseEditValidator,
+} from "@/lib/validators/course";
 import { stripe } from "../lib/stripe";
 import {
   AddVideoValidator,
@@ -10,6 +13,7 @@ import {
 import { utapi } from "./uploadthing";
 import { CourseOnList } from "@/types/course";
 import { formatTimeToNow, shrinkDescription } from "@/lib/utils";
+import { z } from "zod";
 
 export const courseRouter = router({
   getCoursesListView: publicProcedure.query(async () => {
@@ -38,10 +42,36 @@ export const courseRouter = router({
     return coursesOnList;
   }),
 
+  getCourse: privateProcedure
+    .input(
+      z.object({
+        courseId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { courseId } = input;
+      const { user } = ctx;
+
+      const course = await db.course.findUnique({
+        where: {
+          id: courseId,
+        },
+      });
+
+      if (!course) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Course not found",
+        });
+      }
+
+      return course;
+    }),
+
   createCourse: privateProcedure
-    .input(CourseValidator)
+    .input(CourseCreateValidator)
     .mutation(async ({ input, ctx }) => {
-      const { name, description, mainImageId } = input;
+      const { name, description, imageId, categoryId} = input;
       const { user } = ctx;
 
       const price = parseInt(input.price, 10);
@@ -59,10 +89,42 @@ export const courseRouter = router({
           name,
           price,
           description,
-          imageId: mainImageId,
+          imageId,
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
           creatorId: user.id,
+          categoryId,
+        },
+      });
+
+      return course;
+    }),
+
+  editCourse: privateProcedure
+    .input(CourseEditValidator)
+    .mutation(async ({ input, ctx }) => {
+      const { name, description, imageId, courseId, categoryId } = input;
+      const { user } = ctx;
+
+      const price = parseInt(input.price, 10);
+
+      const stripeProduct = await stripe.products.update(courseId, {
+        name: name,
+        // ToDo: update price
+      });
+
+      const course = await db.course.update({
+        where: {
+          id: courseId,
+        },
+        data: {
+          name,
+          price,
+          description,
+          imageId,
+          priceId: stripeProduct.default_price as string,
+          stripeProductId: stripeProduct.id,
+          categoryId,
         },
       });
 
