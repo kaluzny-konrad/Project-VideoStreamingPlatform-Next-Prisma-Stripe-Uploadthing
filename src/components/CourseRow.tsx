@@ -9,6 +9,7 @@ import {
   WalletIcon,
 } from "lucide-react";
 import CourseStatsValue from "./CourseStatsValue";
+import { cn } from "@/lib/utils";
 
 type Props = {
   course: CourseOnList;
@@ -16,49 +17,49 @@ type Props = {
 
 export default function CourseRow({ course }: Props) {
   return (
-    <Link href={`/courses/${course.id}`}>
-      <div className="flex border-b py-6">
-        <div className="my-auto m-4">
+    <Link href={`/courses/${course.id}`} className="group">
+      <div className="flex border-b py-6 w-full">
+        <div className="my-auto mr-4 w-1/2">
           <Image
             src={course.imageUrl}
             alt={course.name}
             width={600}
             height={400}
-            className=" rounded-lg"
+            className={cn(
+              "h-42 rounded-lg object-cover",
+              "group-hover:opacity-80 transition-opacity duration-300"
+            )}
           />
         </div>
 
-        <div>
-          <div className="flex">
-            <div className="p-4">
-              <p className="text-lg font-bold text-slate-700 mt-4 mb-2">
-                {course.name}
-              </p>
-              <p className="text-sm mb-2 text-slate-500">
-                {course.description}
-              </p>
-            </div>
-            <div className="bg-gray-100 p-4 rounded-lg flex gap-2 my-auto">
-              <div className="w-24 space-y-3">
-                <CourseStatsValue
-                  Icon={WalletIcon}
-                  text="Price"
-                  value={`${course.price} PLN`}
-                />
+        <div className="space-y-4">
+          <p
+            className={cn(
+              "text-lg font-bold text-slate-700 mb-2",
+              "group-hover:text-slate-900 duration-300"
+            )}
+          >
+            {course.name}
+          </p>
+          <p className="text-sm text-slate-500">{course.description}</p>
+          <div className="bg-gray-100 py-4 px-6 rounded-lg flex justify-between">
+            <CourseStatsValue
+              Icon={WalletIcon}
+              text="Price"
+              value={`${course.price} PLN`}
+            />
 
-                <CourseStatsValue
-                  Icon={CalendarIcon}
-                  text="Publication"
-                  value={course.publicatedAt}
-                />
-                <CourseStatsValue Icon={EyeIcon} text="Views" value={10} />
-                <CourseStatsValue
-                  Icon={MessageSquareIcon}
-                  text="Comments"
-                  value={10}
-                />
-              </div>
-            </div>
+            <CourseStatsValue
+              Icon={CalendarIcon}
+              text="Publication"
+              value={course.publicatedAt}
+            />
+            <CourseStatsValue Icon={EyeIcon} text="Views" value={10} />
+            <CourseStatsValue
+              Icon={MessageSquareIcon}
+              text="Comments"
+              value={10}
+            />
           </div>
         </div>
       </div>

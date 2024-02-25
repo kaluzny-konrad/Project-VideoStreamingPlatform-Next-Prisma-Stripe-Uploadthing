@@ -1,5 +1,4 @@
 import { db } from "@/db";
-import React from "react";
 
 type Props = {
   courseId: string;

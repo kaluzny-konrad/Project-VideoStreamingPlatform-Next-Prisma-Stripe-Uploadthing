@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { privateProcedure, publicProcedure, router } from "./trpc";
 import { z } from "zod";
+import { CategoryValidator } from "@/lib/validators/category";
 
 export const adminRouter = router({
   deleteVideo: privateProcedure
@@ -37,5 +38,33 @@ export const adminRouter = router({
       });
 
       return true;
+    }),
+
+  deleteCategory: privateProcedure
+    .input(
+      z.object({
+        categoryId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { categoryId } = input;
+
+      await db.category.delete({
+        where: {
+          id: categoryId,
+        },
+      });
+
+      return true;
+    }),
+
+  createCategory: privateProcedure
+    .input(CategoryValidator)
+    .mutation(async ({ input }) => {
+      const category = await db.category.create({
+        data: input,
+      });
+
+      return category;
     }),
 });

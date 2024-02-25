@@ -15,7 +15,7 @@ export default function CoursesPublicList({}: Props) {
 
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">
-      <h1 className="mb-6 text-lg font-bold text-slate-800">All courses</h1>
+      <h1 className="text-lg font-bold text-slate-800">All courses</h1>
       {loading ? (
         <CoursesListSkeleton />
       ) : (

@@ -14,7 +14,7 @@ import UploadImageZone from "./UploadImageZone";
 
 type Props = {};
 
-export default function CreatorCourseAddForm({}: Props) {
+export default function CreatorCourseCreateForm({}: Props) {
   const router = useRouter();
   const [imageId, setImageId] = useState<string>("" as string);
 
@@ -63,7 +63,7 @@ export default function CreatorCourseAddForm({}: Props) {
 
   return (
     <div>
-      <form id="add-course" onSubmit={handleSubmit(onSubmit)}>
+      <form id="create-course" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">Course name</label>
           <input type="text" id="name" {...register("name")} />

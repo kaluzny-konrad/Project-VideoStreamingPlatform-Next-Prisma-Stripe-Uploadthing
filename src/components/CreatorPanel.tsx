@@ -35,14 +35,14 @@ export default function CreatorPanel({}: Props) {
           List of courses
         </Link>
         <Link
-          href={"/creator/courses/add"}
+          href={"/creator/courses/create"}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "justify-start w-full"
           )}
         >
           <PlusIcon size={16} className={cn("mr-2")} />
-          Add course
+          Create course
         </Link>
       </div>
     </div>

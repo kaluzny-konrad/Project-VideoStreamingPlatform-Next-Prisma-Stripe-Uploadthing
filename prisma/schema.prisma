@@ -70,7 +70,7 @@ model Course {
   name        String
   description String
   price       Int
-  imageId       String
+  imageId     String
   creatorId   String
 
   priceId         String
@@ -79,6 +79,11 @@ model Course {
   OrdersWithCourse Order[]
   VideosIncluded   Video[]
   UsersOwnedCourse User[]
+
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+
+  @@index([categoryId])
 }
 
 model Order {
@@ -104,11 +109,11 @@ enum OrderStatus {
 }
 
 model Video {
-  id   String @id @default(cuid())
-  key  String @unique
+  id        String @id @default(cuid())
+  key       String @unique
   videoName String
   fileName  String
-  url  String
+  url       String
 
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String
@@ -120,4 +125,12 @@ model Image {
   id  String @id @default(cuid())
   key String @unique
   url String
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  CoursesInCategory Course[]
 }
