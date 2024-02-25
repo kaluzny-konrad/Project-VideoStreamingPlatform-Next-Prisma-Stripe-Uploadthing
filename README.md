@@ -35,11 +35,11 @@
 - [X] Features: Some headers Main Page
 - [-] SetUp Logs: Add logs to the app
 - [X] Features: Admin access control
-- [ ] Features: Upload Course admin page
-- [ ] Features: Upload Courses list
+- [X] Features: Upload Course admin page
+- [X] Features: Upload Courses list
+- [ ] Features: Courses list row
 - [ ] Features: Uploaded Course - stats
 - [ ] Features: Uploaded Course - edit course
-- [ ] Features: Courses list row
 - [ ] Features: Courses Page
 - [ ] Features: Course page - video
 - [ ] Features: Course page - list of videos
