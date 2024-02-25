@@ -103,7 +103,6 @@ enum OrderStatus {
   REFUNDED
 }
 
-
 model Video {
   id   String @id @default(cuid())
   key  String @unique

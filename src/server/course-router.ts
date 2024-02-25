@@ -9,6 +9,7 @@ import {
   DeleteVideoValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
+import { Input } from "postcss";
 
 export const courseRouter = router({
   getCourses: publicProcedure.query(async () => {
@@ -119,6 +120,7 @@ export const courseRouter = router({
       const video = await db.video.findUnique({
         where: {
           id: videoId,
+          courseId: courseId,
         },
       });
 
@@ -129,35 +131,19 @@ export const courseRouter = router({
         });
       }
 
-      // Update the course to disconnect the video
-      const updatedCourse = await db.course.update({
+      await db.video.delete({
+        where: {
+          id: videoId,
+        },
+      });
+
+      utapi.deleteFiles(video.fileName);
+
+      const updatedCourse = await db.course.findUnique({
         where: {
           id: courseId,
         },
-        data: {
-          VideosIncluded: {
-            disconnect: {
-              id: videoId,
-            },
-          },
-        },
       });
-
-      // Check if there are any remaining courses with the deleted video
-      const coursesWithDeletedVideo = await db.course.findMany({
-        where: {
-          VideosIncluded: {
-            some: {
-              id: videoId,
-            },
-          },
-        },
-      });
-
-      // If no courses contain the deleted video, delete related files
-      if (coursesWithDeletedVideo.length === 0) {
-        utapi.deleteFiles(video.fileName);
-      }
 
       return updatedCourse;
     }),
