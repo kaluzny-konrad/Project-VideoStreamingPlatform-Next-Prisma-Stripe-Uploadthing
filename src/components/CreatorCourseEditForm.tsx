@@ -21,7 +21,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
     data: course,
     isLoading: loading,
     error,
-  } = trpc.course.getCourse.useQuery({ courseId });
+  } = trpc.course.getCourse.useQuery({ courseId }); // ToDo: Correctly inject data to the form
 
   const router = useRouter();
   const [imageId, setImageId] = useState<string>("");
