@@ -81,7 +81,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
         setValue("categoryId", coursePreviousData.categoryId.toString());
       setValue("courseId", coursePreviousData.id);
     }
-  }, [coursePreviousData]);
+  }, [coursePreviousData, databaseLoading, databaseError, setValue]);
 
   const imageUploaded = (args: { imageId: string }) => {
     setValue("imageId", args.imageId);

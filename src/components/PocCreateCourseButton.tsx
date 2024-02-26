@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { trpc } from "@/server/client";
+import { CourseCreateRequest } from "@/lib/validators/course";
 
 type Props = {};
 
@@ -15,11 +16,12 @@ export default function PocCreateCourseButton({}: Props) {
     },
   });
 
-  const dummyCourseData = {
+  const dummyCourseData: CourseCreateRequest = {
     name: "dummy course",
     description: "dummy course description",
     price: "10000",
-    mainImageId: "asdbc",
+    imageId: "asdbc",
+    categoryId: "asdbc",
   };
 
   return (

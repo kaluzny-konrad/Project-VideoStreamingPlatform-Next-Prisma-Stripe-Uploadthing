@@ -37,7 +37,7 @@
 - [X] Features: Admin access control
 - [X] Features: Upload Course admin page
 - [X] Features: Upload Courses list
-- [ ] Features: Courses list row
+- [X] Features: Courses list row
 - [ ] Features: Uploaded Course - stats
 - [ ] Features: Uploaded Course - edit course
 - [ ] Features: Courses Page

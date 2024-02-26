@@ -4,6 +4,7 @@ import NavUserOptions from "./NavUserOptions";
 import Link from "next/link";
 import NavDesktopItems from "./NavDesktopItems";
 import NavMobileHamburger from "./NavMobileHamburger";
+import Image from "next/image";
 
 type Props = {};
 
@@ -18,10 +19,12 @@ export default function Navbar({}: Props) {
             </div>
 
             <Link href="/">
-              <img
+              <Image
                 className="h-8"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                 alt="Logo"
+                width={32}
+                height={32}
               />
             </Link>
 
