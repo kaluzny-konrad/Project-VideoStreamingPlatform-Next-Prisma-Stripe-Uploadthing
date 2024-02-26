@@ -7,6 +7,7 @@ export type CourseOnList = {
   price: number;
   imageUrl: string;
   publicatedAt: string;
+  categoryId: string;
 };
 
 export type CourseStatsInList = {

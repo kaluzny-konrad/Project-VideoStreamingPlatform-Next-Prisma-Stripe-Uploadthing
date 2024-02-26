@@ -30,6 +30,7 @@ export const courseRouter = router({
         price: course.price,
         imageUrl: image?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
+        categoryId: course.categoryId,
       };
       return courseOnList;
     });
