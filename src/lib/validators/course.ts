@@ -33,8 +33,8 @@ export const CourseEditValidator = z.object({
     .refine((val) => parseInt(val, 10) > 0, {
       message: "Price must be greater than 0",
     }),
-  imageId: z.string(),
-  categoryId: z.string(),
+  imageId: z.string().min(1, { message: "You need to upload a main image" }),
+  categoryId: z.string().min(1, { message: "You need to select a category" }),
 });
 
 export type CourseCreateRequest = z.infer<typeof CourseCreateValidator>;

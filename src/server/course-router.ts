@@ -71,7 +71,7 @@ export const courseRouter = router({
   createCourse: privateProcedure
     .input(CourseCreateValidator)
     .mutation(async ({ input, ctx }) => {
-      const { name, description, imageId, categoryId} = input;
+      const { name, description, imageId, categoryId } = input;
       const { user } = ctx;
 
       const price = parseInt(input.price, 10);
@@ -108,12 +108,28 @@ export const courseRouter = router({
 
       const price = parseInt(input.price, 10);
 
-      const stripeProduct = await stripe.products.update(courseId, {
-        name: name,
-        // ToDo: update price
+      const course = await db.course.findUnique({
+        where: {
+          id: courseId,
+        },
       });
 
-      const course = await db.course.update({
+      if (!course) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Course not found",
+        });
+      }
+
+      const stripeProduct = await stripe.products.update(
+        course.stripeProductId,
+        {
+          name: name,
+          // ToDo: update price
+        }
+      );
+
+      const updatedCourse = await db.course.update({
         where: {
           id: courseId,
         },
@@ -128,7 +144,7 @@ export const courseRouter = router({
         },
       });
 
-      return course;
+      return updatedCourse;
     }),
 
   addVideoToCourse: privateProcedure

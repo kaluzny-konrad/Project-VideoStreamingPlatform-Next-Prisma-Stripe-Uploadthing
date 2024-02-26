@@ -16,12 +16,18 @@ type Props = {};
 
 export default function CreatorCourseCreateForm({}: Props) {
   const router = useRouter();
-  const [imageId, setImageId] = useState<string>("" as string);
+
+  const {
+    data: categories,
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = trpc.category.getCategories.useQuery();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<CourseCreateRequest>({
     resolver: zodResolver(CourseCreateValidator),
     defaultValues: {
@@ -57,9 +63,18 @@ export default function CreatorCourseCreateForm({}: Props) {
   });
 
   const imageUploaded = (args: { imageId: string }) => {
-    console.log(args);
-    setImageId(args.imageId);
+    setValue("imageId", args.imageId);
   };
+
+  if (categoriesLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (categoriesError) {
+    toast.error(`Something went wrong: ${categoriesError?.message}`);
+    console.error(categoriesError);
+    return <div>Try again later</div>;
+  }
 
   return (
     <div>
@@ -80,12 +95,18 @@ export default function CreatorCourseCreateForm({}: Props) {
         <UploadImageZone imageUploaded={imageUploaded} />
         <div>
           <label htmlFor="imageId">Main image</label>
-          <input
-            type="text"
-            id="imageId"
-            value={imageId}
-            {...register("imageId")}
-          />
+          <input type="text" id="imageId" {...register("imageId")} />
+        </div>
+
+        <div>
+          <label htmlFor="categoryId">Category</label>
+          <select id="categoryId" {...register("categoryId")}>
+            {categories?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
