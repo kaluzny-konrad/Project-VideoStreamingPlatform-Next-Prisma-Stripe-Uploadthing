@@ -12,7 +12,7 @@ type Props = {
 export default function CreatorDeleteVideoButton({ courseId, videoId }: Props) {
   const router = useRouter();
 
-  const { mutate: deleteVideo } = trpc.course.deleteVideoFromCourse.useMutation(
+  const { mutate: deleteVideo } = trpc.video.deleteVideoFromCourse.useMutation(
     {
       onSuccess: () => {
         console.log("Video deleted");

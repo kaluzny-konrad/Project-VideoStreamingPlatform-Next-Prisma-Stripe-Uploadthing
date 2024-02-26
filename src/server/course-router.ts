@@ -6,11 +6,6 @@ import {
   CourseEditValidator,
 } from "@/lib/validators/course";
 import { stripe } from "../lib/stripe";
-import {
-  AddVideoValidator,
-  DeleteVideoValidator,
-} from "@/lib/validators/video";
-import { utapi } from "./uploadthing";
 import { CourseOnList } from "@/types/course";
 import { formatTimeToNow, shrinkDescription } from "@/lib/utils";
 import { z } from "zod";
@@ -106,7 +101,9 @@ export const courseRouter = router({
       const { name, description, imageId, courseId, categoryId } = input;
       const { user } = ctx;
 
-      const price = parseInt(input.price, 10);
+      const newPrice = parseInt(input.price, 10);
+
+      console.log("price", newPrice);
 
       const course = await db.course.findUnique({
         where: {
@@ -121,11 +118,27 @@ export const courseRouter = router({
         });
       }
 
+      const previousStripePrices = await stripe.prices.list({
+        product: course.stripeProductId,
+      });
+
+      let defaultPrice = previousStripePrices.data.find(
+        (price) => price.unit_amount === newPrice && price.currency === "pln"
+      );
+
+      if (!defaultPrice) {
+        defaultPrice = await stripe.prices.create({
+          currency: "PLN",
+          unit_amount: newPrice,
+          product: course.stripeProductId,
+        });
+      }
+
       const stripeProduct = await stripe.products.update(
         course.stripeProductId,
         {
           name: name,
-          // ToDo: update price
+          default_price: defaultPrice.id,
         }
       );
 
@@ -135,112 +148,12 @@ export const courseRouter = router({
         },
         data: {
           name,
-          price,
+          price: newPrice,
           description,
           imageId,
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
           categoryId,
-        },
-      });
-
-      return updatedCourse;
-    }),
-
-  addVideoToCourse: privateProcedure
-    .input(AddVideoValidator)
-    .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId } = input;
-      const { user } = ctx;
-
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
-
-      const video = await db.video.findUnique({
-        where: {
-          id: videoId,
-        },
-      });
-
-      if (!video) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Video not found",
-        });
-      }
-
-      const updatedCourse = await db.course.update({
-        where: {
-          id: courseId,
-        },
-        data: {
-          VideosIncluded: {
-            connect: {
-              id: videoId,
-            },
-          },
-        },
-      });
-
-      return updatedCourse;
-    }),
-
-  deleteVideoFromCourse: privateProcedure
-    .input(DeleteVideoValidator)
-    .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId } = input;
-      const { user } = ctx;
-
-      // Ensure the course exists
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
-
-      // Ensure the video exists
-      const video = await db.video.findUnique({
-        where: {
-          id: videoId,
-          courseId: courseId,
-        },
-      });
-
-      if (!video) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Video not found",
-        });
-      }
-
-      await db.video.delete({
-        where: {
-          id: videoId,
-        },
-      });
-
-      utapi.deleteFiles(video.fileName);
-
-      const updatedCourse = await db.course.findUnique({
-        where: {
-          id: courseId,
         },
       });
 
