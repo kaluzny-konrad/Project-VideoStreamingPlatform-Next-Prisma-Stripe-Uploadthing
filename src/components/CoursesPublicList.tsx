@@ -33,7 +33,7 @@ export default function CoursesPublicList({}: Props) {
         })
       );
     }
-  }, [categoriesStateValue, courses, anyActive, isActive, loading, error]);
+  }, [categoriesStateValue]);
 
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">

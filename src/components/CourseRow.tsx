@@ -25,6 +25,7 @@ export default function CourseRow({ course }: Props) {
             alt={course.name}
             width={600}
             height={400}
+            priority
             className={cn(
               "h-42 rounded-lg object-cover",
               "group-hover:opacity-80 transition-opacity duration-300"

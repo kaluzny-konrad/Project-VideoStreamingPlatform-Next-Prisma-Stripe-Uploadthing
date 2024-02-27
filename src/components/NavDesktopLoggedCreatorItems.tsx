@@ -11,9 +11,7 @@ export default async function NavDesktopLoggedCreatorItems({}: Props) {
   if (!user || !(user.role == "ADMIN" || user.role == "CREATOR")) {
     return null;
   }
-
-
-
+  
   return (
     <>
       <Link href={"/creator"} className={buttonVariants({ variant: "ghost" })}>

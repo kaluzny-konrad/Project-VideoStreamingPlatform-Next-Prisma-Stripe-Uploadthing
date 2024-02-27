@@ -22,10 +22,6 @@ export function useCategories() {
   const [categoriesStateValue, setCategoriesStateValue] =
     useRecoilState(categoriesState);
 
-  const isMounted = () => {
-    return categoriesStateValue.categories.length > 0;
-  };
-
   const initCategoryIds = (categoryIds: string[]) => {
     setCategoriesStateValue((oldValue) => {
       return {
@@ -82,7 +78,6 @@ export function useCategories() {
 
   return {
     categoriesStateValue,
-    isMounted,
     initCategoryIds,
     setActive,
     isActive,

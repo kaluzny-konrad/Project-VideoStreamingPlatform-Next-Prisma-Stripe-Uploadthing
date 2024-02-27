@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import { trpc } from "@/server/client";
 import { useCategories } from "@/hooks/use-categories";
@@ -8,19 +8,20 @@ import { useCategories } from "@/hooks/use-categories";
 type Props = {};
 
 export default function CoursesPanel({}: Props) {
-  const {
-    isMounted,
-    initCategoryIds,
-    setActive,
-    clearStates,
-    isActive,
-    anyActive,
-  } = useCategories();
+  const { initCategoryIds, setActive, clearStates, isActive, anyActive } =
+    useCategories();
+
   const {
     data: categories,
     isLoading: loading,
     error,
   } = trpc.category.getCategories.useQuery();
+
+  useEffect(() => {
+    if (categories) {
+      initCategoryIds(categories.map((category) => category.id));
+    }
+  }, [categories]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -28,10 +29,6 @@ export default function CoursesPanel({}: Props) {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  }
-
-  if (!isMounted()) {
-    initCategoryIds(categories.map((category) => category.id));
   }
 
   return (
