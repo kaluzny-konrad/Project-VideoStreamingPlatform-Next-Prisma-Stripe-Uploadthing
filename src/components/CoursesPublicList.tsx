@@ -1,49 +1,52 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import CoursesListSkeleton from "./CoursesListSkeleton";
 import CourseRow from "./CourseRow";
 import { useCategories } from "@/hooks/use-categories";
 import { useEffect, useState } from "react";
 import { CourseOnList } from "@/types/course";
 import { toast } from "sonner";
+import { Skeleton } from "./ui/skeleton";
 
 type Props = {};
 
 export default function CoursesPublicList({}: Props) {
   const [activeCourses, setActiveCourses] = useState<CourseOnList[]>([]);
   const {
-    data: courses,
-    isLoading: loading,
+    data: allCourses,
+    isLoading,
     error,
   } = trpc.course.getCoursesListView.useQuery();
 
-  const { isActive, categoriesStateValue } = useCategories();
+  const { categoriesStateValue } = useCategories();
 
   useEffect(() => {
-    if (categoriesStateValue.anyActive === false && !loading && !error) {
-      setActiveCourses(courses);
-    }
-    else if (categoriesStateValue.categories.length > 0 && !loading && !error) {
+    if (isLoading || error) return;
+
+    if (categoriesStateValue.activeCategoryId === null) {
+      setActiveCourses(allCourses);
+    } else {
       setActiveCourses(
-        courses.filter((course) => {
-          return isActive(course.categoryId);
+        allCourses.filter((course) => {
+          return course.categoryId === categoriesStateValue.activeCategoryId;
         })
       );
     }
-  }, [categoriesStateValue, courses]);
+  }, [categoriesStateValue, allCourses]);
 
-  useEffect(() => {
-    if (error) {
-      toast.error("Error loading courses");
-      console.log(error);
-    }
-  });
+  if (error) {
+    toast.error("Error loading courses");
+    console.log(error);
+  }
 
   return (
     <>
-      {loading ? (
-        <CoursesListSkeleton />
+      {isLoading ? (
+        <>
+          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+        </>
       ) : (
         activeCourses.map((course) => (
           <CourseRow key={course.id} course={course} />
