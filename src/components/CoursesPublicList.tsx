@@ -6,6 +6,7 @@ import CourseRow from "./CourseRow";
 import { useCategories } from "@/hooks/use-categories";
 import { useEffect, useState } from "react";
 import { CourseOnList } from "@/types/course";
+import { toast } from "sonner";
 
 type Props = {};
 
@@ -17,27 +18,30 @@ export default function CoursesPublicList({}: Props) {
     error,
   } = trpc.course.getCoursesListView.useQuery();
 
+  const { isActive, categoriesStateValue } = useCategories();
+
   useEffect(() => {
-    if (courses) {
+    if (categoriesStateValue.anyActive === false && !loading && !error) {
       setActiveCourses(courses);
     }
-  }, [courses]);
-
-  const { isActive, anyActive, categoriesStateValue } = useCategories();
-
-  useEffect(() => {
-    if (categoriesStateValue.categories.length > 0 && !loading && !error) {
+    else if (categoriesStateValue.categories.length > 0 && !loading && !error) {
       setActiveCourses(
         courses.filter((course) => {
-          return !anyActive() || isActive(course.categoryId);
+          return isActive(course.categoryId);
         })
       );
     }
-  }, [categoriesStateValue]);
+  }, [categoriesStateValue, courses]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Error loading courses");
+      console.log(error);
+    }
+  });
 
   return (
-    <div className="p-4 bg-white rounded-xl min-h-96">
-      <h1 className="text-lg font-bold text-slate-800">All courses</h1>
+    <>
       {loading ? (
         <CoursesListSkeleton />
       ) : (
@@ -45,7 +49,6 @@ export default function CoursesPublicList({}: Props) {
           <CourseRow key={course.id} course={course} />
         ))
       )}
-      {error && <p>Error: {error.message}</p>}
-    </div>
+    </>
   );
 }

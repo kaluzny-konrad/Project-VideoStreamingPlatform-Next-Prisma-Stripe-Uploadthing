@@ -8,7 +8,7 @@ import { useCategories } from "@/hooks/use-categories";
 type Props = {};
 
 export default function CoursesPanel({}: Props) {
-  const { initCategoryIds, setActive, clearStates, isActive, anyActive } =
+  const { initCategoryIds, setActive, isActive, categoriesStateValue } =
     useCategories();
 
   const {
@@ -39,9 +39,9 @@ export default function CoursesPanel({}: Props) {
       </p>
       <div className="flex flex-col gap-2">
         <Button
-          variant={`${anyActive() ? "ghost" : "default"}`}
+          variant={`${categoriesStateValue.anyActive ? "ghost" : "default"}`}
           className="justify-start w-full"
-          onClick={clearStates}
+          onClick={() => setActive(null)}
         >
           All
         </Button>

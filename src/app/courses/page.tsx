@@ -11,7 +11,10 @@ export default function page({}: Props) {
       </div>
 
       <div className="w-[50em]">
-        <CoursesPublicList />
+        <div className="p-4 bg-white rounded-xl min-h-96">
+          <h1 className="text-lg font-bold text-slate-800">All courses</h1>
+          <CoursesPublicList />
+        </div>
       </div>
     </div>
   );
