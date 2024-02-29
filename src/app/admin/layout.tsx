@@ -8,12 +8,12 @@ export default async function CreatorLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const session = await getAuthSession();
-  // const user = session?.user;
+  const session = await getAuthSession();
+  const user = session?.user;
 
-  // if (!user || !(user.role == "ADMIN")) {
-  //   redirect("/sign-in");
-  // }
+  if (!user || !(user.role == "ADMIN")) {
+    redirect("/sign-in");
+  }
 
   return (
     <div className="flex flex-row p-2 ">
