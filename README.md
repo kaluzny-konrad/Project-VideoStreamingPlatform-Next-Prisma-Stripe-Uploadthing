@@ -38,7 +38,7 @@
 - [X] Features: Upload Course admin page
 - [X] Features: Upload Courses list
 - [X] Features: Courses list row
-- [ ] Security: Add Auth Guards to Creator and Admin Pages.
+- [X] Security: Add Auth Guards to Creator and Admin Pages.
 - [ ] Features: Uploaded Course - stats
 - [ ] Features: Uploaded Course - edit course
 - [ ] Features: Courses Page
