@@ -33,23 +33,25 @@
 - [X] Features: Meta data
 - [X] Refactor: Change Database provider to Supabase https://supabase.com/partners/integrations/prisma
 - [X] Features: Some headers Main Page
-- [-] SetUp Logs: Add logs to the app
 - [X] Features: Admin access control
 - [X] Features: Upload Course admin page
 - [X] Features: Upload Courses list
 - [X] Features: Courses list row
 - [X] Security: Add Auth Guards to Creator and Admin Pages.
-- [ ] Features: Uploaded Course - stats
-- [ ] Features: Uploaded Course - edit course
-- [ ] Features: Courses Page
-- [ ] Features: Course page - video
-- [ ] Features: Course page - list of videos
-- [ ] Features: Course page - comments
-- [ ] Improve GUI: Styling
+- [X] Features: Uploaded Course - edit course - backend
+- [ ] Features: Courses Page - backend
+- [ ] Features: Course page - video - backend
+- [ ] Features: Course page - list of videos - backend
+- [ ] Features: Course page - comments - backend
+- [ ] Features: Uploaded Course - stats - backend
+- [ ] Features: Creator Panel - List of courses - backend
+- [ ] Features: Admin Panel - deep delete backend
+- [ ] Styling: all pages
 - [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions
 - [ ] SetUp Mailing: SendGrid
 - [ ] SetUp Cache: Redis, Upstash (?)
+- [ ] SetUp Logs: Add logs to the app
 
 ## Upgrade commands:
 
