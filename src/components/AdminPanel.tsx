@@ -9,7 +9,7 @@ type Props = {};
 export default function AdminPanel({}: Props) {
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">
-      <h2 className="mb-2 text-lg font-bold text-slate-800">Creator Panel</h2>
+      <h2 className="mb-2 text-lg font-bold text-slate-800">Admin Panel</h2>
 
       <div className="flex flex-col">
         <p className="my-2 text-xs font-light uppercase text-slate-400">

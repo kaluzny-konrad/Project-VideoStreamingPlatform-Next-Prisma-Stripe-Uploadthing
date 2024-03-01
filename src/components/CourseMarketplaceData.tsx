@@ -7,6 +7,9 @@ import { Skeleton } from "./ui/skeleton";
 import CourseCreator from "./CourseCreator";
 import CourseImage from "./CourseImage";
 import CourseCheckoutButton from "./CourseCheckoutButton";
+import { Button, buttonVariants } from "./ui/button";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 type Props = {
   courseId: string;
@@ -18,6 +21,11 @@ export default function CourseMarketplaceData({ courseId }: Props) {
     error,
     isLoading,
   } = trpc.course.getCourse.useQuery({ courseId });
+
+  const { data: courseOwned, error: errorCourseOwned } =
+    trpc.user.isCourseOwned.useQuery({
+      courseId,
+    });
 
   if (error) {
     toast.error("Error loading course");
@@ -38,7 +46,19 @@ export default function CourseMarketplaceData({ courseId }: Props) {
           <p>{course.description}</p>
           <p>{course.price} PLN</p>
           <CourseCreator creatorId={course.creatorId} />
-          <CourseCheckoutButton stripeProductId={course.stripeProductId} />
+          {courseOwned ? (
+            <Link
+              href={`/courses/${courseId}/watch`}
+              className={cn(buttonVariants())}
+            >
+              Watch course
+            </Link>
+          ) : (
+            <CourseCheckoutButton
+              stripeProductId={course.stripeProductId}
+              courseId={course.id}
+            />
+          )}
         </>
       ) : null}
     </div>

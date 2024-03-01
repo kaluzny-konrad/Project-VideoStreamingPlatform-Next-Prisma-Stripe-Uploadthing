@@ -5,6 +5,7 @@ import { courseRouter } from "./course-router";
 import { adminRouter } from "./admin-router";
 import { categoryRouter } from "./category-router";
 import { videoRouter } from "./video-router";
+import { userRouter } from "./user-router";
 
 export const appRouter = router({
   test: testRouter,
@@ -13,6 +14,7 @@ export const appRouter = router({
   admin: adminRouter,
   category: categoryRouter,
   video: videoRouter,
+  user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;
