@@ -5,8 +5,8 @@ type Props = {};
 
 export default function page({}: Props) {
   return (
-    <div className="flex flex-row p-2 ">
-      <div className="w-64 mr-4">
+    <div className="flex flex-row">
+      <div className="min-w-64 mr-4">
         <div className="p-4 bg-white rounded-xl min-h-96">
           <h2 className="mb-6 text-lg font-bold text-slate-800">
             Filter Courses
@@ -20,7 +20,7 @@ export default function page({}: Props) {
         </div>
       </div>
 
-      <div className="w-[50em]">
+      <div className="w-full">
         <div className="p-4 bg-white rounded-xl min-h-96">
           <h1 className="text-lg font-bold text-slate-800">All courses</h1>
           <CoursesPublicList />

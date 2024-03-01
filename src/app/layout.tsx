@@ -5,6 +5,7 @@ import { cn, constructMetadata } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WrapperMaxWidth from "@/components/WrapperMaxWidth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,12 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={cn("relative h-full font-sans antialiased bg-gray-100", inter.className)}
+        className={cn("font-sans antialiased bg-gray-100", inter.className)}
       >
         <Providers>
           <Navbar />
-          <main className="relative flex flex-col min-h-screen mt-12">
-            <div className="flex-1 flex-grow mx-auto">{children}</div>
+          <main className="min-h-screen mt-12">
+            <WrapperMaxWidth>{children}</WrapperMaxWidth>
           </main>
           <Footer />
           <Toaster />

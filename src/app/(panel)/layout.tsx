@@ -6,11 +6,11 @@ export default async function CreatorLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-row p-2 ">
-      <div className="w-64 mr-4">
+    <div className="flex flex-row">
+      <div className="min-w-64 mr-4">
         <CreatorPanel />
       </div>
-      <div className="w-[50em]">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }

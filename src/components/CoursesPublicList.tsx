@@ -48,9 +48,11 @@ export default function CoursesPublicList({}: Props) {
           <Skeleton className="w-full h-24 mt-4 rounded-lg" />
         </>
       ) : (
-        activeCourses.map((course) => (
-          <CourseRow key={course.id} course={course} />
-        ))
+        <>
+          {activeCourses.map((course) => (
+            <CourseRow key={course.id} course={course} />
+          ))}
+        </>
       )}
     </>
   );
