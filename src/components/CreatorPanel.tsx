@@ -32,7 +32,7 @@ export default function CreatorPanel({}: Props) {
           )}
         >
           <ListIcon size={16} className={cn("mr-2")} />
-          List of courses
+          List of your courses
         </Link>
         <Link
           href={"/creator/courses/create"}

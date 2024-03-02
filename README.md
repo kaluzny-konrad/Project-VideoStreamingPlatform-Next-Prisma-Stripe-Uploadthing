@@ -39,9 +39,11 @@
 - [X] Features: Courses list row
 - [X] Security: Add Auth Guards to Creator and Admin Pages.
 - [X] Features: Uploaded Course - edit course - backend
-- [ ] Features: Courses Page - backend
-- [ ] Features: Course page - video - backend
-- [ ] Features: Course page - list of videos - backend
+- [X] Features: Courses Page - backend MVP
+- [X] Features: Course page - video - backend MVP
+- [X] Features: Course page - list of videos - backend MVP
+- [ ] Features: Admin Panel - delete owned courses
+- [ ] Features: Marketplace - create session for buying course
 - [ ] Features: Course page - comments - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend

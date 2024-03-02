@@ -20,7 +20,7 @@ export default function CourseCheckoutButton({
     trpc.test.createCheckoutSession.useMutation({
       onSuccess: () => {
         toast.success("Checkout session created");
-        router.push('/watch');
+        router.push(`${courseId}/watch`);
       },
     });
 

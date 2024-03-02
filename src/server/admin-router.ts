@@ -67,4 +67,48 @@ export const adminRouter = router({
 
       return category;
     }),
+
+  deleteUser: privateProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { userId } = input;
+
+      await db.user.delete({
+        where: {
+          id: userId,
+        },
+      });
+
+      return true;
+    }),
+
+  deleteUserCourse: privateProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        courseId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { userId, courseId } = input;
+
+      await db.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          CoursesOwnedByUser: {
+            disconnect: {
+              id: courseId,
+            },
+          },
+        },
+      });
+
+      return true;
+    }),
 });
