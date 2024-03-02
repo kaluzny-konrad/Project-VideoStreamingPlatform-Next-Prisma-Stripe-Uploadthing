@@ -6,8 +6,81 @@ import {
   DeleteVideoValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
+import { z } from "zod";
+import { VideoOnList, VideoToWatch } from "@/types/video";
 
 export const videoRouter = router({
+  getVideosIncludedInCourse: privateProcedure
+    .input(
+      z.object({
+        courseId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { courseId } = input;
+      const { user } = ctx;
+
+      const course = await db.course.findUnique({
+        where: {
+          id: courseId,
+        },
+        include: {
+          VideosIncluded: true,
+        },
+      });
+
+      if (!course) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Course not found",
+        });
+      }
+
+      const videosOnList: Array<VideoOnList> = course.VideosIncluded.map(
+        (video) => {
+          const videoOnList: VideoOnList = {
+            id: video.id,
+            name: video.videoName,
+          };
+          return videoOnList;
+        }
+      );
+
+      return videosOnList;
+    }),
+
+  getVideoToWatch: privateProcedure
+    .input(
+      z.object({
+        videoId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { videoId } = input;
+      const { user } = ctx;
+
+      const video = await db.video.findUnique({
+        where: {
+          id: videoId,
+        },
+      });
+
+      if (!video) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video not found",
+        });
+      }
+
+      const videoToWatch: VideoToWatch = {
+        id: video.id,
+        name: video.videoName,
+        url: video.url,
+      };
+
+      return video;
+    }),
+
   addVideoToCourse: privateProcedure
     .input(AddVideoValidator)
     .mutation(async ({ input, ctx }) => {

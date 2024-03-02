@@ -52,6 +52,7 @@
 - [ ] SetUp Mailing: SendGrid
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
+- [ ] The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
 
 ## Upgrade commands:
 
