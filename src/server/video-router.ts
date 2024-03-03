@@ -4,6 +4,7 @@ import { db } from "@/db";
 import {
   AddVideoValidator,
   DeleteVideoValidator,
+  VideoEditValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
 import { z } from "zod";
@@ -179,5 +180,49 @@ export const videoRouter = router({
       });
 
       return updatedCourse;
+    }),
+
+  editVideo: privateProcedure
+    .input(VideoEditValidator)
+    .mutation(async ({ input, ctx }) => {
+      const { courseId, videoId, name } = input;
+      const { user } = ctx;
+
+      const course = await db.course.findUnique({
+        where: {
+          id: courseId,
+        },
+      });
+
+      if (!course) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Course not found",
+        });
+      }
+
+      const video = await db.video.findUnique({
+        where: {
+          id: videoId,
+        },
+      });
+
+      if (!video) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video not found",
+        });
+      }
+
+      const updatedVideo = await db.video.update({
+        where: {
+          id: videoId,
+        },
+        data: {
+          videoName: name,
+        },
+      });
+
+      return updatedVideo;
     }),
 });

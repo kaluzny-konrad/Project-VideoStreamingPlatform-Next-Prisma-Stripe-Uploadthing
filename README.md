@@ -46,12 +46,12 @@
 - [X] Fix: Fixed currency
 - [X] Features: Marketplace - create session for buying course
 - [ ] Features: Create Course - change video name, description and order
+- [ ] Features: Delete data in uploadthing
 - [ ] Features: Course page - description page - backend
 - [ ] Features: Course page - comments - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend
 - [ ] Features: Admin Panel - deep delete backend
-- [ ] Features: Delete data in uploadthing
 - [ ] Features: Delete data in stripe
 - [ ] Styling: all pages
 - [ ] SetUp Testing: Jest, Cypress

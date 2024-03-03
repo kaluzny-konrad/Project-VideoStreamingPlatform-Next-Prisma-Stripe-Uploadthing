@@ -10,6 +10,7 @@ import CourseCheckoutButton from "./CourseCheckoutButton";
 import { Button, buttonVariants } from "./ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import CourseWatchButton from "./CourseWatchButton";
 
 type Props = {
   courseId: string;
@@ -61,12 +62,7 @@ export default function CourseMarketplaceData({ courseId }: Props) {
                   <p className="font-bold">{course.price} PLN</p>
                 </div>
                 {courseOwned ? (
-                  <Link
-                    href={`/courses/${courseId}/watch`}
-                    className={cn(buttonVariants())}
-                  >
-                    Watch course
-                  </Link>
+                  <CourseWatchButton courseId={course.id} />
                 ) : (
                   <CourseCheckoutButton
                     courseId={course.id}

@@ -1,15 +1,15 @@
-import CourseVideo from "@/components/CourseVideo";
+import CoursePanel from "@/components/CoursePanel";
 import CourseVideos from "@/components/CourseVideos";
 
 type Props = {
+  children: React.ReactNode;
   params: {
     courseId: string;
-    videoId: string;
   };
 };
 
-export default function page({ params }: Props) {
-  const { courseId, videoId } = params;
+export default async function CourseLayout({ children, params }: Props) {
+  const { courseId } = params;
 
   return (
     <div className="flex flex-row">
@@ -28,10 +28,7 @@ export default function page({ params }: Props) {
       </div>
 
       <div className="w-full">
-        <div className="p-4 bg-white rounded-xl min-h-96">
-          <h1 className="text-lg font-bold text-slate-800">Watch Course</h1>
-          <CourseVideo videoId={videoId} />
-        </div>
+        <div className="p-4 bg-white rounded-xl min-h-96">{children}</div>
       </div>
     </div>
   );
