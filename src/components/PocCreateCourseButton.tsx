@@ -19,7 +19,7 @@ export default function PocCreateCourseButton({}: Props) {
   const dummyCourseData: CourseCreateRequest = {
     name: "dummy course",
     description: "dummy course description",
-    price: "10000",
+    price: "100.00",
     imageId: "asdbc",
     categoryId: "asdbc",
   };

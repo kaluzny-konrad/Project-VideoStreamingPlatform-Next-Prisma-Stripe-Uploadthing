@@ -6,27 +6,25 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  stripeProductId: string;
   courseId: string;
 };
 
 export default function CourseCheckoutButton({
-  stripeProductId,
   courseId,
 }: Props) {
   const router = useRouter();
 
-  const { mutate: createCheckoutSession } =
-    trpc.test.createCheckoutSession.useMutation({
-      onSuccess: () => {
-        toast.success("Checkout session created");
-        router.push(`${courseId}/watch`);
+  const { mutate: createCheckoutSession, isLoading } =
+    trpc.order.createSession.useMutation({
+      onSuccess: ({ url }) => {
+        toast.success("Order created");
+        if (url) router.push(url);
       },
     });
 
   function handleCourseCheckout() {
     const courseIdArray = [courseId];
-    createCheckoutSession({ courseId: courseIdArray });
+    createCheckoutSession({ courseIds: courseIdArray });
   }
 
   return (

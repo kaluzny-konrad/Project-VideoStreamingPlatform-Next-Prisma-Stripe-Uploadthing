@@ -69,7 +69,6 @@ export default function CourseMarketplaceData({ courseId }: Props) {
                   </Link>
                 ) : (
                   <CourseCheckoutButton
-                    stripeProductId={course.stripeProductId}
                     courseId={course.id}
                   />
                 )}

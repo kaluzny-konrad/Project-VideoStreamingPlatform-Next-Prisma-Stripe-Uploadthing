@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
+import { Prisma } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,7 +15,7 @@ export function absoluteUrl(path: string) {
 }
 
 export function formatPrice(
-  price: number | string,
+  price: Prisma.Decimal | string,
   options: {
     currency?: "PLN" | "USD" | "EUR" | "GBP" | "BDT";
     notation?: Intl.NumberFormatOptions["notation"];
@@ -22,7 +23,7 @@ export function formatPrice(
 ) {
   const { currency = "PLN", notation = "compact" } = options;
 
-  const numericPrice = typeof price === "string" ? parseFloat(price) : price;
+  const numericPrice = typeof price === "string" ? new Prisma.Decimal(price).toNumber() : price.toNumber();
 
   return new Intl.NumberFormat("pl-PL", {
     style: "currency",
@@ -85,7 +86,7 @@ export function formatTimeToNow(date: Date): string {
 
 export function shrinkDescription(description: string, maxLength: number) {
   if (description.length <= maxLength) return description;
-  
+
   // split to max length, but not in the middle of the word
   const words = description.split(" ");
   let result = "";

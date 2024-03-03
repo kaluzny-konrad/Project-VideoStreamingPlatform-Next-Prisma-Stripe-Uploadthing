@@ -47,7 +47,7 @@ export default function CourseRow({ course }: Props) {
             <CourseStatsValue
               Icon={WalletIcon}
               text="Price"
-              value={`${course.price} PLN`}
+              value={`${course.price}`}
             />
 
             <CourseStatsValue

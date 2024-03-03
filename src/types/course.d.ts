@@ -4,7 +4,7 @@ export type CourseOnList = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   imageUrl: string;
   publicatedAt: string;
   categoryId: string;
@@ -19,7 +19,7 @@ export type CourseOnMarketplace = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   imageUrl: string;
   publicatedAt: string;
   creatorId: string;

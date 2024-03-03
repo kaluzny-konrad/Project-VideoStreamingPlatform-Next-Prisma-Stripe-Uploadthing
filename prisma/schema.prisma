@@ -69,7 +69,7 @@ model Course {
   id          String @id @default(cuid())
   name        String
   description String
-  price       Int
+  price       Decimal @db.Decimal(12, 2)
   imageId     String
   creatorId   String
 
@@ -88,7 +88,7 @@ model Course {
 
 model Order {
   id        String      @id @default(cuid())
-  total     Int
+  total     Decimal @db.Decimal(12, 2)
   currency  String
   status    OrderStatus
   createdAt DateTime    @default(now())

@@ -42,12 +42,15 @@
 - [X] Features: Courses Page - backend MVP
 - [X] Features: Course page - video - backend MVP
 - [X] Features: Course page - list of videos - backend MVP
-- [ ] Features: Admin Panel - delete owned courses
-- [ ] Features: Marketplace - create session for buying course
+- [X] Features: Admin Panel - delete owned courses
+- [X] Fix: Fixed currency
+- [X] Features: Marketplace - create session for buying course
 - [ ] Features: Course page - comments - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend
 - [ ] Features: Admin Panel - deep delete backend
+- [ ] Features: Delete data in uploadthing
+- [ ] Features: Delete data in stripe
 - [ ] Styling: all pages
 - [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions

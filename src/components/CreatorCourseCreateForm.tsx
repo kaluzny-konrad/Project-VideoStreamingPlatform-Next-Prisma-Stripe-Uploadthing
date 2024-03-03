@@ -89,7 +89,7 @@ export default function CreatorCourseCreateForm({}: Props) {
         </div>
         <div>
           <label htmlFor="price">Price</label>
-          <input type="number" id="price" {...register("price")} />
+          <input type="number" step="0.01" id="price" {...register("price")} />
         </div>
 
         <UploadImageZone imageUploaded={imageUploaded} />

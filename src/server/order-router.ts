@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { stripe } from "../lib/stripe";
 import { db } from "@/db";
-import { OrderStatus } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
 import { absoluteUrl } from "@/lib/utils";
 
 export const orderRouter = router({
@@ -47,16 +47,19 @@ export const orderRouter = router({
           CoursesInOrder: {
             connect: courseIds.map((id) => ({ id })),
           },
-          total: filteredCourses.reduce((acc, curr) => {
-            return acc + curr.price;
-          }, 0),
+          total: new Prisma.Decimal(
+            filteredCourses.reduce(
+              (acc, curr) => acc.add(new Prisma.Decimal(curr.price)),
+              new Prisma.Decimal(0)
+            )
+          ),
           currency: "PLN",
           status: OrderStatus.CREATED,
         },
       });
 
       try {
-        const billingUrl = absoluteUrl(`/order/${order.id}`);
+        const billingUrl = absoluteUrl(`/orders/${order.id}`);
         const stripeSession = await stripe.checkout.sessions.create({
           success_url: billingUrl,
           cancel_url: billingUrl,
@@ -72,6 +75,8 @@ export const orderRouter = router({
             orderId: order.id,
           },
         });
+
+        console.log(stripeSession);
 
         return { url: stripeSession.url };
       } catch (error) {

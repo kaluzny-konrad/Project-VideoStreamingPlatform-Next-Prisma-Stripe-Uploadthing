@@ -12,8 +12,9 @@ import {
   CourseOnMarketplace,
   CourseWatch,
 } from "@/types/course";
-import { formatTimeToNow, shrinkDescription } from "@/lib/utils";
+import { formatPrice, formatTimeToNow, shrinkDescription } from "@/lib/utils";
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
 
 export const courseRouter = router({
   getCoursesListView: publicProcedure.query(async () => {
@@ -32,7 +33,7 @@ export const courseRouter = router({
         id: course.id,
         name: course.name,
         description: shrinkDescription(course.description, 120),
-        price: course.price,
+        price: formatPrice(course.price),
         imageUrl: image?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         categoryId: course.categoryId,
@@ -75,7 +76,7 @@ export const courseRouter = router({
         id: course?.id || "",
         name: course?.name || "",
         description: course?.description || "",
-        price: course?.price || 0,
+        price: formatPrice(course?.price || new Prisma.Decimal(0)),
         imageUrl: image?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         creatorId: course?.creatorId || "",
@@ -192,13 +193,14 @@ export const courseRouter = router({
       const { name, description, imageId, categoryId } = input;
       const { user } = ctx;
 
-      const price = parseInt(input.price, 10);
+      const price = new Prisma.Decimal(input.price);
+      const prismaPrice = parseFloat(input.price.replace(',', '.')) * 100;
 
       const stripeProduct = await stripe.products.create({
         name: name,
         default_price_data: {
           currency: "PLN",
-          unit_amount: price,
+          unit_amount: prismaPrice,
         },
       });
 
@@ -224,7 +226,8 @@ export const courseRouter = router({
       const { name, description, imageId, courseId, categoryId } = input;
       const { user } = ctx;
 
-      const newPrice = parseInt(input.price, 10);
+      const newPrice = new Prisma.Decimal(input.price);
+      const newPrismaPrice = parseFloat(input.price.replace(',', '.')) * 100;
 
       console.log("price", newPrice);
 
@@ -246,13 +249,13 @@ export const courseRouter = router({
       });
 
       let defaultPrice = previousStripePrices.data.find(
-        (price) => price.unit_amount === newPrice && price.currency === "pln"
+        (price) => price.unit_amount === newPrismaPrice && price.currency === "pln"
       );
 
       if (!defaultPrice) {
         defaultPrice = await stripe.prices.create({
           currency: "PLN",
-          unit_amount: newPrice,
+          unit_amount: newPrismaPrice,
           product: course.stripeProductId,
         });
       }
