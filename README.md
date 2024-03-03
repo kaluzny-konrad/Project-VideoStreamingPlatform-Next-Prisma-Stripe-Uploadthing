@@ -45,7 +45,8 @@
 - [X] Features: Admin Panel - delete owned courses
 - [X] Fix: Fixed currency
 - [X] Features: Marketplace - create session for buying course
-- [ ] SetUp Testing: Jest, Cypress
+- [ ] Features: Create Course - change video name, description and order
+- [ ] Features: Course page - description page - backend
 - [ ] Features: Course page - comments - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend
@@ -53,6 +54,7 @@
 - [ ] Features: Delete data in uploadthing
 - [ ] Features: Delete data in stripe
 - [ ] Styling: all pages
+- [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions
 - [ ] SetUp Mailing: SendGrid
 - [ ] SetUp Cache: Redis, Upstash (?)
