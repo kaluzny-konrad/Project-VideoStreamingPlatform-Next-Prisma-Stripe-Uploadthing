@@ -32,7 +32,7 @@ export default function CoursesPublicList({}: Props) {
         })
       );
     }
-  }, [categoriesStateValue, allCourses]);
+  }, [isLoading, error, categoriesStateValue.activeCategoryId, allCourses]);
 
   if (error) {
     toast.error("Error loading courses");

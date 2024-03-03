@@ -45,6 +45,7 @@
 - [X] Features: Admin Panel - delete owned courses
 - [X] Fix: Fixed currency
 - [X] Features: Marketplace - create session for buying course
+- [ ] SetUp Testing: Jest, Cypress
 - [ ] Features: Course page - comments - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend
@@ -52,26 +53,11 @@
 - [ ] Features: Delete data in uploadthing
 - [ ] Features: Delete data in stripe
 - [ ] Styling: all pages
-- [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions
 - [ ] SetUp Mailing: SendGrid
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
 - [ ] The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
-
-## Upgrade commands:
-
-### @next:
-
-`npm install @vidstack/react@next`
-
-### @latest:
-
-`npm install @prisma/client@latest @uploadthing/react@latest next@latest react@latest react-dom@latest tailwindcss-animate@latest uploadthing@latest @next/bundle-analyzer@latest @next-auth/prisma-adapter@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest`
-
-### dev with @latest:
-
-`npm install --save-dev @types/node@latest @types/react@latest @types/react-dom@latest autoprefixer@latest eslint@latest eslint-config-next@latest postcss@latest prisma@latest tailwindcss@latest typescript@latest`
 
 ## Providers config:
 

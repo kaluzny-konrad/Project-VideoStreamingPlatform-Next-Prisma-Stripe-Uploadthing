@@ -1,5 +1,6 @@
 import PaymentStatus from "@/components/PaymentStatus";
 import { db } from "@/db";
+import { formatPrice, getPriceSum } from "@/lib/utils";
 import { Course, OrderStatus } from "@prisma/client";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -30,9 +31,7 @@ export default async function page({ params }: Props) {
 
   const products = order.CoursesInOrder as Course[];
 
-  const orderTotal = products.reduce((acc, product) => {
-    return acc + product.price;
-  }, 0);
+  const orderTotal = getPriceSum(products.map((product) => product.price));
 
   const user = await db.user.findUnique({
     where: {
@@ -52,7 +51,7 @@ export default async function page({ params }: Props) {
           <li key={product.id}>{product.name}</li>
         ))}
       </ul>
-      <p>Total: {orderTotal}</p>
+      <p>Total: {formatPrice(orderTotal)}</p>
       <PaymentStatus
         isPaid={order.status === OrderStatus.PAID}
         orderEmail={user.email || ""}

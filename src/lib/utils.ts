@@ -23,7 +23,10 @@ export function formatPrice(
 ) {
   const { currency = "PLN", notation = "compact" } = options;
 
-  const numericPrice = typeof price === "string" ? new Prisma.Decimal(price).toNumber() : price.toNumber();
+  const numericPrice =
+    typeof price === "string"
+      ? new Prisma.Decimal(price).toNumber()
+      : price.toNumber();
 
   return new Intl.NumberFormat("pl-PL", {
     style: "currency",
@@ -31,6 +34,10 @@ export function formatPrice(
     notation,
     maximumFractionDigits: 2,
   }).format(numericPrice);
+}
+
+export function getPriceSum(prices: Prisma.Decimal[]) {
+  return prices.reduce((acc, curr) => acc.add(curr), new Prisma.Decimal(0));
 }
 
 const formatDistanceLocale = {

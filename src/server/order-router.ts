@@ -4,7 +4,7 @@ import { z } from "zod";
 import { stripe } from "../lib/stripe";
 import { db } from "@/db";
 import { OrderStatus, Prisma } from "@prisma/client";
-import { absoluteUrl } from "@/lib/utils";
+import { absoluteUrl, getPriceSum } from "@/lib/utils";
 
 export const orderRouter = router({
   createSession: privateProcedure
@@ -47,12 +47,7 @@ export const orderRouter = router({
           CoursesInOrder: {
             connect: courseIds.map((id) => ({ id })),
           },
-          total: new Prisma.Decimal(
-            filteredCourses.reduce(
-              (acc, curr) => acc.add(new Prisma.Decimal(curr.price)),
-              new Prisma.Decimal(0)
-            )
-          ),
+          total: getPriceSum(filteredCourses.map((prod) => prod.price)),
           currency: "PLN",
           status: OrderStatus.CREATED,
         },
