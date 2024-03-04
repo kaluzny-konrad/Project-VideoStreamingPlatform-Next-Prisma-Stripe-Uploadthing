@@ -1,3 +1,4 @@
+import CreatorCourseChapters from "@/components/CreatorCourseChapters";
 import CreatorCourseInfo from "@/components/CreatorCourseInfo";
 import CreatorCourseVideos from "@/components/CreatorCourseVideos";
 import UploadVideoZone from "@/components/UploadVideoZone";
@@ -30,6 +31,9 @@ export default function page({ params }: Props) {
 
       <h2 className="mb-4 mt-8 font-bold text-slate-600">List of videos</h2>
       <CreatorCourseVideos courseId={courseId} />
+
+      <h2 className="mb-4 mt-8 font-bold text-slate-600">Course Chapters</h2>
+      <CreatorCourseChapters courseId={courseId} />
 
       <h2 className="mb-4 mt-8 font-bold text-slate-600">Upload video</h2>
       <UploadVideoZone courseId={courseId} />

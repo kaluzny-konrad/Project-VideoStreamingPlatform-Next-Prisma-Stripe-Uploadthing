@@ -66,7 +66,7 @@ enum Role {
 }
 
 model Course {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String
   price       Decimal @db.Decimal(12, 2)
@@ -80,6 +80,8 @@ model Course {
   VideosIncluded   Video[]
   UsersOwnedCourse User[]
 
+  ChaptersState ChaptersState?
+
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
@@ -88,7 +90,7 @@ model Course {
 
 model Order {
   id        String      @id @default(cuid())
-  total     Decimal @db.Decimal(12, 2)
+  total     Decimal     @db.Decimal(12, 2)
   currency  String
   status    OrderStatus
   createdAt DateTime    @default(now())
@@ -133,4 +135,38 @@ model Category {
   slug String @unique
 
   CoursesInCategory Course[]
+}
+
+model ChaptersState {
+  id       String @id @default(cuid())
+  courseId String @unique
+
+  Chapters    Chapter[]
+  SubChapters SubChapter[]
+
+  chapterIdsOrder String[]
+
+  Course Course @relation(fields: [courseId], references: [id])
+}
+
+model Chapter {
+  id   String @id @default(cuid())
+  name String
+
+  SubChapterIdsOrder String[]
+
+  ChaptersState   ChaptersState @relation(fields: [chaptersStateId], references: [id])
+  chaptersStateId String
+
+  @@index([chaptersStateId])
+}
+
+model SubChapter {
+  id   String @id @default(cuid())
+  name String
+
+  ChaptersState   ChaptersState @relation(fields: [chaptersStateId], references: [id])
+  chaptersStateId String
+
+  @@index([chaptersStateId])
 }
