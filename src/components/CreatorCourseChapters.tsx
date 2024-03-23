@@ -174,6 +174,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                       chapter={chapter}
                       chapterIndex={chapterIndex}
                       subChapters={subChapters}
+                      chaptersStateId={state.id}
                     />
                   );
                 })}

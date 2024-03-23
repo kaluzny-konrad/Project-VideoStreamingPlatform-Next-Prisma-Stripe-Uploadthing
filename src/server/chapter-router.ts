@@ -36,7 +36,7 @@ export const chapterRouter = router({
       return chaptersState;
     }),
 
-  createChapterState: privateProcedure
+  createChaptersState: privateProcedure
     .input(CreateChaptersStateValidator)
     .mutation(async ({ input }) => {
       const chaptersState = await db.chaptersState.create({

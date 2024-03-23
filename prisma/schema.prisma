@@ -80,12 +80,14 @@ model Course {
   VideosIncluded   Video[]
   UsersOwnedCourse User[]
 
-  ChaptersState ChaptersState?
+  ChaptersState   ChaptersState?
+  chaptersStateId String
 
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
   @@index([categoryId])
+  @@index([chaptersStateId])
 }
 
 model Order {
@@ -138,15 +140,15 @@ model Category {
 }
 
 model ChaptersState {
-  id       String @id @default(cuid())
-  courseId String @unique
+  id String @id @default(cuid())
 
   Chapters    Chapter[]
   SubChapters SubChapter[]
 
   chapterIdsOrder String[]
 
-  Course Course @relation(fields: [courseId], references: [id])
+  Course   Course @relation(fields: [courseId], references: [id])
+  courseId String @unique
 }
 
 model Chapter {

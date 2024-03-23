@@ -4,17 +4,20 @@ import React from "react";
 import CreatorCourseChaptersDndListSubChapter from "./CreatorCourseChaptersDndListSubChapter";
 import { ChapterActionTypes } from "./CreatorCourseChapters";
 import { cn } from "@/lib/utils";
+import CreateSubChapterButton from "./CreateSubChapterButton";
 
 type Props = {
   chapter: Chapter;
   chapterIndex: number;
   subChapters: SubChapter[];
+  chaptersStateId: string;
 };
 
 export default function CreatorCourseChaptersDndListChapter({
   chapter,
   chapterIndex,
   subChapters,
+  chaptersStateId,
 }: Props) {
   return (
     <Draggable key={chapter.id} draggableId={chapter.id} index={chapterIndex}>
@@ -48,6 +51,8 @@ export default function CreatorCourseChaptersDndListChapter({
                   <p>{` - isDraggingOver: ${snapshotDroppableSubChapter.isDraggingOver} `}</p>
                   <p>{` - draggingOverWith: ${snapshotDroppableSubChapter.draggingOverWith} `}</p>
                 </div>
+
+                <CreateSubChapterButton chaptersStateId={chaptersStateId} chapterId={chapter.id} />
 
                 {subChapters.map((subChapter, subChapterIndex) => (
                   <CreatorCourseChaptersDndListSubChapter

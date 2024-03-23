@@ -194,7 +194,7 @@ export const courseRouter = router({
       const { user } = ctx;
 
       const price = new Prisma.Decimal(input.price);
-      const prismaPrice = parseFloat(input.price.replace(',', '.')) * 100;
+      const prismaPrice = parseFloat(input.price.replace(",", ".")) * 100;
 
       const stripeProduct = await stripe.products.create({
         name: name,
@@ -214,6 +214,22 @@ export const courseRouter = router({
           stripeProductId: stripeProduct.id,
           creatorId: user.id,
           categoryId,
+          chaptersStateId: "",
+        },
+      });
+
+      const chaptersState = await db.chaptersState.create({
+        data: {
+          courseId: course.id,
+        },
+      });
+
+      await db.course.update({
+        where: {
+          id: course.id,
+        },
+        data: {
+          chaptersStateId: chaptersState.id,
         },
       });
 
@@ -227,7 +243,7 @@ export const courseRouter = router({
       const { user } = ctx;
 
       const newPrice = new Prisma.Decimal(input.price);
-      const newPrismaPrice = parseFloat(input.price.replace(',', '.')) * 100;
+      const newPrismaPrice = parseFloat(input.price.replace(",", ".")) * 100;
 
       console.log("price", newPrice);
 
@@ -249,7 +265,8 @@ export const courseRouter = router({
       });
 
       let defaultPrice = previousStripePrices.data.find(
-        (price) => price.unit_amount === newPrismaPrice && price.currency === "pln"
+        (price) =>
+          price.unit_amount === newPrismaPrice && price.currency === "pln"
       );
 
       if (!defaultPrice) {
