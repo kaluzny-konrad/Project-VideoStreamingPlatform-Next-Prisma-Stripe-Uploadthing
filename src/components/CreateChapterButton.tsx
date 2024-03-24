@@ -1,42 +1,35 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { CreateChapterRequest } from "@/lib/validators/chapter";
+import { Chapter } from "@prisma/client";
 
 type Props = {
-  courseId: string;
+  chaptersStateId: string;
+  pushChapterToChaptersState: (Chapter: Chapter) => void;
 };
 
-export default function CreateChapterButton({ courseId }: Props) {
-  const router = useRouter();
-
-  const { data: chaptersState, isLoading: chaptersStateLoading } =
-    trpc.chapter.getChaptersState.useQuery({
-      courseId,
-    });
-
+export default function CreateChapterButton({
+  chaptersStateId,
+  pushChapterToChaptersState,
+}: Props) {
   const { mutate: createChapter } = trpc.chapter.createChapter.useMutation({
     onSuccess: (res) => {
       toast.success("Chapter added to course");
-      router.refresh();
+      pushChapterToChaptersState(res);
     },
   });
 
-  async function onClick() {
+  async function handleCreateChapter() {
     const data: CreateChapterRequest = {
-      chaptersStateId: chaptersState?.id ?? "",
+      chaptersStateId: chaptersStateId,
       name: "New Chapter",
     };
     console.log(data);
     createChapter(data);
   }
 
-  return (
-    <Button onClick={onClick} disabled={chaptersStateLoading}>
-      Add Chapter
-    </Button>
-  );
+  return <Button className="w-full mt-4" onClick={handleCreateChapter}>Add Chapter</Button>;
 }

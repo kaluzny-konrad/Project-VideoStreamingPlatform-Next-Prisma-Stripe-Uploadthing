@@ -23,6 +23,7 @@ export const CreateSubChapterValidator = z.object({
     .string()
     .min(3, { message: "Subchapter name must be minimum 3 characters long" })
     .max(128, { message: "Subchapter name must be at least 128 characters" }),
+  chapterId: z.string(),
 });
 
 export const UpdateChapterValidator = z.object({

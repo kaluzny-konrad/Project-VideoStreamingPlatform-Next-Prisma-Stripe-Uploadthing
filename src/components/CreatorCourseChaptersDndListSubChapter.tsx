@@ -2,15 +2,18 @@ import { cn } from "@/lib/utils";
 import { Draggable } from "@hello-pangea/dnd";
 import { SubChapter } from "@prisma/client";
 import React from "react";
+import DeleteSubChapterButton from "./DeleteSubChapterButton";
 
 type Props = {
   subChapter: SubChapter;
   subChapterIndex: number;
+  deleteSubChapterFromChaptersState: (subChapterId: string) => void;
 };
 
 export default function CreatorCourseChaptersDndListSubChapter({
   subChapter,
   subChapterIndex,
+  deleteSubChapterFromChaptersState,
 }: Props) {
   return (
     <Draggable
@@ -33,6 +36,11 @@ export default function CreatorCourseChaptersDndListSubChapter({
           {` - index: ${subChapterIndex} `}
           {` - isDragging: ${snapshotDraggableSubChapter.isDragging} `}
           {` - draggingOver: ${snapshotDraggableSubChapter.draggingOver} `}
+          <DeleteSubChapterButton
+            subChapterId={subChapter.id}
+            deleteSubChapterFromChaptersState={deleteSubChapterFromChaptersState}
+            disabled={snapshotDraggableSubChapter.isDragging}
+          />
         </div>
       )}
     </Draggable>

@@ -4,6 +4,7 @@ import { z } from "zod";
 import {
   CreateChapterValidator,
   CreateChaptersStateValidator,
+  CreateSubChapterValidator,
   DeleteChapterValidator,
   DeleteSubChapterValidator,
   UpdateChapterIdsOrderValidator,
@@ -67,18 +68,68 @@ export const chapterRouter = router({
   createChapter: privateProcedure
     .input(CreateChapterValidator)
     .mutation(async ({ input }) => {
+      const { chaptersStateId, name } = input;
       const chapter = await db.chapter.create({
-        data: input,
+        data: {
+          chaptersStateId,
+          name,
+        },
       });
+
+      const chaptersState = await db.chaptersState.update({
+        data: {
+          Chapters: {
+            connect: {
+              id: chapter.id,
+            },
+          },
+          ChapterIdsOrder: {
+            push: chapter.id,
+          },
+        },
+        where: {
+          id: chaptersStateId,
+        },
+      });
+
       return chapter;
     }),
 
   createSubChapter: privateProcedure
-    .input(CreateChapterValidator)
+    .input(CreateSubChapterValidator)
     .mutation(async ({ input }) => {
+      const { chaptersStateId, name, chapterId } = input;
       const subChapter = await db.subChapter.create({
-        data: input,
+        data: {
+          chaptersStateId,
+          name,
+        },
       });
+
+      await db.chaptersState.update({
+        data: {
+          SubChapters: {
+            connect: {
+              id: subChapter.id,
+            },
+          },
+        },
+        where: {
+          id: chaptersStateId,
+        },
+      });
+
+      await db.chapter.update({
+        data: {
+          SubChapterIdsOrder: {
+            push: subChapter.id,
+          },
+        },
+        where: {
+          id: chapterId,
+        },
+      });
+
       return subChapter;
     }),
 
@@ -128,11 +179,42 @@ export const chapterRouter = router({
   deleteChapter: privateProcedure
     .input(DeleteChapterValidator)
     .mutation(async ({ input }) => {
+      const { id } = input;
+
       const chapter = await db.chapter.delete({
         where: {
-          id: input.id,
+          id: id,
         },
       });
+
+      const chaptersState = await db.chaptersState.findFirst({
+        where: {
+          id: chapter.chaptersStateId,
+        },
+        select: {
+          ChapterIdsOrder: true,
+        },
+      });
+
+      if (!chaptersState) {
+        throw new Error("No chapters state");
+      }
+
+      const newChapterIdsOrder = chaptersState.ChapterIdsOrder.filter(
+        (chapterId) => chapterId !== id
+      );
+
+      await db.chaptersState.update({
+        data: {
+          ChapterIdsOrder: {
+            set: newChapterIdsOrder,
+          },
+        },
+        where: {
+          id: chapter.chaptersStateId,
+        },
+      });
+
       return chapter;
     }),
 

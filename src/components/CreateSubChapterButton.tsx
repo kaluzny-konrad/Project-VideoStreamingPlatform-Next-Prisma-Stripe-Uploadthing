@@ -1,41 +1,42 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import { CreateChapterRequest, CreateSubChapterRequest } from "@/lib/validators/chapter";
+import { CreateSubChapterRequest } from "@/lib/validators/chapter";
+import { SubChapter } from "@prisma/client";
 
 type Props = {
   chaptersStateId: string;
   chapterId: string;
+  pushSubChapterToChaptersState: (
+    SubChapter: SubChapter,
+    chapterId: string
+  ) => void;
 };
 
 export default function CreateSubChapterButton({
   chaptersStateId,
   chapterId,
+  pushSubChapterToChaptersState,
 }: Props) {
-  const router = useRouter();
+  const { mutate: createSubChapter } =
+    trpc.chapter.createSubChapter.useMutation({
+      onSuccess: (res) => {
+        toast.success("SubChapter added to course");
+        pushSubChapterToChaptersState(res, chapterId);
+      },
+    });
 
-  const { mutate: createSubChapter } = trpc.chapter.createSubChapter.useMutation({
-    onSuccess: (res) => {
-      toast.success("SubChapter added to course");
-      router.refresh();
-    },
-  });
-
-  async function onClick() {
+  async function handleCreateSubChapter() {
     const data: CreateSubChapterRequest = {
       chaptersStateId: chaptersStateId,
       name: "New Sub Chapter",
+      chapterId: chapterId,
     };
     console.log(data);
     createSubChapter(data);
   }
 
-  return (
-    <Button onClick={onClick}>
-      Add Chapter
-    </Button>
-  );
+  return <Button onClick={handleCreateSubChapter}>Add SubChapter</Button>;
 }

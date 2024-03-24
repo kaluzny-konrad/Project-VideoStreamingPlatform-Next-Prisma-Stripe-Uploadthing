@@ -145,7 +145,7 @@ model ChaptersState {
   Chapters    Chapter[]
   SubChapters SubChapter[]
 
-  chapterIdsOrder String[]
+  ChapterIdsOrder String[]
 
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String @unique

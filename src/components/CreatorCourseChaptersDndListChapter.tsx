@@ -5,12 +5,20 @@ import CreatorCourseChaptersDndListSubChapter from "./CreatorCourseChaptersDndLi
 import { ChapterActionTypes } from "./CreatorCourseChapters";
 import { cn } from "@/lib/utils";
 import CreateSubChapterButton from "./CreateSubChapterButton";
+import { Button } from "./ui/button";
+import DeleteChapterButton from "./DeleteChapterButton";
 
 type Props = {
   chapter: Chapter;
   chapterIndex: number;
   subChapters: SubChapter[];
   chaptersStateId: string;
+  pushSubChapterToChaptersState: (
+    subChapter: SubChapter,
+    chapterId: string
+  ) => void;
+  deleteChapterFromChaptersState: (chapterId: string) => void;
+  deleteSubChapterFromChaptersState: (subChapterId: string) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({
@@ -18,6 +26,9 @@ export default function CreatorCourseChaptersDndListChapter({
   chapterIndex,
   subChapters,
   chaptersStateId,
+  pushSubChapterToChaptersState,
+  deleteChapterFromChaptersState,
+  deleteSubChapterFromChaptersState
 }: Props) {
   return (
     <Draggable key={chapter.id} draggableId={chapter.id} index={chapterIndex}>
@@ -52,13 +63,26 @@ export default function CreatorCourseChaptersDndListChapter({
                   <p>{` - draggingOverWith: ${snapshotDroppableSubChapter.draggingOverWith} `}</p>
                 </div>
 
-                <CreateSubChapterButton chaptersStateId={chaptersStateId} chapterId={chapter.id} />
+                <CreateSubChapterButton
+                  chaptersStateId={chaptersStateId}
+                  chapterId={chapter.id}
+                  pushSubChapterToChaptersState={pushSubChapterToChaptersState}
+                />
+
+                <DeleteChapterButton
+                  chapterId={chapter.id}
+                  deleteChapterFromChaptersState={
+                    deleteChapterFromChaptersState
+                  }
+                  disabled={subChapters.length > 0}
+                />
 
                 {subChapters.map((subChapter, subChapterIndex) => (
                   <CreatorCourseChaptersDndListSubChapter
                     subChapter={subChapter}
                     subChapterIndex={subChapterIndex}
                     key={subChapter.id}
+                    deleteSubChapterFromChaptersState={deleteSubChapterFromChaptersState}
                   />
                 ))}
 
