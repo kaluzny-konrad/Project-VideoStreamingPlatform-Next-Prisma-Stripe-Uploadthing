@@ -3,6 +3,7 @@ import { z } from "zod";
 export const AddVideoValidator = z.object({
   courseId: z.string().min(1, { message: "You need to provide a course id" }),
   videoId: z.string().min(1, { message: "You need to provide a video id" }),
+  subChapterId: z.string().min(1, { message: "You need to provide a subchapter id" }),
 });
 
 export const DeleteVideoValidator = z.object({

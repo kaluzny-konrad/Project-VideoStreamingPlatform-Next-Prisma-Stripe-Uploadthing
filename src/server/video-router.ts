@@ -85,7 +85,7 @@ export const videoRouter = router({
   addVideoToCourse: privateProcedure
     .input(AddVideoValidator)
     .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId } = input;
+      const { courseId, videoId, subChapterId } = input;
       const { user } = ctx;
 
       const course = await db.course.findUnique({
@@ -114,7 +114,20 @@ export const videoRouter = router({
         });
       }
 
-      const updatedCourse = await db.course.update({
+      await db.subChapter.update({
+        where: {
+          id: subChapterId,
+        },
+        data: {
+          Video: {
+            connect: {
+              id: videoId,
+            },
+          },
+        },
+      });
+
+      await db.course.update({
         where: {
           id: courseId,
         },
@@ -127,7 +140,7 @@ export const videoRouter = router({
         },
       });
 
-      return updatedCourse;
+      return video;
     }),
 
   deleteVideoFromCourse: privateProcedure

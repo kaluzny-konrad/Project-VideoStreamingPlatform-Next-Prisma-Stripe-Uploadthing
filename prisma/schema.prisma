@@ -119,9 +119,12 @@ model Video {
   fileName  String
   url       String
 
+  SubChapter   SubChapter @relation(fields: [subChapterId], references: [id])
+  subChapterId String @unique
+  @@index([subChapterId])
+
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String
-
   @@index([courseId])
 }
 
@@ -169,6 +172,8 @@ model SubChapter {
 
   ChaptersState   ChaptersState @relation(fields: [chaptersStateId], references: [id])
   chaptersStateId String
+  
+  Video           Video?
 
   @@index([chaptersStateId])
 }

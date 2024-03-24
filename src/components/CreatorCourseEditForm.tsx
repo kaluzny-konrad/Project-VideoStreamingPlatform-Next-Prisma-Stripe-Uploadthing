@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import UploadImageZone from "./UploadImageZone";
+import { Button } from "./ui/button";
+import UploadVideoZone from "./UploadVideoZone";
 
 type Props = {
   courseId: string;
@@ -135,7 +137,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
         </div>
 
         <div>
-          <button type="submit">Save course</button>
+          <Button type="submit">Save course</Button>
         </div>
       </form>
     </div>

@@ -32,6 +32,7 @@ const onVideoUploadComplete = async ({
         url: file.url,
         courseId: "",
         videoName: file.name,
+        subChapterId: "",
       },
     });
 

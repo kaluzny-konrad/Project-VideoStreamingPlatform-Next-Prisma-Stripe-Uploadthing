@@ -5,11 +5,11 @@ import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  courseId: string;
   videoId: string;
+  courseId: string;
 };
 
-export default function CreatorDeleteVideoButton({ courseId, videoId }: Props) {
+export default function CreatorDeleteVideoButton({ videoId, courseId }: Props) {
   const router = useRouter();
 
   const { mutate: deleteVideo } = trpc.video.deleteVideoFromCourse.useMutation(
@@ -26,11 +26,10 @@ export default function CreatorDeleteVideoButton({ courseId, videoId }: Props) {
 
   const handleDeleteVideo = (videoId: string) => async () => {
     console.log("Deleting video", videoId);
-    console.log("Course id", courseId);
 
     deleteVideo({
-      courseId,
       videoId,
+      courseId
     });
   };
 
