@@ -1,3 +1,5 @@
+"use client";
+
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { Chapter, SubChapter } from "@prisma/client";
 import React from "react";
@@ -7,8 +9,11 @@ import { cn } from "@/lib/utils";
 import CreateSubChapterButton from "./CreateSubChapterButton";
 import { Button } from "./ui/button";
 import DeleteChapterButton from "./DeleteChapterButton";
+import { trpc } from "@/server/client";
+import { Edit2Icon } from "lucide-react";
 
 type Props = {
+  courseId: string;
   chapter: Chapter;
   chapterIndex: number;
   subChapters: SubChapter[];
@@ -19,17 +24,36 @@ type Props = {
   ) => void;
   deleteChapterFromChaptersState: (chapterId: string) => void;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
+  editChapterName: (chapterId: string, chapterName: string) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({
+  courseId,
   chapter,
   chapterIndex,
   subChapters,
   chaptersStateId,
   pushSubChapterToChaptersState,
   deleteChapterFromChaptersState,
-  deleteSubChapterFromChaptersState
+  deleteSubChapterFromChaptersState,
+  editChapterName,
 }: Props) {
+  const { mutate: updateChapterName } = trpc.chapter.updateChapter.useMutation({
+    onSuccess: (res) => {
+      editChapterName(chapter.id, res.name);
+    },
+  });
+
+  async function handleEditChapterName() {
+    const newChapterName = prompt("Enter new chapter name", chapter.name);
+    if (newChapterName) {
+      updateChapterName({
+        id: chapter.id,
+        name: newChapterName,
+      });
+    }
+  }
+
   return (
     <Draggable key={chapter.id} draggableId={chapter.id} index={chapterIndex}>
       {(providedDraggableChapter, snapshotDraggableChapter) => (
@@ -43,6 +67,14 @@ export default function CreatorCourseChaptersDndListChapter({
             {...providedDraggableChapter.dragHandleProps}
           >
             {chapter.name}
+            <Button
+              onClick={handleEditChapterName}
+              className="ml-2"
+              variant="outline"
+              size="icon"
+            >
+              <Edit2Icon size={16} />
+            </Button>
           </h3>
           <Droppable
             droppableId={chapter.id}
@@ -57,36 +89,37 @@ export default function CreatorCourseChaptersDndListChapter({
                   snapshotDroppableSubChapter.isDraggingOver && "bg-yellow-50"
                 )}
               >
-                <div className="flex gap-2">
-                  <p>{`Snapshot: ${chapter.name} `}</p>
-                  <p>{` - isDraggingOver: ${snapshotDroppableSubChapter.isDraggingOver} `}</p>
-                  <p>{` - draggingOverWith: ${snapshotDroppableSubChapter.draggingOverWith} `}</p>
-                </div>
-
-                <CreateSubChapterButton
-                  chaptersStateId={chaptersStateId}
-                  chapterId={chapter.id}
-                  pushSubChapterToChaptersState={pushSubChapterToChaptersState}
-                />
-
-                <DeleteChapterButton
-                  chapterId={chapter.id}
-                  deleteChapterFromChaptersState={
-                    deleteChapterFromChaptersState
-                  }
-                  disabled={subChapters.length > 0}
-                />
-
                 {subChapters.map((subChapter, subChapterIndex) => (
                   <CreatorCourseChaptersDndListSubChapter
                     subChapter={subChapter}
                     subChapterIndex={subChapterIndex}
                     key={subChapter.id}
-                    deleteSubChapterFromChaptersState={deleteSubChapterFromChaptersState}
+                    deleteSubChapterFromChaptersState={
+                      deleteSubChapterFromChaptersState
+                    }
+                    courseId={courseId}
                   />
                 ))}
 
                 {providedDroppableSubChapter.placeholder}
+
+                <div className="flex">
+                  <CreateSubChapterButton
+                    chaptersStateId={chaptersStateId}
+                    chapterId={chapter.id}
+                    pushSubChapterToChaptersState={
+                      pushSubChapterToChaptersState
+                    }
+                  />
+
+                  <DeleteChapterButton
+                    chapterId={chapter.id}
+                    deleteChapterFromChaptersState={
+                      deleteChapterFromChaptersState
+                    }
+                    disabled={subChapters.length > 0}
+                  />
+                </div>
               </div>
             )}
           </Droppable>

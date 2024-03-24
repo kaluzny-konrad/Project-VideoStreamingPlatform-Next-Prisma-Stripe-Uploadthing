@@ -4,6 +4,7 @@ import { DeleteSubChapterRequest } from "@/lib/validators/chapter";
 import { trpc } from "@/server/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import { Trash2Icon } from "lucide-react";
 
 type Props = {
   subChapterId: string;
@@ -37,8 +38,9 @@ export default function DeleteSubChapterButton({
       variant={disabled ? "ghost" : "destructive"}
       className="mt-2"
       disabled={disabled}
+      size={"icon"}
     >
-      Delete SubChapter
+      <Trash2Icon size={16} />
     </Button>
   );
 }

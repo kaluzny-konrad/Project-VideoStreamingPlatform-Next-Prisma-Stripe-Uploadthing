@@ -7,6 +7,7 @@ import {
   CreateSubChapterValidator,
   DeleteChapterValidator,
   DeleteSubChapterValidator,
+  MoveSubChapterValidator,
   UpdateChapterIdsOrderValidator,
   UpdateChapterValidator,
   UpdateSubChapterIdsOrderValidator,
@@ -49,19 +50,17 @@ export const chapterRouter = router({
   updateChapterIdsOrder: privateProcedure
     .input(UpdateChapterIdsOrderValidator)
     .mutation(async ({ input }) => {
+      const { chaptersStateId, chaptersIdsOrder } = input;
+
       const chaptersState = await db.chaptersState.update({
         data: {
-          Chapters: {
-            set: input.chaptersIdsOrder.map((id, index) => ({
-              id,
-              order: index,
-            })),
-          },
+          ChapterIdsOrder: chaptersIdsOrder
         },
         where: {
-          id: input.chaptersStateId,
+          id: chaptersStateId,
         },
       });
+
       return chaptersState;
     }),
 
@@ -145,23 +144,66 @@ export const chapterRouter = router({
       return chapter;
     }),
 
-  updateSubCharterIdsOrder: privateProcedure
+  updateSubChapterIdsOrder: privateProcedure
     .input(UpdateSubChapterIdsOrderValidator)
     .mutation(async ({ input }) => {
-      const chaptersState = await db.chaptersState.update({
+      const { chapterId, subChaptersIdsOrder } = input;
+
+      const chapter = await db.chapter.update({
         data: {
-          SubChapters: {
-            set: input.subChaptersIdsOrder.map((id, index) => ({
-              id,
-              order: index,
-            })),
+          SubChapterIdsOrder: subChaptersIdsOrder,
+        },
+        where: {
+          id: chapterId,
+        },
+      });
+
+      return chapter;
+    }),
+
+  moveSubChapter: privateProcedure
+    .input(MoveSubChapterValidator)
+    .mutation(async ({ input }) => {
+      const { moveSubChapterId, removeChapterId, addChapterId, addChapterIdsOrder } = input;
+
+      const removeChapterBefore = await db.chapter.findFirst({
+        where: {
+          id: removeChapterId,
+        },
+        select: {
+          SubChapterIdsOrder: true,
+        },
+      });
+
+      if (!removeChapterBefore) {
+        throw new Error("No chapter found");
+      }
+
+      const removeChapterIdsOrder = removeChapterBefore?.SubChapterIdsOrder.filter(
+        (subChapterId) => subChapterId !== moveSubChapterId
+      );
+
+      await db.chapter.update({
+        data: {
+          SubChapterIdsOrder: removeChapterIdsOrder
+        },
+        where: {
+          id: removeChapterId,
+        },
+      });
+
+      const addChapter = await db.chapter.update({
+        data: {
+          SubChapterIdsOrder: {
+            set: addChapterIdsOrder,
           },
         },
         where: {
-          id: input.chaptersStateId,
+          id: addChapterId,
         },
       });
-      return chaptersState;
+
+      return addChapter;
     }),
 
   updateSubChapter: privateProcedure

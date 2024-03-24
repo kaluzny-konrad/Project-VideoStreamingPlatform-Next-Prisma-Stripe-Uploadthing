@@ -14,6 +14,11 @@ import { Chapter, ChaptersState, SubChapter } from "@prisma/client";
 import { ChaptersFullState } from "@/types/chapter";
 import CreatorCourseChaptersDndListChapter from "./CreatorCourseChaptersDndListChapter";
 import CreateChapterButton from "./CreateChapterButton";
+import {
+  MoveSubChapterRequest,
+  UpdateSubChapterIdsOrderRequest,
+  UpdateSubChapterRequest,
+} from "@/lib/validators/chapter";
 
 type Props = {
   courseId: string;
@@ -41,6 +46,26 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       setChaptersState(chaptersInitialState);
     }
   }, [chaptersInitialState]);
+
+  const { mutate: updateChapterIdsOrder } =
+    trpc.chapter.updateChapterIdsOrder.useMutation({
+      onSuccess: (res) => {
+        console.log(res);
+      },
+    });
+
+  const { mutate: updateSubChapterIdsOrder } =
+    trpc.chapter.updateSubChapterIdsOrder.useMutation({
+      onSuccess: (res) => {
+        console.log(res);
+      },
+    });
+
+  const { mutate: moveSubChapter } = trpc.chapter.moveSubChapter.useMutation({
+    onSuccess: (res) => {
+      console.log(res);
+    },
+  });
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     const { destination, source, draggableId, type } = result;
@@ -71,65 +96,96 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       };
 
       setChaptersState(newChaptersState);
+      updateChapterIdsOrder({
+        chaptersStateId: chaptersState.id,
+        chaptersIdsOrder: newChapterIdsOrder,
+      });
       return;
-    }
+    } else if (type === ChapterActionTypes.MOVE_SUB_CHAPTER) {
+      const startChapter = chaptersState.Chapters.find(
+        (chapter) => chapter.id === source.droppableId
+      );
 
-    const startChapter = chaptersState.Chapters.find(
-      (chapter) => chapter.id === source.droppableId
-    );
+      const finishChapter = chaptersState.Chapters.find(
+        (chapter) => chapter.id === destination.droppableId
+      );
 
-    const finishChapter = chaptersState.Chapters.find(
-      (chapter) => chapter.id === destination.droppableId
-    );
+      if (!startChapter || !finishChapter) {
+        return;
+      }
 
-    if (!startChapter || !finishChapter) {
-      return;
-    }
+      const newSubChapterIdsOrder = Array.from(startChapter.SubChapterIdsOrder);
+      newSubChapterIdsOrder.splice(source.index, 1);
 
-    const newSubChapterIdsOrder = Array.from(startChapter.SubChapterIdsOrder);
-    newSubChapterIdsOrder.splice(source.index, 1);
+      if (startChapter === finishChapter) {
+        newSubChapterIdsOrder.splice(destination.index, 0, draggableId);
 
-    if (startChapter === finishChapter) {
-      newSubChapterIdsOrder.splice(destination.index, 0, draggableId);
+        const newChapter: Chapter = {
+          ...startChapter,
+          SubChapterIdsOrder: newSubChapterIdsOrder,
+        };
 
-      const newChapter: Chapter = {
-        ...startChapter,
-        SubChapterIdsOrder: newSubChapterIdsOrder,
-      };
+        const newChapters = chaptersState.Chapters.map((chapter) => {
+          if (chapter.id === startChapter.id) {
+            return newChapter;
+          }
 
-      const newState: ChaptersFullState = {
-        ...chaptersState,
-        Chapters: {
-          ...chaptersState.Chapters,
-          [newChapter.id]: newChapter,
-        },
-      };
+          return chapter;
+        });
 
-      setChaptersState(newState);
-    } else {
-      const newStartChapter: Chapter = {
-        ...startChapter,
-        SubChapterIdsOrder: newSubChapterIdsOrder,
-      };
+        const newState: ChaptersFullState = {
+          ...chaptersState,
+          Chapters: newChapters,
+        };
 
-      const finishSubChapterIds = Array.from(finishChapter.SubChapterIdsOrder);
-      finishSubChapterIds.splice(destination.index, 0, draggableId);
+        console.log(newState);
 
-      const newFinishChapter: Chapter = {
-        ...finishChapter,
-        SubChapterIdsOrder: finishSubChapterIds,
-      };
+        setChaptersState(newState);
+        const updateData: UpdateSubChapterIdsOrderRequest = {
+          chapterId: startChapter.id,
+          subChaptersIdsOrder: newSubChapterIdsOrder,
+        };
+        updateSubChapterIdsOrder(updateData);
+      } else {
+        const newStartChapter: Chapter = {
+          ...startChapter,
+          SubChapterIdsOrder: newSubChapterIdsOrder,
+        };
 
-      const newState: ChaptersFullState = {
-        ...chaptersState,
-        Chapters: {
-          ...chaptersState.Chapters,
-          [newStartChapter.id]: newStartChapter,
-          [newFinishChapter.id]: newFinishChapter,
-        },
-      };
+        const finishSubChapterIds = Array.from(
+          finishChapter.SubChapterIdsOrder
+        );
+        finishSubChapterIds.splice(destination.index, 0, draggableId);
 
-      setChaptersState(newState);
+        const newFinishChapter: Chapter = {
+          ...finishChapter,
+          SubChapterIdsOrder: finishSubChapterIds,
+        };
+
+        const newChapters = chaptersState.Chapters.map((chapter) => {
+          if (chapter.id === startChapter.id) {
+            return newStartChapter;
+          } else if (chapter.id === finishChapter.id) {
+            return newFinishChapter;
+          }
+
+          return chapter;
+        });
+
+        const newState: ChaptersFullState = {
+          ...chaptersState,
+          Chapters: newChapters,
+        };
+
+        setChaptersState(newState);
+        const moveData: MoveSubChapterRequest = {
+          moveSubChapterId: draggableId,
+          removeChapterId: startChapter.id,
+          addChapterId: finishChapter.id,
+          addChapterIdsOrder: finishSubChapterIds,
+        };
+        moveSubChapter(moveData);
+      }
     }
   };
 
@@ -229,6 +285,29 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
+  const editChapterName = (chapterId: string, chapterName: string) => {
+    if (!chaptersState) {
+      console.error("No chapters state");
+      return;
+    }
+
+    const newChaptersState: ChaptersFullState = {
+      ...chaptersState,
+      Chapters: chaptersState.Chapters.map((chapter) => {
+        if (chapter.id === chapterId) {
+          return {
+            ...chapter,
+            name: chapterName,
+          };
+        }
+
+        return chapter;
+      }),
+    };
+
+    setChaptersState(newChaptersState);
+  };
+
   return (
     <>
       {chaptersState && (
@@ -263,6 +342,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                       return (
                         <CreatorCourseChaptersDndListChapter
                           key={chapter.id}
+                          courseId={courseId}
                           chapter={chapter}
                           chapterIndex={chapterIndex}
                           subChapters={subChapters}
@@ -276,6 +356,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                           deleteSubChapterFromChaptersState={
                             deleteSubChapterFromChaptersState
                           }
+                          editChapterName={editChapterName}
                         />
                       );
                     }

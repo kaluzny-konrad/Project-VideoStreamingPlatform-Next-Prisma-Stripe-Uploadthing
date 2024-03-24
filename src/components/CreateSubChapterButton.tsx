@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { CreateSubChapterRequest } from "@/lib/validators/chapter";
 import { SubChapter } from "@prisma/client";
+import { PlusIcon } from "lucide-react";
 
 type Props = {
   chaptersStateId: string;
@@ -38,5 +39,9 @@ export default function CreateSubChapterButton({
     createSubChapter(data);
   }
 
-  return <Button onClick={handleCreateSubChapter}>Add SubChapter</Button>;
+  return (
+    <Button onClick={handleCreateSubChapter} size={"icon"}>
+      <PlusIcon size={16} />
+    </Button>
+  );
 }

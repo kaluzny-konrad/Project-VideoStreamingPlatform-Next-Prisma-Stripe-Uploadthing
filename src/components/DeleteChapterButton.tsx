@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { trpc } from "@/server/client";
 import { DeleteChapterRequest } from "@/lib/validators/chapter";
 import { toast } from "sonner";
+import { Trash2Icon } from "lucide-react";
 
 type Props = {
   chapterId: string;
@@ -35,8 +36,9 @@ export default function DeleteChapterButton({
       variant={disabled ? "ghost" : "destructive"}
       className="mt-2"
       disabled={disabled}
+      size={"icon"}
     >
-      Delete Chapter
+      <Trash2Icon size={16} />
     </Button>
   );
 }

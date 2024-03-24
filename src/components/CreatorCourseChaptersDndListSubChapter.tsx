@@ -1,20 +1,33 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { Draggable } from "@hello-pangea/dnd";
 import { SubChapter } from "@prisma/client";
 import React from "react";
 import DeleteSubChapterButton from "./DeleteSubChapterButton";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
 
 type Props = {
   subChapter: SubChapter;
   subChapterIndex: number;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
+  courseId: string;
 };
 
 export default function CreatorCourseChaptersDndListSubChapter({
   subChapter,
   subChapterIndex,
   deleteSubChapterFromChaptersState,
+  courseId,
 }: Props) {
+  const router = useRouter();
+  
+  const handleEditButton = () => {
+    console.log("Edit button clicked");
+    router.push(`/creator/courses/${courseId}/subchapters/${subChapter.id}`);
+  };
+
   return (
     <Draggable
       key={subChapter.id}
@@ -32,13 +45,20 @@ export default function CreatorCourseChaptersDndListSubChapter({
           {...providedDraggableSubChapter.dragHandleProps}
         >
           {`${subChapter.name}`}
-          {` - ${subChapter.id} `}
-          {` - index: ${subChapterIndex} `}
-          {` - isDragging: ${snapshotDraggableSubChapter.isDragging} `}
-          {` - draggingOver: ${snapshotDraggableSubChapter.draggingOver} `}
+
+          <Button
+            onClick={handleEditButton}
+            className="ml-auto"
+            variant="secondary"
+          >
+            Edit
+          </Button>
+
           <DeleteSubChapterButton
             subChapterId={subChapter.id}
-            deleteSubChapterFromChaptersState={deleteSubChapterFromChaptersState}
+            deleteSubChapterFromChaptersState={
+              deleteSubChapterFromChaptersState
+            }
             disabled={snapshotDraggableSubChapter.isDragging}
           />
         </div>

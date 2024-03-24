@@ -35,8 +35,15 @@ export const UpdateChapterValidator = z.object({
 });
 
 export const UpdateSubChapterIdsOrderValidator = z.object({
-  chaptersStateId: z.string(),
+  chapterId: z.string(),
   subChaptersIdsOrder: z.array(z.string()),
+});
+
+export const MoveSubChapterValidator = z.object({
+  moveSubChapterId: z.string(),
+  removeChapterId: z.string(),
+  addChapterId: z.string(),
+  addChapterIdsOrder: z.array(z.string()),
 });
 
 export const UpdateSubChapterValidator = z.object({
@@ -64,3 +71,6 @@ export type UpdateChapterRequest = z.infer<typeof UpdateChapterValidator>;
 export type UpdateSubChapterRequest = z.infer<typeof UpdateSubChapterValidator>;
 export type DeleteChapterRequest = z.infer<typeof DeleteChapterValidator>;
 export type DeleteSubChapterRequest = z.infer<typeof DeleteSubChapterValidator>;
+
+export type UpdateSubChapterIdsOrderRequest = z.infer<typeof UpdateSubChapterIdsOrderValidator>;
+export type MoveSubChapterRequest = z.infer<typeof MoveSubChapterValidator>;
