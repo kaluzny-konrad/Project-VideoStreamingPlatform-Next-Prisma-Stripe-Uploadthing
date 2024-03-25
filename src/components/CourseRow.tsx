@@ -13,11 +13,12 @@ import { cn } from "@/lib/utils";
 
 type Props = {
   course: CourseOnList;
+  redirectToWatch: boolean;
 };
 
-export default function CourseRow({ course }: Props) {
+export default function CourseRow({ course, redirectToWatch }: Props) {
   return (
-    <Link href={`/courses/${course.id}`} className="group">
+    <Link href={redirectToWatch ? `/watch/${course.id}` : `/courses/${course.id}`} className="group">
       <div className="flex border-b py-6 w-full">
         <div className="my-auto mr-4 w-1/2">
           <Image

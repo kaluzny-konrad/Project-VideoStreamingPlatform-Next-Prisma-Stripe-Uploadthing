@@ -13,6 +13,16 @@ export default async function NavDesktopLoggedItems({}: Props) {
 
   return (
     <>
+      {user.role == "USER" || user.role == "CREATOR" || user.role == "ADMIN" ? (
+        <>
+          <Link
+            href={"/watch"}
+            className={buttonVariants({ variant: "ghost" })}
+          >
+            Watch course
+          </Link>
+        </>
+      ) : null}
       {user.role == "CREATOR" || user.role == "ADMIN" ? (
         <>
           <Link

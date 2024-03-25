@@ -10,13 +10,13 @@ import { Skeleton } from "./ui/skeleton";
 
 type Props = {};
 
-export default function CoursesPublicList({}: Props) {
+export default function CoursesPrivateList({}: Props) {
   const [activeCourses, setActiveCourses] = useState<CourseOnList[]>([]);
   const {
     data: allCourses,
     isLoading,
     error,
-  } = trpc.course.getCoursesListView.useQuery();
+  } = trpc.course.getBoughtCoursesListView.useQuery();
 
   const { categoriesStateValue } = useCategories();
 
@@ -50,7 +50,7 @@ export default function CoursesPublicList({}: Props) {
       ) : (
         <>
           {activeCourses.map((course) => (
-            <CourseRow key={course.id} course={course} redirectToWatch={false} />
+            <CourseRow key={course.id} course={course} redirectToWatch={true} />
           ))}
         </>
       )}

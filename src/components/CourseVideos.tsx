@@ -37,7 +37,7 @@ export default function CourseVideos({ courseId }: Props) {
           {videos.map((video) => (
             <Link
               key={video.id}
-              href={`/course/${courseId}/${video.id}`}
+              href={`/watch/${courseId}/${video.id}`}
               className={cn(
                 buttonVariants({
                   variant: pathname.includes(video.id) ? "default" : "ghost",

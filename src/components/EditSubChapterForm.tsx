@@ -55,7 +55,7 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
     trpc.chapter.updateSubChapter.useMutation({
       onSuccess: () => {
         toast.success("SubChapter updated successfully");
-        router.push(`/creator/courses/${courseId}`);
+        router.refresh();
       },
       onError: (error) => {
         toast.error(`Something went wrong: ${error.message}`);

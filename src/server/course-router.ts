@@ -44,6 +44,52 @@ export const courseRouter = router({
     return coursesOnList;
   }),
 
+  getBoughtCoursesListView: privateProcedure.query(async ({ ctx }) => {
+    const { user } = ctx;
+
+    const userDb = await db.user.findUnique({
+      where: {
+        id: user.id,
+      },
+      include: {
+        CoursesOwnedByUser: true,
+      },
+    });
+
+    if (!userDb) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User not found",
+      });
+    }
+
+    const courses = userDb.CoursesOwnedByUser;
+
+    const images = await db.image.findMany({
+      where: {
+        id: {
+          in: courses.map((course) => course.imageId),
+        },
+      },
+    });
+
+    const coursesOnList = courses.map((course) => {
+      const image = images.find((image) => image.id === course.imageId);
+      const courseOnList: CourseOnList = {
+        id: course.id,
+        name: course.name,
+        description: shrinkDescription(course.description, 120),
+        price: formatPrice(course.price),
+        imageUrl: image?.url || "",
+        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
+        categoryId: course.categoryId,
+      };
+      return courseOnList;
+    });
+
+    return coursesOnList;
+  }),
+
   getCourseMarketplaceView: publicProcedure
     .input(
       z.object({

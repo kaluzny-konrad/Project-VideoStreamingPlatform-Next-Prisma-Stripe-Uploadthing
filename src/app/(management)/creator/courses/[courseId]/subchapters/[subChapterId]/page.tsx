@@ -1,7 +1,5 @@
 import EditSubChapterForm from "@/components/EditSubChapterForm";
 import SubChapterVideo from "@/components/SubChapterVideo";
-import UploadVideoZone from "@/components/UploadVideoZone";
-import React from "react";
 
 type Props = {
   params: {
@@ -19,13 +17,7 @@ export default function page({ params }: Props) {
 
       <EditSubChapterForm courseId={courseId} subChapterId={subChapterId} />
 
-      {/* ToDo: UploadVideo should be visible only if the subchapter has no video uploaded */}
-
-      <h2 className="mb-4 mt-8 font-bold text-slate-600">Uploaded video</h2>
       <SubChapterVideo subChapterId={subChapterId} courseId={courseId} />
-
-      <h2 className="mb-4 mt-8 font-bold text-slate-600">Upload video</h2>
-      <UploadVideoZone courseId={courseId} subChapterId={subChapterId} />
     </div>
   );
 }

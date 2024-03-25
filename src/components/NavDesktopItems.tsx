@@ -9,7 +9,7 @@ export default function NavDesktopItems({}: Props) {
   return (
     <div className="w-96 flex flex-row justify-end items-center">
       <Link href={"/courses"} className={buttonVariants({ variant: "ghost" })}>
-        Courses
+        Explore
       </Link>
       <NavDesktopLoggedItems />
     </div>
