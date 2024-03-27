@@ -1,8 +1,7 @@
-import CourseVideos from "@/components/CourseVideos";
-import CourseVideo from "@/components/CourseVideo";
-import React from "react";
 import CourseWatchDescription from "@/components/CourseWatchDescription";
-import CourseDescriptionButton from "@/components/CourseDescriptionButton";
+import { db } from "@/db";
+
+import { notFound, redirect } from "next/navigation";
 
 type Props = {
   params: {
@@ -10,8 +9,31 @@ type Props = {
   };
 };
 
-export default function page({ params }: Props) {
+export default async function page({ params }: Props) {
   const { courseId } = params;
+
+  const chaptersState = await db.chaptersState.findUnique({
+    where: {
+      courseId,
+    },
+    include: {
+      Chapters: true,
+      SubChapters: true,
+    }
+  });
+
+  if (!chaptersState) {
+    notFound();
+  }
+
+  if (chaptersState) {
+    const firstChapterId = chaptersState.ChapterIdsOrder[0];
+    const firstChapter = chaptersState.Chapters.find(
+      (chapter) => chapter.id === firstChapterId
+    );
+    const firstSubChapterId = firstChapter?.SubChapterIdsOrder[0];
+    redirect(`/watch/${courseId}/${firstSubChapterId}`);
+  }
 
   return (
     <>

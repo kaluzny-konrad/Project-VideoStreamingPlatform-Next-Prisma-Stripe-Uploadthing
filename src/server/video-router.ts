@@ -53,16 +53,16 @@ export const videoRouter = router({
   getVideoToWatch: privateProcedure
     .input(
       z.object({
-        videoId: z.string(),
+        subChapterId: z.string(),
       })
     )
     .query(async ({ ctx, input }) => {
-      const { videoId } = input;
+      const { subChapterId } = input;
       const { user } = ctx;
 
       const video = await db.video.findUnique({
         where: {
-          id: videoId,
+          subChapterId: subChapterId,
         },
       });
 
@@ -79,7 +79,7 @@ export const videoRouter = router({
         url: video.url,
       };
 
-      return video;
+      return videoToWatch;
     }),
 
   addVideoToCourse: privateProcedure

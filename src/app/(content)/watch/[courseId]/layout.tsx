@@ -1,5 +1,4 @@
-import CoursePanel from "@/components/CoursePanel";
-import CourseVideos from "@/components/CourseVideos";
+import CourseChapters from "@/components/CourseChapters";
 
 type Props = {
   children: React.ReactNode;
@@ -19,10 +18,10 @@ export default async function CourseLayout({ children, params }: Props) {
             Course Content
           </h2>
           <p className="mb-2 text-xs font-light uppercase text-slate-400">
-            Videos
+            Chapters
           </p>
           <div className="flex flex-col gap-2">
-            <CourseVideos courseId={courseId} />
+            <CourseChapters courseId={courseId} />
           </div>
         </div>
       </div>

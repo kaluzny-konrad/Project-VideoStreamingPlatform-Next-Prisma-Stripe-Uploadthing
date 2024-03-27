@@ -9,7 +9,7 @@ type Props = {
 
 export default function CourseWatchButton({ courseId }: Props) {
   return (
-    <Link href={`/course/${courseId}`} className={cn(buttonVariants())}>
+    <Link href={`/watch/${courseId}`} className={cn(buttonVariants())}>
       Watch course
     </Link>
   );
