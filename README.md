@@ -51,8 +51,9 @@
 - [X] Features: Course page - reviews - backend
 - [X] Features: Course page - reviews - add info about reviewer
 - [X] Bug: Fix apos bug
-- [ ] Backend: Fix json types in trpc
+- [X] Refactor: Fix json types in trpc
 - [ ] Features: Course page - reviews - create use context for reviews
+- [ ] Refactor: Undo all strings to correct types
 - [ ] Features: nav - fix gap between mobile and desktop version
 - [ ] Features: Course page - questions to subChapters - backend
 - [ ] Features: Uploaded Course - stats - backend

@@ -7,6 +7,7 @@ import { trpc } from "@/server/client";
 import { absoluteUrl } from "@/lib/utils";
 import React from "react";
 import { RecoilRoot } from "recoil";
+import superjson from "superjson";
 
 export default function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient({}));
@@ -23,6 +24,7 @@ export default function Providers({ children }: PropsWithChildren) {
           },
         }),
       ],
+      transformer: superjson,
     })
   );
 

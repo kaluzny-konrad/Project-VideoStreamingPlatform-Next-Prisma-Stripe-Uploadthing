@@ -34,7 +34,7 @@ export default function OrderInfo({ orderId, userEmail }: Props) {
         const products: Course[] = order.CoursesInOrder.map((product) => {
             return {
                 ...product,
-                price: getDecimalPrice(product.price),
+                price: product.price,
             };
         });
 
