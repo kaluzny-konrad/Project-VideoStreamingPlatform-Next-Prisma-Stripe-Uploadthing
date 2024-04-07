@@ -10,6 +10,7 @@ import {
   CourseCreatorInfo,
   CourseOnList,
   CourseOnMarketplace,
+  CourseStats,
   CourseWatch,
 } from "@/types/course";
 import { formatPrice, formatTimeToNow, shrinkDescription } from "@/lib/utils";
@@ -18,25 +19,36 @@ import { Prisma } from "@prisma/client";
 
 export const courseRouter = router({
   getCoursesListView: publicProcedure.query(async () => {
-    const courses = await db.course.findMany({});
-    const images = await db.image.findMany({
-      where: {
-        id: {
-          in: courses.map((course) => course.imageId),
-        },
+    const courses = await db.course.findMany({
+      include: {
+        Reviews: true,
+        CourseMainImage: true,
       },
     });
 
     const coursesOnList = courses.map((course) => {
-      const image = images.find((image) => image.id === course.imageId);
+      let rating = 0;
+      if (course.Reviews.length > 0) {
+        rating =
+          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
+          course.Reviews.length;
+      }
+
+      const stats: CourseStats = {
+        views: 0,
+        reviews: course.Reviews.length,
+        rating,
+      };
+
       const courseOnList: CourseOnList = {
         id: course.id,
         name: course.name,
         description: shrinkDescription(course.description, 120),
         price: formatPrice(course.price),
-        imageUrl: image?.url || "",
+        imageUrl: course.CourseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         categoryId: course.categoryId,
+        stats,
       };
       return courseOnList;
     });
@@ -63,7 +75,17 @@ export const courseRouter = router({
       });
     }
 
-    const courses = userDb.CoursesOwnedByUser;
+    const courses = await db.course.findMany({
+      where: {
+        id: {
+          in: userDb.CoursesOwnedByUser.map((course) => course.id),
+        },
+      },
+      include: {
+        Reviews: true,
+        CourseMainImage: true,
+      },
+    });
 
     const images = await db.image.findMany({
       where: {
@@ -74,15 +96,28 @@ export const courseRouter = router({
     });
 
     const coursesOnList = courses.map((course) => {
-      const image = images.find((image) => image.id === course.imageId);
+      let rating = 0;
+      if (course.Reviews.length > 0) {
+        rating =
+          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
+          course.Reviews.length;
+      }
+
+      const stats: CourseStats = {
+        views: 0,
+        reviews: course.Reviews.length,
+        rating,
+      };
+
       const courseOnList: CourseOnList = {
         id: course.id,
         name: course.name,
         description: shrinkDescription(course.description, 120),
         price: formatPrice(course.price),
-        imageUrl: image?.url || "",
+        imageUrl: course.CourseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         categoryId: course.categoryId,
+        stats,
       };
       return courseOnList;
     });
@@ -103,6 +138,10 @@ export const courseRouter = router({
         where: {
           id: courseId,
         },
+        include: {
+          Reviews: true,
+          CourseMainImage: true,
+        },
       });
 
       if (!course) {
@@ -112,22 +151,31 @@ export const courseRouter = router({
         });
       }
 
-      const image = await db.image.findUnique({
-        where: {
-          id: course?.imageId,
-        },
-      });
+      let rating = 0;
+      if (course.Reviews.length > 0) {
+        rating =
+          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
+          course.Reviews.length;
+      }
+
+      const stats: CourseStats = {
+        views: 0,
+        reviews: course.Reviews.length,
+        rating,
+      };
 
       const courseOnMarketplace: CourseOnMarketplace = {
         id: course?.id || "",
         name: course?.name || "",
         description: course?.description || "",
         price: formatPrice(course?.price || new Prisma.Decimal(0)),
-        imageUrl: image?.url || "",
+        imageUrl: course.CourseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         creatorId: course?.creatorId || "",
         stripeProductId: course?.stripeProductId || "",
         imageId: course?.imageId || "",
+        stats,
+        reviews: course.Reviews,
       };
 
       return courseOnMarketplace;
@@ -178,6 +226,10 @@ export const courseRouter = router({
         where: {
           id: courseId,
         },
+        include: {
+          CourseMainImage: true,
+          Reviews: true,
+        },
       });
 
       if (!course) {
@@ -187,21 +239,29 @@ export const courseRouter = router({
         });
       }
 
-      const image = await db.image.findUnique({
-        where: {
-          id: course.imageId,
-        },
-      });
+      let rating = 0;
+      if (course.Reviews.length > 0) {
+        rating =
+          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
+          course.Reviews.length;
+      }
+
+      const stats: CourseStats = {
+        views: 0,
+        reviews: course.Reviews.length,
+        rating,
+      };
 
       const courseWatch: CourseWatch = {
         id: course.id,
         name: course.name,
         description: course.description,
-        imageUrl: image?.url || "",
+        imageUrl: course.CourseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         creatorId: course.creatorId,
         imageId: course.imageId,
         categoryId: course.categoryId,
+        stats,
       };
 
       return courseWatch;

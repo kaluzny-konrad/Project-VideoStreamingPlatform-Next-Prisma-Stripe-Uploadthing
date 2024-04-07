@@ -1,6 +1,4 @@
 import CourseVideo from "@/components/CourseVideo";
-import CourseVideos from "@/components/CourseVideos";
-import CourseWatchDescription from "@/components/CourseWatchDescription";
 import { db } from "@/db";
 import { notFound } from "next/navigation";
 
@@ -31,7 +29,6 @@ export default async function page({ params }: Props) {
     <>
       <h1 className="text-lg font-bold text-slate-800">Watch Course</h1>
       {subChapter?.Video && <CourseVideo subChapterId={subChapterId} />}
-      <CourseWatchDescription courseId={courseId} />
     </>
   );
 }

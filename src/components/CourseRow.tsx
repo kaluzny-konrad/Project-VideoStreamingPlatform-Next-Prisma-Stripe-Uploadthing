@@ -56,11 +56,11 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
               text="Publication"
               value={course.publicatedAt}
             />
-            <CourseStatsValue Icon={EyeIcon} text="Views" value={10} />
+            <CourseStatsValue Icon={EyeIcon} text="Rating" value={course.stats.rating} />
             <CourseStatsValue
               Icon={MessageSquareIcon}
-              text="Comments"
-              value={10}
+              text="Reviews"
+              value={course.stats.reviews}
             />
           </div>
         </div>

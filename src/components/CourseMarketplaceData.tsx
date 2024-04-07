@@ -68,9 +68,7 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
                   <CourseCheckoutButton courseId={course.id} />
                 ) : (
                   <Link href="/sign-in">
-                    <Button>
-                      Login to buy
-                    </Button>
+                    <Button>Login to buy</Button>
                   </Link>
                 )}
               </div>
@@ -88,18 +86,30 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
             <h2 className="font-bold text-slate-600">Course stats</h2>
             <div className="flex gap-4">
               <div>
-                <p className="font-bold">Views</p>
-                <p>{10}</p>
+                <p className="font-bold">Rating</p>
+                <p>{course.stats.rating}</p>
               </div>
               <div>
-                <p className="font-bold">Comments</p>
-                <p>{10}</p>
+                <p className="font-bold">Reviews</p>
+                <p>{course.stats.reviews}</p>
               </div>
             </div>
           </div>
           <div>
-            <h2 className="font-bold text-slate-600">Comments</h2>
-            <p>No comments yet</p>
+            <h2 className="font-bold text-slate-600">Reviews</h2>
+            {course.stats.reviews === 0 ? (
+              <p>No comments yet</p>
+            ) : (
+              <ul>
+                {course.reviews.map((review) => (
+                  <li key={review.id}>
+                    <p>{review.title}</p>
+                    <p>{review.rating}</p>
+                    <p>{review.content}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </>
       ) : null}

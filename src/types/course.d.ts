@@ -8,11 +8,13 @@ export type CourseOnList = {
   imageUrl: string;
   publicatedAt: string;
   categoryId: string;
+  stats: CourseStats;
 };
 
-export type CourseStatsInList = {
+export type CourseStats = {
     views: number;
-    comments: number;
+    reviews: number;
+    rating: number;
 }
 
 export type CourseOnMarketplace = {
@@ -25,6 +27,8 @@ export type CourseOnMarketplace = {
   creatorId: string;
   stripeProductId: string;
   imageId: string;
+  stats: CourseStats;
+  reviews: CourseReview[];
 }
 
 export type CourseCreatorInfo = {
@@ -42,4 +46,5 @@ export type CourseWatch = {
   creatorId: string;
   imageId: string;
   categoryId: string;
+  stats: CourseStats;
 }

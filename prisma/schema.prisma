@@ -57,6 +57,7 @@ model User {
 
   CoursesOwnedByUser Course[]
   OrdersPlaced       Order[]
+  Review             Review[]
 }
 
 enum Role {
@@ -70,7 +71,6 @@ model Course {
   name        String
   description String
   price       Decimal @db.Decimal(12, 2)
-  imageId     String
   creatorId   String
 
   priceId         String
@@ -86,8 +86,14 @@ model Course {
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
+  Reviews Review[]
+
+  CourseMainImage   Image? @relation(fields: [imageId], references: [id])
+  imageId String @unique
+
   @@index([categoryId])
   @@index([chaptersStateId])
+  @@index([imageId])
 }
 
 model Order {
@@ -130,9 +136,11 @@ model Video {
 }
 
 model Image {
-  id  String @id @default(cuid())
-  key String @unique
-  url String
+  id     String  @id @default(cuid())
+  key    String  @unique
+  url    String
+  
+  Course Course?
 }
 
 model Category {
@@ -177,4 +185,20 @@ model SubChapter {
   Video Video?
 
   @@index([chaptersStateId])
+}
+
+model Review {
+  id      String  @id @default(cuid())
+  rating  Int
+  title   String?
+  comment String?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
+  @@index([userId])
+  @@index([courseId])
 }

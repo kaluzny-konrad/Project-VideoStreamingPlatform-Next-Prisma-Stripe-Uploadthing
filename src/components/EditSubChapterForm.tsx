@@ -1,15 +1,12 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { UpdateSubChapterRequest } from "@/lib/validators/chapter";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
-import UploadVideoZone from "./UploadVideoZone";
-import SubChapterVideo from "./SubChapterVideo";
 
 type Props = {
   courseId: string;

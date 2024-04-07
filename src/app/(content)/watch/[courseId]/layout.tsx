@@ -1,4 +1,6 @@
 import CourseChapters from "@/components/CourseChapters";
+import CourseWatchDescription from "@/components/CourseWatchDescription";
+import CourseWatchReviews from "@/components/CourseWatchReviews";
 
 type Props = {
   children: React.ReactNode;
@@ -27,7 +29,13 @@ export default async function CourseLayout({ children, params }: Props) {
       </div>
 
       <div className="w-full">
-        <div className="p-4 bg-white rounded-xl min-h-96">{children}</div>
+        <div className="p-4 bg-white rounded-xl min-h-96 mb-3">{children}</div>
+        <div className="p-4 bg-white rounded-xl min-h-20 mb-3">
+          <CourseWatchDescription courseId={courseId} />
+        </div>
+        <div className="p-4 bg-white rounded-xl min-h-20 mb-3">
+          <CourseWatchReviews courseId={courseId} />
+        </div>
       </div>
     </div>
   );
