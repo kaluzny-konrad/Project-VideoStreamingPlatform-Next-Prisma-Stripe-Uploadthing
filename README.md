@@ -50,7 +50,7 @@
 - [X] Features: Course page - dont load video, if subchapter has no video
 - [X] Features: Course page - reviews - backend
 - [X] Features: Course page - reviews - add info about reviewer
-- [ ] Bug: Fix apos bug
+- [X] Bug: Fix apos bug
 - [ ] Backend: Fix json types in trpc
 - [ ] Features: Course page - reviews - create use context for reviews
 - [ ] Features: nav - fix gap between mobile and desktop version
