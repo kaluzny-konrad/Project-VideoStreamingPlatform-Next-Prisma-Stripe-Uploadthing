@@ -40,6 +40,10 @@ export function getPriceSum(prices: Prisma.Decimal[]) {
   return prices.reduce((acc, curr) => acc.add(curr), new Prisma.Decimal(0));
 }
 
+export function getDecimalPrice(price: string) {
+  return new Prisma.Decimal(price).toDecimalPlaces();
+}
+
 const formatDistanceLocale = {
   lessThanXSeconds: "just now",
   xSeconds: "just now",

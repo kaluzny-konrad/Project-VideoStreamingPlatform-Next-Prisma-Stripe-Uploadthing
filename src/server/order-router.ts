@@ -107,4 +107,33 @@ export const orderRouter = router({
         isPaid: order.status === OrderStatus.PAID,
       };
     }),
+
+  getOrder: privateProcedure
+    .input(
+      z.object({
+        orderId: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const { orderId } = input;
+      const { user } = ctx;
+
+      const order = await db.order.findFirst({
+        where: {
+          id: orderId,
+          userId: user.id,
+        },
+        include: {
+          CoursesInOrder: true,
+        },
+      });
+
+      if (!order) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+        });
+      }
+
+      return order;
+    }),
 });

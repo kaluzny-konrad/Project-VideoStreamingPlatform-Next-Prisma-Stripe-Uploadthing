@@ -14,9 +14,10 @@ import CourseWatchButton from "./CourseWatchButton";
 
 type Props = {
   courseId: string;
+  isLoggedIn: boolean;
 };
 
-export default function CourseMarketplaceData({ courseId }: Props) {
+export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
   const {
     data: course,
     error,
@@ -63,10 +64,14 @@ export default function CourseMarketplaceData({ courseId }: Props) {
                 </div>
                 {courseOwned ? (
                   <CourseWatchButton courseId={course.id} />
+                ) : isLoggedIn ? (
+                  <CourseCheckoutButton courseId={course.id} />
                 ) : (
-                  <CourseCheckoutButton
-                    courseId={course.id}
-                  />
+                  <Link href="/sign-in">
+                    <Button>
+                      Login to buy
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>
