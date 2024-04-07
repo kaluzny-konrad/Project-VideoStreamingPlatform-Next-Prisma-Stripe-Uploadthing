@@ -49,6 +49,7 @@
 - [X] Features: Delete data in uploadthing
 - [X] Features: Course page - dont load video, if subchapter has no video
 - [ ] Features: Course page - reviews - backend
+- [ ] Features: nav - fix gap between mobile and desktop version
 - [ ] Features: Course page - questions to subChapters - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend

@@ -4,6 +4,8 @@ import { trpc } from "@/server/client";
 import { Review } from "@prisma/client";
 import { useEffect, useState } from "react";
 import ReviewAddForm from "./ReviewAddForm";
+import ReviewDeleteButton from "./ReviewDeleteButton";
+import ReviewEditButton from "./ReviewEditButton";
 
 type Props = {
   courseId: string;
@@ -11,6 +13,10 @@ type Props = {
 
 export default function CourseWatchReviews({ courseId }: Props) {
   const [userReview, setUserReview] = useState<Review | null>(null);
+  const [optimisticUpdateLoading, setOptimisticUpdateLoading] = useState(false);
+  const [otherUsersReviews, setOtherUsersReviews] = useState<Review[] | null>(
+    null
+  );
 
   const {
     data: reviewsOnCourse,
@@ -29,8 +35,18 @@ export default function CourseWatchReviews({ courseId }: Props) {
           (review) => review.id === reviewsOnCourse.userReviewId
         ) ?? null
       );
+      setOtherUsersReviews(
+        reviewsOnCourse.reviews.filter(
+          (review) => review.id !== reviewsOnCourse.userReviewId
+        )
+      );
     }
   }, [reviewsOnCourse]);
+
+  useEffect(() => {
+    console.log("optimisticUpdateLoading", optimisticUpdateLoading);
+    console.log("userReview", userReview);
+  }, [optimisticUpdateLoading, userReview]);
 
   return (
     <div>
@@ -40,31 +56,49 @@ export default function CourseWatchReviews({ courseId }: Props) {
       ) : (
         <>
           {reviewsOnCourse === undefined ||
-          reviewsOnCourse.reviews?.length === 0 ? (
+            (reviewsOnCourse.reviews.length === 0 && (
+              <>
+                <p>No reviews yet</p>
+              </>
+            ))}
+
+          {userReview ? (
             <>
-              <p>No reviews yet</p>
-              <ReviewAddForm courseId={courseId} />
+              <p>Twoja opinia:</p>
+              <p>{userReview.title}</p>
+              <p>{userReview.rating}</p>
+              <p>{userReview.comment}</p>
+              <ReviewDeleteButton
+                reviewId={userReview.id}
+                setUserReview={setUserReview}
+                initialReview={userReview}
+                optimisticUpdateLoading={optimisticUpdateLoading}
+                setOptimisticUpdateLoading={setOptimisticUpdateLoading}
+              />
+              <ReviewEditButton
+                reviewId={userReview.id}
+                setUserReview={setUserReview}
+                initialReview={userReview}
+                optimisticUpdateLoading={optimisticUpdateLoading}
+                setOptimisticUpdateLoading={setOptimisticUpdateLoading}
+              />
             </>
           ) : (
-            <ul>
-              {userReview ? (
-                <>
-                  <p>Twoja opinia:</p>
-                  <li key={userReview.id}>
-                    <p>{userReview.title}</p>
-                    <p>{userReview.rating}</p>
-                    <p>{userReview.comment}</p>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <ReviewAddForm courseId={courseId} />
-                </>
-              )}
+            <>
+              <ReviewAddForm
+                courseId={courseId}
+                setUserReview={setUserReview}
+                optimisticUpdateLoading={optimisticUpdateLoading}
+                setOptimisticUpdateLoading={setOptimisticUpdateLoading}
+              />
+            </>
+          )}
 
+          {otherUsersReviews && otherUsersReviews.length > 0 && (
+            <ul>
               <p>Opinie innych użytkowników:</p>
 
-              {reviewsOnCourse.reviews?.map((review) => (
+              {otherUsersReviews?.map((review) => (
                 <li key={review.id}>
                   <p>{review.title}</p>
                   <p>{review.rating}</p>
