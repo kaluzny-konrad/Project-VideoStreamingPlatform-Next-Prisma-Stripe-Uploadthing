@@ -1,11 +1,12 @@
 "use client";
 
+import { CreateReviewRequest } from "@/lib/validators/review";
 import { trpc } from "@/server/client";
-import { Review } from "@prisma/client";
-import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { toast } from "sonner";
+
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
+import { buttonVariants } from "@/components/ui/button";
 
 import {
   Dialog,
@@ -28,41 +30,30 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { EditReviewRequest } from "@/lib/validators/review";
-import { EditIcon } from "lucide-react";
+import { Review } from "@prisma/client";
+import { EditIcon, PenIcon, PlusIcon } from "lucide-react";
 
 type Props = {
-  reviewId: string;
+  courseId: string;
   setUserReview: (review: Review | null) => void;
-  initialReview: Review;
   optimisticUpdateLoading: boolean;
   setOptimisticUpdateLoading: (loading: boolean) => void;
 };
 
-export default function ReviewEditButton({
-  reviewId,
+export default function ReviewAddButton({
+  courseId,
   setUserReview,
-  initialReview,
   optimisticUpdateLoading,
   setOptimisticUpdateLoading,
 }: Props) {
-  const reviewForm = useForm<EditReviewRequest>({
+  const reviewForm = useForm<CreateReviewRequest>({
     defaultValues: {
-      reviewId,
-      rating: initialReview.rating.toString(),
-      title: initialReview.title || "",
-      comment: initialReview.comment || "",
+      courseId,
+      rating: "5",
+      title: "",
+      comment: "",
     },
   });
-
-  useEffect(() => {
-    reviewForm.reset({
-      reviewId,
-      rating: initialReview.rating.toString(),
-      title: initialReview.title || "",
-      comment: initialReview.comment || "",
-    });
-  }, [initialReview]);
 
   useEffect(() => {
     if (Object.keys(reviewForm.formState.errors).length) {
@@ -74,47 +65,33 @@ export default function ReviewEditButton({
     }
   }, [reviewForm.formState.errors]);
 
-  function isReviewChanged(updatedReviewFormData: EditReviewRequest) {
-    return (
-      updatedReviewFormData.rating !== initialReview.rating.toString() ||
-      updatedReviewFormData.title !== initialReview.title ||
-      updatedReviewFormData.comment !== initialReview.comment
-    );
-  }
-
-  async function onSubmit(updatedReviewFormData: EditReviewRequest) {
-    console.log("updatedReviewFormData", updatedReviewFormData);
-
-    if (!isReviewChanged(updatedReviewFormData)) {
-      toast.error("No changes detected");
-      closeDialogButtonRef.current?.click();
-      return;
-    }
+  async function onSubmit(newReviewFormData: CreateReviewRequest) {
+    console.log("newReviewFormData", newReviewFormData);
 
     setOptimisticUpdateLoading(true);
     const optimisticReview: Review = {
-      id: initialReview.id,
-      rating: parseInt(updatedReviewFormData.rating, 10),
-      title: updatedReviewFormData.title || "",
-      comment: updatedReviewFormData.comment || "",
-      userId: initialReview.userId,
-      courseId: initialReview.courseId,
+      id: "optimistic",
+      title: newReviewFormData.title || null,
+      comment: newReviewFormData.comment || null,
+      rating: parseInt(newReviewFormData.rating, 10),
+      userId: "optimistic",
+      courseId: newReviewFormData.courseId,
     };
     setUserReview(optimisticReview);
-    editReview(updatedReviewFormData);
+    createReview(newReviewFormData);
     closeDialogButtonRef.current?.click();
   }
 
-  const { mutate: editReview, isLoading: editReviewLoading } =
-    trpc.review.editReview.useMutation({
-      onSuccess: (updatedReviewDb: Review) => {
-        toast.success("Review edited successfully");
-        setUserReview(updatedReviewDb);
+  const { mutate: createReview, isLoading: createReviewLoading } =
+    trpc.review.createReview.useMutation({
+      onSuccess: (newReviewDb: Review) => {
+        toast.success("Review added successfully");
+        setUserReview(newReviewDb);
       },
       onError: (error) => {
         toast.error("Something went wrong");
         console.error(error);
-        setUserReview(initialReview);
+        setUserReview(null);
       },
       onSettled: () => {
         setOptimisticUpdateLoading(false);
@@ -127,9 +104,9 @@ export default function ReviewEditButton({
     <Dialog>
       <DialogTrigger
         disabled={optimisticUpdateLoading}
-        className={buttonVariants({ variant: 'secondary', size: "icon"})}
+        className={buttonVariants({ size: "sm"})}
       >
-        <EditIcon />
+        <PenIcon className="mr-2" /> Write a review
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -190,8 +167,8 @@ export default function ReviewEditButton({
             />
 
             <DialogFooter className="grid grid-cols-2 gap-2">
-              <Button type="submit" disabled={editReviewLoading}>
-                {(editReviewLoading && "Saving...") || "Save changes"}
+              <Button type="submit" disabled={createReviewLoading}>
+                {(createReviewLoading && "Saving...") || "Add review"}
               </Button>
               <DialogClose asChild ref={closeDialogButtonRef}>
                 <Button variant="secondary">Cancel</Button>

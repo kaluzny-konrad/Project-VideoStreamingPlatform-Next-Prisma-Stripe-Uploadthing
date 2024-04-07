@@ -49,6 +49,8 @@
 - [X] Features: Delete data in uploadthing
 - [X] Features: Course page - dont load video, if subchapter has no video
 - [ ] Features: Course page - reviews - backend
+- [ ] Features: Course page - reviews - add info about revierer
+- [ ] Features: Course page - reviews - create use context for reviews
 - [ ] Features: nav - fix gap between mobile and desktop version
 - [ ] Features: Course page - questions to subChapters - backend
 - [ ] Features: Uploaded Course - stats - backend

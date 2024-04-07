@@ -3,9 +3,9 @@
 import { trpc } from "@/server/client";
 import { Review } from "@prisma/client";
 import { useEffect, useState } from "react";
-import ReviewAddForm from "./ReviewAddForm";
 import ReviewDeleteButton from "./ReviewDeleteButton";
 import ReviewEditButton from "./ReviewEditButton";
+import ReviewAddButton from "./ReviewAddButton";
 
 type Props = {
   courseId: string;
@@ -85,7 +85,7 @@ export default function CourseWatchReviews({ courseId }: Props) {
             </>
           ) : (
             <>
-              <ReviewAddForm
+              <ReviewAddButton
                 courseId={courseId}
                 setUserReview={setUserReview}
                 optimisticUpdateLoading={optimisticUpdateLoading}
