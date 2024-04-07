@@ -74,7 +74,7 @@ export default function ReviewEditButton({
 
   async function onSubmit(updatedReviewFormData: EditReviewRequest) {
     console.log("updatedReviewFormData", updatedReviewFormData);
-    
+
     if (!isReviewChanged(updatedReviewFormData)) {
       toast.error("No changes detected");
       closeDialogButtonRef.current?.click();
@@ -97,17 +97,18 @@ export default function ReviewEditButton({
   const { mutate: editReview, isLoading: editReviewLoading } =
     trpc.review.editReview.useMutation({
       onSuccess: (updatedReviewDb: Review) => {
+        closeDialogButtonRef.current?.click();
         toast.success("Review edited successfully");
         setUserReview(updatedReviewDb);
       },
       onError: (error) => {
+        closeDialogButtonRef.current?.click();
         toast.error("Something went wrong");
         console.error(error);
         setUserReview(initialReview);
       },
       onSettled: () => {
         setOptimisticUpdateLoading(false);
-        closeDialogButtonRef.current?.click();
       },
     });
 
