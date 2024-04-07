@@ -20,7 +20,7 @@ export default function NavMobileHamburger({}: Props) {
   }, [pathname]);
 
   // when we click the path we are currently on, we still want the mobile menu to close,
-  // however we cant rely on the pathname for it because that won't change (we're already there)
+  // however we cant rely on the pathname for it because that wont change (were already there)
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {
       setIsOpen(false);

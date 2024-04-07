@@ -135,7 +135,7 @@ export default function ReviewEditButton({
         <DialogHeader>
           <DialogTitle>Edit review</DialogTitle>
           <DialogDescription>
-            Make changes to your review here. Click save when you're done.
+            Make changes to your review here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
         <Form {...reviewForm}>

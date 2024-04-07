@@ -2,6 +2,7 @@ import CourseChapters from "@/components/CourseChapters";
 import CourseWatchDescription from "@/components/CourseWatchDescription";
 import ReviewUser from "@/components/ReviewUser";
 import ReviewsOtherUsers from "@/components/ReviewsOtherUsers";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Props = {
   children: React.ReactNode;
@@ -32,11 +33,19 @@ export default async function CourseLayout({ children, params }: Props) {
       <div className="w-full">
         <div className="p-4 bg-white rounded-xl min-h-96 mb-3">{children}</div>
         <div className="p-4 bg-white rounded-xl min-h-20 mb-3">
-          <CourseWatchDescription courseId={courseId} />
-        </div>
-        <div className="p-4 bg-white rounded-xl min-h-20 mb-3 gap-4">
-          <ReviewUser courseId={courseId} />
-          <ReviewsOtherUsers courseId={courseId} />
+          <Tabs defaultValue="description">
+            <TabsList>
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            </TabsList>
+            <TabsContent value="description">
+              <CourseWatchDescription courseId={courseId} />
+            </TabsContent>
+            <TabsContent value="reviews">
+              <ReviewUser courseId={courseId} />
+              <ReviewsOtherUsers courseId={courseId} />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </div>

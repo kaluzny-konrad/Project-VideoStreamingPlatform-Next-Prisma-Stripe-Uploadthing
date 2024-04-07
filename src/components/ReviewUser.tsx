@@ -42,7 +42,7 @@ export default function ReviewUser({ courseId }: Props) {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4 mb-4">
-        <h2 className="font-bold text-slate-600">Your Review</h2>
+        <p className="font-bold text-slate-600">Your Review</p>
         <Skeleton className="h-16" />
       </div>
     );
@@ -50,7 +50,7 @@ export default function ReviewUser({ courseId }: Props) {
 
   return (
     <div>
-      <h2 className="font-bold text-slate-600">Your Review</h2>
+      <p className="font-bold text-slate-600">Your Review</p>
       <div className="p-4 my-4 border-b border-gray-200 gap-4 flex items-center justify-between">
         {userReview && user ? (
           <>

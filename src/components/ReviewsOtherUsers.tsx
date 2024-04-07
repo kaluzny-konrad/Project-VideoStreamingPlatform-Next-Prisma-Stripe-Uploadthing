@@ -22,7 +22,7 @@ export default function ReviewsOtherUsers({ courseId }: Props) {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4 mb-4">
-        <h2 className="font-bold text-slate-600">Other Reviews</h2>
+        <p className="font-bold text-slate-600">Other Reviews</p>
         <Skeleton className="h-16" />
         <Skeleton className="h-16" />
         <Skeleton className="h-16" />
@@ -32,7 +32,7 @@ export default function ReviewsOtherUsers({ courseId }: Props) {
 
   return (
     <div>
-      <h2 className="font-bold text-slate-600">Other Reviews</h2>
+      <p className="font-bold text-slate-600">Other Reviews</p>
       <div className="p-4 my-4 border-b border-gray-200 gap-4 flex items-center justify-between">
         {otherUsersReviews?.map((review) => (
           <ReviewBox key={review.id} review={review} user={review.user} />

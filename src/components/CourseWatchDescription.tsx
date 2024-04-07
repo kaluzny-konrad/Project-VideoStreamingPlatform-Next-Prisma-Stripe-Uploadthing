@@ -23,7 +23,7 @@ export default function CourseWatchDescription({ courseId }: Props) {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">
-        <h2 className="font-bold text-slate-600">Course Description</h2>
+        <p className="font-bold text-slate-600">Course Description</p>
         <Skeleton className="h-16" />
       </div>
     );
@@ -35,7 +35,8 @@ export default function CourseWatchDescription({ courseId }: Props) {
 
   return (
     <div>
-      <h1>{course.name}</h1>
+      <p className="font-bold text-slate-600">Course Description</p>
+      <p>{course.name}</p>
       <p>{course.description}</p>
     </div>
   );
