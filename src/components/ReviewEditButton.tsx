@@ -55,6 +55,15 @@ export default function ReviewEditButton({
   });
 
   useEffect(() => {
+    reviewForm.reset({
+      reviewId,
+      rating: initialReview.rating.toString(),
+      title: initialReview.title || "",
+      comment: initialReview.comment || "",
+    });
+  }, [initialReview]);
+
+  useEffect(() => {
     if (Object.keys(reviewForm.formState.errors).length) {
       const errors = reviewForm.formState.errors;
       for (const [key, value] of Object.entries(errors)) {
@@ -92,17 +101,16 @@ export default function ReviewEditButton({
     };
     setUserReview(optimisticReview);
     editReview(updatedReviewFormData);
+    closeDialogButtonRef.current?.click();
   }
 
   const { mutate: editReview, isLoading: editReviewLoading } =
     trpc.review.editReview.useMutation({
       onSuccess: (updatedReviewDb: Review) => {
-        closeDialogButtonRef.current?.click();
         toast.success("Review edited successfully");
         setUserReview(updatedReviewDb);
       },
       onError: (error) => {
-        closeDialogButtonRef.current?.click();
         toast.error("Something went wrong");
         console.error(error);
         setUserReview(initialReview);
@@ -138,7 +146,6 @@ export default function ReviewEditButton({
             <FormField
               control={reviewForm.control}
               name="rating"
-              disabled={editReviewLoading}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="rating">Rating</FormLabel>
@@ -154,7 +161,6 @@ export default function ReviewEditButton({
             <FormField
               control={reviewForm.control}
               name="title"
-              disabled={editReviewLoading}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="title">Title</FormLabel>
@@ -170,7 +176,6 @@ export default function ReviewEditButton({
             <FormField
               control={reviewForm.control}
               name="comment"
-              disabled={editReviewLoading}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="comment">Comment</FormLabel>

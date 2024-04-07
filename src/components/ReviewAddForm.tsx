@@ -55,7 +55,7 @@ export default function ReviewAddForm({
 
   async function onSubmit(newReviewFormData: CreateReviewRequest) {
     console.log("newReviewFormData", newReviewFormData);
-    
+
     setOptimisticUpdateLoading(true);
     const optimisticReview: Review = {
       id: "optimistic",
@@ -69,20 +69,21 @@ export default function ReviewAddForm({
     createReview(newReviewFormData);
   }
 
-  const { mutate: createReview } = trpc.review.createReview.useMutation({
-    onSuccess: (newReviewDb: Review) => {
-      toast.success("Review added successfully");
-      setUserReview(newReviewDb);
-    },
-    onError: (error) => {
-      toast.error("Something went wrong");
-      console.error(error);
-      setUserReview(null);
-    },
-    onSettled: () => {
-      setOptimisticUpdateLoading(false);
-    },
-  });
+  const { mutate: createReview, isLoading: createReviewLoading } =
+    trpc.review.createReview.useMutation({
+      onSuccess: (newReviewDb: Review) => {
+        toast.success("Review added successfully");
+        setUserReview(newReviewDb);
+      },
+      onError: (error) => {
+        toast.error("Something went wrong");
+        console.error(error);
+        setUserReview(null);
+      },
+      onSettled: () => {
+        setOptimisticUpdateLoading(false);
+      },
+    });
 
   return (
     <div>
