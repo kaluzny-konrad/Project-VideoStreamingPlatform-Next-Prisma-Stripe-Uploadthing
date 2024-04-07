@@ -337,7 +337,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                           chaptersState.SubChapters.find(
                             (subChapter) => subChapter.id === subChapterId
                           )
-                      ).filter(Boolean) as Chapter[];
+                      ).filter(Boolean) as SubChapter[];
 
                       return (
                         <CreatorCourseChaptersDndListChapter

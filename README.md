@@ -45,10 +45,11 @@
 - [X] Features: Admin Panel - delete owned courses
 - [X] Fix: Fixed currency
 - [X] Features: Marketplace - create session for buying course
-- [ ] Features: Create Course - change video name, description and order
-- [ ] Features: Delete data in uploadthing
-- [ ] Features: Course page - description page - backend
-- [ ] Features: Course page - comments - backend
+- [X] Features: Create Course - change video name, description and order
+- [X] Features: Delete data in uploadthing
+- [X] Features: Course page - dont load video, if subchapter has no video
+- [ ] Features: Course page - reviews - backend
+- [ ] Features: Course page - questions to subChapters - backend
 - [ ] Features: Uploaded Course - stats - backend
 - [ ] Features: Creator Panel - List of courses - backend
 - [ ] Features: Admin Panel - deep delete backend
@@ -60,6 +61,7 @@
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
 - [ ] The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+- [ ] Update all dependencies
 
 ## Providers config:
 

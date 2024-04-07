@@ -120,11 +120,12 @@ model Video {
   url       String
 
   SubChapter   SubChapter @relation(fields: [subChapterId], references: [id])
-  subChapterId String @unique
-  @@index([subChapterId])
+  subChapterId String     @unique
 
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String
+
+  @@index([subChapterId])
   @@index([courseId])
 }
 
@@ -172,8 +173,8 @@ model SubChapter {
 
   ChaptersState   ChaptersState @relation(fields: [chaptersStateId], references: [id])
   chaptersStateId String
-  
-  Video           Video?
+
+  Video Video?
 
   @@index([chaptersStateId])
 }
