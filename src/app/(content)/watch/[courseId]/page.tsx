@@ -35,10 +35,5 @@ export default async function page({ params }: Props) {
     redirect(`/watch/${courseId}/${firstSubChapterId}`);
   }
 
-  return (
-    <>
-      <h1 className="text-lg font-bold text-slate-800">Watch Course</h1>
-      <CourseWatchDescription courseId={courseId} />
-    </>
-  );
+  return notFound();
 }

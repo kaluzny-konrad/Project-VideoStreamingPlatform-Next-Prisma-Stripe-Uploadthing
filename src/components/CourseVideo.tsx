@@ -1,7 +1,6 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import React from "react";
 
 type Props = {
   subChapterId: string;
