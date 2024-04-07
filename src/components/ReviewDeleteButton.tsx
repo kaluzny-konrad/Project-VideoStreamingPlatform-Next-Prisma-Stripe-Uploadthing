@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { buttonVariants } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   reviewId: string;
@@ -49,8 +50,6 @@ export default function ReviewDeleteButton({
   });
 
   const handleOptimisticDelete = async () => {
-    console.log("delete review", reviewId);
-
     setOptimisticUpdateLoading(true);
     setUserReview(null);
     deleteReview({ reviewId });
@@ -62,7 +61,12 @@ export default function ReviewDeleteButton({
     <Dialog>
       <DialogTrigger
         disabled={optimisticUpdateLoading}
-        className={buttonVariants({ variant: "destructive", size: "icon" })}
+        className={cn(
+          buttonVariants({
+            variant: "destructive",
+            size: "icon",
+          })
+        )}
       >
         <TrashIcon />
       </DialogTrigger>

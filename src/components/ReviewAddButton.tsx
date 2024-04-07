@@ -66,8 +66,6 @@ export default function ReviewAddButton({
   }, [reviewForm.formState.errors]);
 
   async function onSubmit(newReviewFormData: CreateReviewRequest) {
-    console.log("newReviewFormData", newReviewFormData);
-
     setOptimisticUpdateLoading(true);
     const optimisticReview: Review = {
       id: "optimistic",

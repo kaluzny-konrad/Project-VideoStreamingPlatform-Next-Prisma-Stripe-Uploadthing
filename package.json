@@ -44,6 +44,7 @@
     "recoil": "^0.7.7",
     "sonner": "^1.4.3",
     "stripe": "^14.19.0",
+    "superjson": "^2.2.1",
     "swiper": "^11.0.7",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
