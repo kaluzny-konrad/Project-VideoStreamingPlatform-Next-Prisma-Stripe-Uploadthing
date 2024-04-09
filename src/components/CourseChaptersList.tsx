@@ -9,6 +9,7 @@ type Props = {
   chapter: Chapter;
   subChapters: SubChapter[];
   chaptersStateId: string;
+  closeModal?: () => void;
 };
 
 export default function CourseChaptersList({
@@ -16,6 +17,7 @@ export default function CourseChaptersList({
   chapter,
   subChapters,
   chaptersStateId,
+  closeModal
 }: Props) {
   const pathname = usePathname();
 
@@ -32,6 +34,7 @@ export default function CourseChaptersList({
                 size: "sm",
                 className: "w-full",
               }))}
+              onClick={closeModal}
             >
               <p>{subChapter.name}</p>
             </Link>

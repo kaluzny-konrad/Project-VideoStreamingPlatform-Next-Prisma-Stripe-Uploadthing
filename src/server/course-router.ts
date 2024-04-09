@@ -206,7 +206,7 @@ export const courseRouter = router({
       const creatorInfo: CourseCreatorInfo = {
         id: creator.id,
         name: creator.name || "Anonim",
-        avatarUrl: creator.image || "",
+        image: creator.image || "",
       };
 
       return creatorInfo;

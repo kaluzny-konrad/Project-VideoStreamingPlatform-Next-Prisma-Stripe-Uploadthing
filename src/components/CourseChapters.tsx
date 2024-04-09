@@ -7,9 +7,10 @@ import CourseChaptersList from "./CourseChaptersList";
 
 type Props = {
   courseId: string;
+  closeModal?: () => void;
 };
 
-export default function CourseChapters({ courseId }: Props) {
+export default function CourseChapters({ courseId, closeModal }: Props) {
   const {
     data: chaptersState,
     error,
@@ -50,6 +51,7 @@ export default function CourseChapters({ courseId }: Props) {
                     chapter={chapter}
                     subChapters={subChapters}
                     chaptersStateId={chaptersState.id}
+                    closeModal={closeModal}
                 />
             )
           })}

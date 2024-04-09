@@ -73,6 +73,9 @@ export const reviewRouter = router({
         where: {
           courseId,
         },
+        include: {
+          user: true,
+        },
       });
 
       return reviews;

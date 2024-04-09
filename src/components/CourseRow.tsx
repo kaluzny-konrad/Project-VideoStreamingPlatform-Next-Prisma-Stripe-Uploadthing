@@ -2,14 +2,9 @@ import { CourseOnList } from "@/types/course";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
-import {
-  CalendarIcon,
-  EyeIcon,
-  MessageSquareIcon,
-  WalletIcon,
-} from "lucide-react";
-import CourseStatsValue from "./CourseStatsValue";
+
 import { cn } from "@/lib/utils";
+import CourseStatsRow from "./CourseStatsRow";
 
 type Props = {
   course: CourseOnList;
@@ -47,29 +42,13 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
             {course.name}
           </p>
           <p className="text-sm text-slate-500">{course.description}</p>
-          <div className="grid justify-between grid-cols-2 gap-4 px-6 py-4 bg-gray-100 rounded-lg lg:flex">
-            <CourseStatsValue
-              Icon={WalletIcon}
-              text="Price"
-              value={`${course.price}`}
-            />
 
-            <CourseStatsValue
-              Icon={CalendarIcon}
-              text="Publication"
-              value={course.publicatedAt}
-            />
-            <CourseStatsValue
-              Icon={EyeIcon}
-              text="Rating"
-              value={course.stats.rating}
-            />
-            <CourseStatsValue
-              Icon={MessageSquareIcon}
-              text="Reviews"
-              value={course.stats.reviews}
-            />
-          </div>
+          <CourseStatsRow
+            price={course.price}
+            publicatedAt={course.publicatedAt}
+            rating={course.stats.rating}
+            reviews={course.stats.reviews}
+          />
         </div>
       </div>
     </Link>

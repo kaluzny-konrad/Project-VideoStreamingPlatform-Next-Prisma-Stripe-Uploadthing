@@ -34,7 +34,7 @@ export type CourseOnMarketplace = {
 export type CourseCreatorInfo = {
   id: string;
   name: string;
-  avatarUrl: string;
+  image: string;
 }
 
 export type CourseWatch = {

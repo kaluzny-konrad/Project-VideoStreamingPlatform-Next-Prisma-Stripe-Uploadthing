@@ -1,4 +1,5 @@
 import CourseChapters from "@/components/CourseChapters";
+import CourseChaptersMobileButton from "@/components/CourseChaptersMobileButton";
 import CourseWatchDescription from "@/components/CourseWatchDescription";
 import ReviewUser from "@/components/ReviewUser";
 import ReviewsOtherUsers from "@/components/ReviewsOtherUsers";
@@ -15,8 +16,8 @@ export default async function CourseLayout({ children, params }: Props) {
   const { courseId } = params;
 
   return (
-    <div className="flex flex-row">
-      <div className="min-w-64 mr-4">
+    <div className="flex flex-col lg:flex-row">
+      <div className="hidden mb-4 lg:min-w-64 lg:mr-4 lg:block">
         <div className="p-4 bg-white rounded-xl min-h-96">
           <h2 className="mb-6 text-lg font-bold text-slate-800">
             Course Content
@@ -30,9 +31,13 @@ export default async function CourseLayout({ children, params }: Props) {
         </div>
       </div>
 
+      <div className="block mb-4 lg:hidden">
+        <CourseChaptersMobileButton courseId={courseId} />
+      </div>
+
       <div className="w-full">
-        <div className="p-4 bg-white rounded-xl min-h-96 mb-3">{children}</div>
-        <div className="p-4 bg-white rounded-xl min-h-20 mb-3">
+        <div className="p-4 mb-3 bg-white rounded-xl min-h-96">{children}</div>
+        <div className="p-4 mb-3 bg-white rounded-xl min-h-20">
           <Tabs defaultValue="description">
             <TabsList>
               <TabsTrigger value="description">Description</TabsTrigger>

@@ -11,6 +11,10 @@ import { Button, buttonVariants } from "./ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import CourseWatchButton from "./CourseWatchButton";
+import ReviewsAll from "./ReviewsAll";
+import CourseStatsRow from "./CourseStatsRow";
+import TextHeader from "./base/TextHeader";
+import TextSubHeader from "./base/TextSubHeader";
 
 type Props = {
   courseId: string;
@@ -43,7 +47,7 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
         </>
       ) : course ? (
         <>
-          <div className="flex gap-8">
+          <div className="flex flex-col items-center gap-8 lg:flex-row">
             <Image
               src={course.imageUrl}
               alt={course.name}
@@ -55,11 +59,11 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
                 "group-hover:opacity-80 transition-opacity duration-300"
               )}
             />
-            <div className="space-y-2">
-              <h2 className="mb-4 font-bold text-slate-600">{course.name}</h2>
-              <p>{course.description}</p>
-              <div className="flex gap-4">
-                <div className="bg-slate-100 rounded-md w-fit px-4 py-2 text-center">
+            <div className="flex flex-col mb-2 space-y-4">
+              <TextHeader text={`Course: ${course.name}`} />
+              <p className="mb-4">{course.description}</p>
+              <div className="flex justify-center gap-4 lg:justify-start">
+                <div className="px-4 py-2 text-center rounded-md bg-slate-100 w-fit">
                   <p className="font-bold">{course.price} PLN</p>
                 </div>
                 {courseOwned ? (
@@ -73,42 +77,29 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
                 )}
               </div>
             </div>
-            <div>
-              <p className="font-bold w-36">Autor</p>
+          </div>
+          <div className="flex flex-col gap-4 lg:flex-row">
+            <div className="w-full lg:w-fit">
               <CourseCreator creatorId={course.creatorId} />
             </div>
-          </div>
-          <div>
-            <h2 className="font-bold text-slate-600">Course content</h2>
-            <p>Not available yet</p>
-          </div>
-          <div>
-            <h2 className="font-bold text-slate-600">Course stats</h2>
-            <div className="flex gap-4">
-              <div>
-                <p className="font-bold">Rating</p>
-                <p>{course.stats.rating}</p>
-              </div>
-              <div>
-                <p className="font-bold">Reviews</p>
-                <p>{course.stats.reviews}</p>
-              </div>
+            <div>
+              <TextSubHeader text="Course stats" />
+              <CourseStatsRow
+                price={course.price}
+                publicatedAt={course.publicatedAt}
+                rating={course.stats.rating}
+                reviews={course.stats.reviews}
+              />
             </div>
           </div>
           <div>
-            <h2 className="font-bold text-slate-600">Reviews</h2>
             {course.stats.reviews === 0 ? (
-              <p>No comments yet</p>
+              <>
+                <h2 className="font-bold text-slate-600">Reviews</h2>
+                <p>No reviews yet</p>
+              </>
             ) : (
-              <ul>
-                {course.reviews.map((review) => (
-                  <li key={review.id}>
-                    <p>{review.title}</p>
-                    <p>{review.rating}</p>
-                    <p>{review.content}</p>
-                  </li>
-                ))}
-              </ul>
+              <ReviewsAll courseId={course.id} />
             )}
           </div>
         </>
