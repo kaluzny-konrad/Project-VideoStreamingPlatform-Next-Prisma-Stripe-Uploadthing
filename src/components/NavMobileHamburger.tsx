@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { buttonVariants } from "./ui/button";
+import { trpc } from "@/server/client";
 
 type Props = {};
 
@@ -13,6 +14,12 @@ export default function NavMobileHamburger({}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const pathname = usePathname();
+
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userDataError,
+  } = trpc.user.getUserData.useQuery();
 
   // whenever we click an item in the menu and navigate away, we want to close the menu
   useEffect(() => {
@@ -74,10 +81,65 @@ export default function NavMobileHamburger({}: Props) {
             <div className="mt-2 p-8">
               <ul className="">
                 <li className="">
-                  <Link href={"/courses"}  className={buttonVariants({ variant: "ghost", size: "lg", className: "w-full text-lg"})}>
-                    Courses
+                  <Link
+                    href={"/courses"}
+                    className={buttonVariants({
+                      variant: "ghost",
+                      size: "lg",
+                      className: "w-full text-lg",
+                    })}
+                  >
+                    Explore
                   </Link>
                 </li>
+                {userData && (
+                  <>
+                    {userData.role == "USER" ||
+                    userData.role == "CREATOR" ||
+                    userData.role == "ADMIN" ? (
+                      <li>
+                        <Link
+                          href={"/watch"}
+                          className={buttonVariants({
+                            variant: "ghost",
+                            size: "lg",
+                            className: "w-full text-lg",
+                          })}
+                        >
+                          Watch course
+                        </Link>
+                      </li>
+                    ) : null}
+                    {userData.role == "CREATOR" || userData.role == "ADMIN" ? (
+                      <li>
+                        <Link
+                          href={"/creator"}
+                          className={buttonVariants({
+                            variant: "ghost",
+                            size: "lg",
+                            className: "w-full text-lg",
+                          })}
+                        >
+                          Creator Panel
+                        </Link>
+                      </li>
+                    ) : null}
+                    {userData.role == "ADMIN" ? (
+                      <li>
+                        <Link
+                          href={"/admin"}
+                          className={buttonVariants({
+                            variant: "ghost",
+                            size: "lg",
+                            className: "w-full text-lg",
+                          })}
+                        >
+                          Admin Panel
+                        </Link>
+                      </li>
+                    ) : null}
+                  </>
+                )}
               </ul>
             </div>
           </div>

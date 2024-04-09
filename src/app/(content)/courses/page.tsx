@@ -1,13 +1,14 @@
 import CoursesPanel from "@/components/CoursesPanel";
+import CoursesPanelMobileButton from "@/components/CoursesPanelMobileButton";
 import CoursesPublicList from "@/components/CoursesPublicList";
 
 type Props = {};
 
 export default function page({}: Props) {
   return (
-    <div className="flex flex-row">
-      <div className="min-w-64 mr-4">
-        <div className="p-4 bg-white rounded-xl min-h-96">
+    <div className="flex flex-col lg:flex-row">
+      <div className="hidden mb-4 lg:min-w-64 lg:mr-4 lg:block">
+        <div className="p-4 bg-white rounded-xl lg:min-h-96">
           <h2 className="mb-6 text-lg font-bold text-slate-800">
             Filter Courses
           </h2>
@@ -20,8 +21,12 @@ export default function page({}: Props) {
         </div>
       </div>
 
+      <div className="block mb-4 lg:hidden">
+        <CoursesPanelMobileButton />
+      </div>
+
       <div className="w-full">
-        <div className="p-4 bg-white rounded-xl min-h-96">
+        <div className="p-4 mb-4 bg-white rounded-xl lg:min-h-96">
           <h1 className="text-lg font-bold text-slate-800">All courses</h1>
           <CoursesPublicList />
         </div>

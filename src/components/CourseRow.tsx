@@ -18,9 +18,12 @@ type Props = {
 
 export default function CourseRow({ course, redirectToWatch }: Props) {
   return (
-    <Link href={redirectToWatch ? `/watch/${course.id}` : `/courses/${course.id}`} className="group">
-      <div className="flex border-b py-6 w-full">
-        <div className="my-auto mr-4 w-1/2">
+    <Link
+      href={redirectToWatch ? `/watch/${course.id}` : `/courses/${course.id}`}
+      className="group"
+    >
+      <div className="flex flex-col w-full py-6 border-b lg:flex-row">
+        <div className="my-auto mb-4 lg:mr-4 lg:w-1/2 lg:mb-2">
           <Image
             src={course.imageUrl}
             alt={course.name}
@@ -28,7 +31,7 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
             height={400}
             priority
             className={cn(
-              "h-42 rounded-lg object-cover",
+              "lg:h-42 rounded-lg object-cover",
               "group-hover:opacity-80 transition-opacity duration-300"
             )}
           />
@@ -44,7 +47,7 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
             {course.name}
           </p>
           <p className="text-sm text-slate-500">{course.description}</p>
-          <div className="bg-gray-100 py-4 px-6 rounded-lg flex justify-between">
+          <div className="grid justify-between grid-cols-2 gap-4 px-6 py-4 bg-gray-100 rounded-lg lg:flex">
             <CourseStatsValue
               Icon={WalletIcon}
               text="Price"
@@ -56,7 +59,11 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
               text="Publication"
               value={course.publicatedAt}
             />
-            <CourseStatsValue Icon={EyeIcon} text="Rating" value={course.stats.rating} />
+            <CourseStatsValue
+              Icon={EyeIcon}
+              text="Rating"
+              value={course.stats.rating}
+            />
             <CourseStatsValue
               Icon={MessageSquareIcon}
               text="Reviews"

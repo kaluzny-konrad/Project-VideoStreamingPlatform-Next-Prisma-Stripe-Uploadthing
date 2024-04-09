@@ -23,7 +23,7 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
-          <main className="min-h-screen mt-12">
+          <main className="min-h-screen mt-6 lg:mt-12">
             <WrapperMaxWidth>{children}</WrapperMaxWidth>
           </main>
           <Footer />

@@ -7,20 +7,29 @@ import { useCategories } from "@/hooks/use-categories";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
 
-type Props = {};
+type Props = {
+  closeModal?: () => void;
+};
 
-export default function CoursesPanel({}: Props) {
+export default function CoursesPanel({
+  closeModal,
+}: Props) {
   const { setActive, categoriesStateValue } = useCategories();
 
   const {
     data: allCategories,
     isLoading,
     error,
-  } = trpc.category.getCategories.useQuery();
+  } = trpc.category.getActiveCategories.useQuery();
 
   if (error) {
     toast.error("Error loading categories");
     console.log(error);
+  }
+
+  function handleClick(categoryId: string | null) {
+    setActive(categoryId);
+    closeModal && closeModal();
   }
 
   return (
@@ -30,7 +39,7 @@ export default function CoursesPanel({}: Props) {
           categoriesStateValue.activeCategoryId ? "ghost" : "default"
         }`}
         className="justify-start w-full"
-        onClick={() => setActive(null)}
+        onClick={() => handleClick(null)}
       >
         All
       </Button>
@@ -52,7 +61,7 @@ export default function CoursesPanel({}: Props) {
                     : "ghost"
                 }`}
                 className="justify-start w-full"
-                onClick={() => setActive(category.id)}
+                onClick={() => handleClick(category.id)}
               >
                 {category.name}
               </Button>

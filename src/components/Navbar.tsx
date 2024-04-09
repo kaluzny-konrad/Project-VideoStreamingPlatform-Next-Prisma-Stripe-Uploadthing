@@ -18,10 +18,10 @@ export default function Navbar({}: Props) {
               <NavMobileHamburger />
             </div>
 
-            <Link href="/">
+            <Link href="/" className="flex items-center">
               <Image
                 className="h-8"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                src="/favicon-32x32.png"
                 alt="Logo"
                 width={32}
                 height={32}

@@ -6,4 +6,20 @@ export const categoryRouter = router({
     const categories = await db.category.findMany({});
     return categories;
   }),
+
+  getActiveCategories: publicProcedure.query(async () => {
+    const categories = await db.category.findMany({
+      include: {
+        CoursesInCategory: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    return categories.filter(
+      (category) => category.CoursesInCategory.length > 0
+    );
+  }),
 });

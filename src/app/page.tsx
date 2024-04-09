@@ -26,7 +26,7 @@ const perks = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between lg:p-24">
       <>
         <WrapperMaxWidth>
           <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
@@ -42,7 +42,6 @@ export default function Home() {
               <Link href="/courses" className={buttonVariants()}>
                 Browse Trending
               </Link>
-              <Button variant="ghost">Our quality promise &rarr;</Button>
             </div>
           </div>
         </WrapperMaxWidth>

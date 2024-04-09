@@ -52,6 +52,8 @@
 - [X] Features: Course page - reviews - add info about reviewer
 - [X] Bug: Fix apos bug
 - [X] Refactor: Fix json types in trpc
+- [ ] Styles: Add basic styles to all pages
+- [ ] Features: Add base content to all pages
 - [ ] Features: Course page - reviews - create use context for reviews
 - [ ] Refactor: Undo all strings to correct types
 - [ ] Features: nav - fix gap between mobile and desktop version
