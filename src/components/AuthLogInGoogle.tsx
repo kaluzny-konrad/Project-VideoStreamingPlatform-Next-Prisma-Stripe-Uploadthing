@@ -8,7 +8,7 @@ import IconLoader from "./IconLoader";
 
 type Props = {};
 
-export default function AuthUserForm({}: Props) {
+export default function AuthLogInGoogle({}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginWithGoogle = async () => {
@@ -25,7 +25,12 @@ export default function AuthUserForm({}: Props) {
 
   return (
     <div>
-      <Button onClick={loginWithGoogle} disabled={isLoading} size="sm">
+      <Button
+        onClick={loginWithGoogle}
+        disabled={isLoading}
+        variant="outline"
+        className="w-full"
+      >
         <IconLoader isLoading={isLoading} />
         Google
       </Button>
