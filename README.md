@@ -17,6 +17,8 @@
 13. Mailing: SendGrid
 14. State management: Zustand, TanStack Query, Zod, TRPC
 
+## Examples
+
 ## Work progress
 
 - [x] Setup Next.js
