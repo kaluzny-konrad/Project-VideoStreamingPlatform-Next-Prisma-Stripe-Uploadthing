@@ -1,12 +1,13 @@
 'use client'
 
-import { formatPrice, getDecimalPrice, getPriceSum } from "@/lib/utils";
-import { trpc } from "@/server/client";
-import { toast } from "sonner";
-import PaymentStatus from "./PaymentStatus";
 import { Course, OrderStatus } from "@prisma/client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { formatPrice, getPriceSum } from "@/lib/utils";
+import { trpc } from "@/server/client";
+import PaymentStatus from "./PaymentStatus";
 
 type Props = {
   orderId: string;

@@ -1,10 +1,8 @@
-import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
+import { getAuthSession } from "@/lib/auth";
 import { buttonVariants } from "./ui/button";
 
-type Props = {};
-
-export default async function NavDesktopLoggedItems({}: Props) {
+export default async function NavDesktopLoggedItems() {
   const session = await getAuthSession();
   const user = session?.user;
   if (!user) {

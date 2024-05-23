@@ -38,7 +38,6 @@ export default function CreatorCategoryCreateForm({}: Props) {
   }, [errors]);
 
   async function onSubmit(data: CategoryCreationRequest) {
-    console.log(data);
     createCategory(data);
   }
 

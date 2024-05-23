@@ -2,9 +2,7 @@ import { getAuthSession } from "@/lib/auth";
 import NavUserOptionsLoggedOut from "./NavUserOptionsLoggedOut";
 import NavUserOptionsLoggedIn from "./NavUserOptionsLoggedIn";
 
-type Props = {};
-
-export default async function NavUserOptions({}: Props) {
+export default async function NavUserOptions() {
   const session = await getAuthSession();
 
   if (!session?.user) return <NavUserOptionsLoggedOut />;

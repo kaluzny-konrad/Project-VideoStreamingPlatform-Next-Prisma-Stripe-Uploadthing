@@ -3,6 +3,7 @@ import { trpc } from "@/server/client";
 import { Button } from "./ui/button";
 import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Props = {
   categoryId: string;
@@ -13,7 +14,7 @@ export default function AdminCategoriesDeleteButton({ categoryId }: Props) {
 
   const { mutate: deleteCategory } = trpc.admin.deleteCategory.useMutation({
     onSuccess: () => {
-      console.log("Category deleted");
+      toast("Category deleted");
       router.refresh();
     },
     onError: (error) => {
@@ -22,8 +23,6 @@ export default function AdminCategoriesDeleteButton({ categoryId }: Props) {
   });
 
   const handleDeleteCategory = (categoryId: string) => async () => {
-    console.log("Deleting category", categoryId);
-
     deleteCategory({
       categoryId,
     });

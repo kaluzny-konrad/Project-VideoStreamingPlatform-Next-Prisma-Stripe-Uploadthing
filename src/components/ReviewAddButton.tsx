@@ -1,10 +1,13 @@
 "use client";
 
-import { CreateReviewRequest } from "@/lib/validators/review";
-import { trpc } from "@/server/client";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { Review } from "@prisma/client";
+import { EditIcon, PenIcon, PlusIcon } from "lucide-react";
+
+import { CreateReviewRequest } from "@/lib/validators/review";
+import { trpc } from "@/server/client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,8 +33,6 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Review } from "@prisma/client";
-import { EditIcon, PenIcon, PlusIcon } from "lucide-react";
 
 type Props = {
   courseId: string;

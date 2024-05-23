@@ -1,16 +1,17 @@
 "use client";
 
-import { UploadButton } from "@/lib/uploadthing";
-import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+
+import { UploadButton } from "@/lib/uploadthing";
+import { trpc } from "@/server/client";
 
 type Props = {
   courseId: string;
   subChapterId: string;
 };
 
-export default function UploadVideoZone({ courseId, subChapterId }: Props) {
+export default function VideoUploadZone({ courseId, subChapterId }: Props) {
   const router = useRouter();
   const { mutate: addVideo } = trpc.video.addVideoToCourse.useMutation({
     onSuccess: (res) => {

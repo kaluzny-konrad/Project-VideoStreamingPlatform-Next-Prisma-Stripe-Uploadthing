@@ -1,5 +1,3 @@
-import React from "react";
-
 type Props = {
   Icon: React.ElementType;
   text: string;

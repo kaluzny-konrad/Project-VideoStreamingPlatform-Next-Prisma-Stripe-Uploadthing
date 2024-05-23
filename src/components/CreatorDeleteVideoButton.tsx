@@ -1,8 +1,10 @@
 "use client";
+
 import { trpc } from "@/server/client";
 import { Button } from "./ui/button";
 import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Props = {
   videoId: string;
@@ -15,7 +17,7 @@ export default function CreatorDeleteVideoButton({ videoId, courseId }: Props) {
   const { mutate: deleteVideo } = trpc.video.deleteVideoFromCourse.useMutation(
     {
       onSuccess: () => {
-        console.log("Video deleted");
+        toast("Video deleted");
         router.refresh();
       },
       onError: (error) => {
@@ -25,8 +27,6 @@ export default function CreatorDeleteVideoButton({ videoId, courseId }: Props) {
   );
 
   const handleDeleteVideo = (videoId: string) => async () => {
-    console.log("Deleting video", videoId);
-
     deleteVideo({
       videoId,
       courseId

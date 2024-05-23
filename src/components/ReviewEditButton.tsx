@@ -1,10 +1,12 @@
 "use client";
 
-import { trpc } from "@/server/client";
 import { Review } from "@prisma/client";
 import { toast } from "sonner";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { EditIcon } from "lucide-react";
+
+import { trpc } from "@/server/client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
@@ -29,7 +31,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { EditReviewRequest } from "@/lib/validators/review";
-import { EditIcon } from "lucide-react";
 
 type Props = {
   reviewId: string;
@@ -62,7 +63,7 @@ export default function ReviewEditButton({
       title: initialReview.title || "",
       comment: initialReview.comment || "",
     });
-  }, [initialReview]);
+  }, [initialReview, reviewForm, reviewId]);
 
   useEffect(() => {
     if (Object.keys(reviewForm.formState.errors).length) {
@@ -83,8 +84,6 @@ export default function ReviewEditButton({
   }
 
   async function onSubmit(updatedReviewFormData: EditReviewRequest) {
-    console.log("updatedReviewFormData", updatedReviewFormData);
-
     if (!isReviewChanged(updatedReviewFormData)) {
       toast.error("No changes detected");
       closeDialogButtonRef.current?.click();

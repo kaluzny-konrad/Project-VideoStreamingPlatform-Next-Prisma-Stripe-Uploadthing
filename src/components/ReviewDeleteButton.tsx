@@ -1,10 +1,12 @@
 "use client";
 
-import { trpc } from "@/server/client";
 import { Review } from "@prisma/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { useRef } from "react";
+import { TrashIcon } from "lucide-react";
+
+import { trpc } from "@/server/client";
 import {
   Dialog,
   DialogContent,
@@ -16,7 +18,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { buttonVariants } from "@/components/ui/button";
-import { TrashIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Props = {

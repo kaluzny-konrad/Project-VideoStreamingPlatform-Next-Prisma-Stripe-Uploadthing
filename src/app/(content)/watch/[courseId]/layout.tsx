@@ -12,7 +12,7 @@ type Props = {
   };
 };
 
-export default async function CourseLayout({ children, params }: Props) {
+export default async function WatchCourseLayout({ children, params }: Props) {
   const { courseId } = params;
 
   return (

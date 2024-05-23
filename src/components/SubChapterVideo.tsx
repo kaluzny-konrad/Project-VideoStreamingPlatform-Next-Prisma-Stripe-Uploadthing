@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import CreatorEditVideoModalTrigger from "./CreatorEditVideoModalTrigger";
 import CreatorDeleteVideoButton from "./CreatorDeleteVideoButton";
-import UploadVideoZone from "./UploadVideoZone";
+import VideoUploadZone from "./VideoUploadZone";
 
 type Props = {
   subChapterId: string;
@@ -41,7 +41,7 @@ export default async function SubChapterVideo({
       ) : (
         <>
           <h2 className="mb-4 mt-8 font-bold text-slate-600">Upload video</h2>
-          <UploadVideoZone courseId={courseId} subChapterId={subChapterId} />
+          <VideoUploadZone courseId={courseId} subChapterId={subChapterId} />
         </>
       )}
     </div>

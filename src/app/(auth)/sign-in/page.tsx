@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { ChevronLeftIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import AuthSignIn from "@/components/AuthSignIn";
 import { buttonVariants } from "@/components/ui/button";
 
-type Props = {};
-
-export default function page({}: Props) {
+export default function SignInPage() {
   return (
     <div>
       <Link href="/" className={cn(buttonVariants({ variant: "ghost" }))}>

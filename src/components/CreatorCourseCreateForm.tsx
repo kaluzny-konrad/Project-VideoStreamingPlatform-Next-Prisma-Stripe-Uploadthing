@@ -10,12 +10,18 @@ import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import UploadImageZone from "./UploadImageZone";
+import { Photo } from "@prisma/client";
+import Image from "next/image";
+import PhotoDeleteButton from "./PhotoDeleteButton";
+import PhotoUploadZone from "./PhotoUploadZone";
+import { Button } from "./ui/button";
 
 type Props = {};
 
 export default function CreatorCourseCreateForm({}: Props) {
   const router = useRouter();
+  const [photo, setPhoto] = useState<Photo | undefined>(undefined);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
 
   const {
     data: categories,
@@ -34,7 +40,7 @@ export default function CreatorCourseCreateForm({}: Props) {
       name: "",
       description: "",
       price: "0",
-      imageId: "",
+      categoryId: categories?.[0].id,
     },
   });
 
@@ -42,38 +48,54 @@ export default function CreatorCourseCreateForm({}: Props) {
     if (Object.keys(errors).length) {
       for (const [key, value] of Object.entries(errors)) {
         toast.error(`Something went wrong: ${value.message}`);
-        console.error(errors);
       }
     }
   }, [errors]);
 
   async function onSubmit(data: CourseCreateRequest) {
-    console.log(data);
     createCourse(data);
   }
 
-  const { mutate: createCourse } = trpc.course.createCourse.useMutation({
-    onSuccess: (res) => {
-      router.push(`/creator/courses/${res.id}`);
-    },
+  const { mutate: addPhoto } = trpc.photo.addPhotoToCourse.useMutation({
+    onSuccess: (res) => {},
     onError: (err) => {
-      toast.error(`Something went wrong.`);
-      console.error(err);
+      toast.error(`Something went wrong during photo save.`);
     },
   });
 
-  const imageUploaded = (args: { imageId: string }) => {
-    setValue("imageId", args.imageId);
-  };
+  const { mutate: createCourse } = trpc.course.createCourse.useMutation({
+    onSuccess: (res) => {
+      if (photo?.id) {
+        addPhoto({ courseId: res.id, photoId: photo.id });
+      }
+
+      router.push(`/creator/courses/${res.id}`);
+    },
+    onError: (err) => {
+      toast.error(`Something went wrong during save.`);
+    },
+  });
+
+  function handlePhotoDeleted() {
+    setPhoto(undefined);
+  }
+
+  function onBeforeUploadBegin() {
+    setIsPhotoUploading(true);
+  }
+
+  function onClientUploadComplete(photo: Photo) {
+    setPhoto(photo);
+    setIsPhotoUploading(false);
+  }
 
   if (categoriesLoading) {
-    return <div>Loading...</div>;
+    return false;
   }
 
   if (categoriesError) {
     toast.error(`Something went wrong: ${categoriesError?.message}`);
-    console.error(categoriesError);
-    return <div>Try again later</div>;
+    return false;
   }
 
   return (
@@ -92,11 +114,27 @@ export default function CreatorCourseCreateForm({}: Props) {
           <input type="number" step="0.01" id="price" {...register("price")} />
         </div>
 
-        <UploadImageZone imageUploaded={imageUploaded} />
-        <div>
-          <label htmlFor="imageId">Main image</label>
-          <input type="text" id="imageId" {...register("imageId")} />
-        </div>
+        {photo?.url ? (
+          <div>
+            <Image
+              src={photo.url}
+              alt="Course image"
+              width={600}
+              height={400}
+              className="h-auto w-auto"
+              priority
+            />
+            <PhotoDeleteButton
+              Photo={photo}
+              onPhotoDeleted={handlePhotoDeleted}
+            />
+          </div>
+        ) : (
+          <PhotoUploadZone
+            onClientUploadComplete={onClientUploadComplete}
+            onBeforeUploadBegin={onBeforeUploadBegin}
+          />
+        )}
 
         <div>
           <label htmlFor="categoryId">Category</label>
@@ -110,7 +148,7 @@ export default function CreatorCourseCreateForm({}: Props) {
         </div>
 
         <div>
-          <button type="submit">Create course</button>
+          <Button type="submit">Save course</Button>
         </div>
       </form>
     </div>

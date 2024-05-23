@@ -1,12 +1,9 @@
-import React from "react";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { InfoIcon, ListIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 
-type Props = {};
-
-export default function CreatorPanel({}: Props) {
+export default function CreatorPanel() {
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">
       <h2 className="mb-6 text-lg font-bold text-slate-800">Creator Panel</h2>

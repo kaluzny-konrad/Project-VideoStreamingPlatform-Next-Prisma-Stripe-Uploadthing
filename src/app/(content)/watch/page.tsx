@@ -2,9 +2,7 @@ import CoursesPanel from "@/components/CoursesPanel";
 import CoursesPanelMobileButton from "@/components/CoursesPanelMobileButton";
 import CoursesPrivateList from "@/components/CoursesPrivateList";
 
-type Props = {};
-
-export default function page({}: Props) {
+export default function WatchPage() {
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="hidden mb-4 lg:min-w-64 lg:mr-4 lg:block">

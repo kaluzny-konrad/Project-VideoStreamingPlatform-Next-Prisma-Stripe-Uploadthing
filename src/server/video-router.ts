@@ -1,5 +1,7 @@
-import { privateProcedure, router } from "./trpc";
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+
+import { privateProcedure, router } from "./trpc";
 import { db } from "@/db";
 import {
   AddVideoValidator,
@@ -7,7 +9,6 @@ import {
   VideoEditValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
-import { z } from "zod";
 import { VideoOnList, VideoToWatch } from "@/types/video";
 
 export const videoRouter = router({

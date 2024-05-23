@@ -7,7 +7,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function BasketOrderPage({ params }: Props) {
   const { orderId } = params;
   const session = await getAuthSession();
 

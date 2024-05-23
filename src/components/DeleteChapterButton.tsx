@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "./ui/button";
 import { trpc } from "@/server/client";
 import { DeleteChapterRequest } from "@/lib/validators/chapter";

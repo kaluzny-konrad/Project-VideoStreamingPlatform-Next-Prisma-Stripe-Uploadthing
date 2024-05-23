@@ -8,11 +8,13 @@ import {
 } from "@/lib/validators/course";
 import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import UploadImageZone from "./UploadImageZone";
 import { Button } from "./ui/button";
-import UploadVideoZone from "./UploadVideoZone";
+import { Photo } from "@prisma/client";
+import Image from "next/image";
+import PhotoUploadZone from "./PhotoUploadZone";
+import PhotoDeleteButton from "./PhotoDeleteButton";
 
 type Props = {
   courseId: string;
@@ -20,6 +22,8 @@ type Props = {
 
 export default function CreatorCourseEditForm({ courseId }: Props) {
   const router = useRouter();
+  const [photo, setPhoto] = useState<Photo | undefined>(undefined);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
 
   const {
     data: coursePreviousData,
@@ -44,7 +48,6 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
       name: "",
       description: "",
       price: "0",
-      imageId: "",
       categoryId: "",
     },
   });
@@ -53,50 +56,65 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
     if (Object.keys(errors).length) {
       for (const [key, value] of Object.entries(errors)) {
         toast.error(`Something went wrong: ${value.message}`);
-        console.error(errors);
       }
     }
   }, [errors]);
 
   async function onSubmit(data: CourseEditRequest) {
-    console.log(data);
     editCourse(data);
   }
 
+  const { mutate: addPhoto } = trpc.photo.addPhotoToCourse.useMutation({
+    onSuccess: (res) => {},
+    onError: (err) => {
+      toast.error(`Something went wrong during photo save.`);
+    },
+  });
+
   const { mutate: editCourse } = trpc.course.editCourse.useMutation({
     onSuccess: (res) => {
+      if (photo?.id) {
+        addPhoto({ courseId: res.id, photoId: photo.id });
+      }
+
       router.push(`/creator/courses/${res.id}`);
     },
     onError: (err) => {
       toast.error(`Something went wrong.`);
-      console.error(err);
     },
   });
 
   useEffect(() => {
-    if (coursePreviousData && !databaseLoading && !databaseError) {
+    if (coursePreviousData) {
       setValue("name", coursePreviousData.name);
       setValue("description", coursePreviousData.description);
       setValue("price", coursePreviousData.price.toString());
-      setValue("imageId", coursePreviousData.imageId);
-      if (coursePreviousData.categoryId)
-        setValue("categoryId", coursePreviousData.categoryId.toString());
+      setValue("categoryId", coursePreviousData.categoryId.toString());
       setValue("courseId", coursePreviousData.id);
+      setPhoto(coursePreviousData.Photos[0] ?? undefined);
     }
   }, [coursePreviousData, databaseLoading, databaseError, setValue]);
 
-  const imageUploaded = (args: { imageId: string }) => {
-    setValue("imageId", args.imageId);
-  };
-
   if (categoriesLoading || databaseLoading) {
-    return <div>Loading...</div>;
+    return false;
   }
 
   if (categoriesError || databaseError) {
     toast.error(`Something went wrong: ${categoriesError?.message}`);
-    console.error(categoriesError);
-    return <div>Try again later</div>;
+    return false;
+  }
+
+  function handlePhotoDeleted() {
+    setPhoto(undefined);
+  }
+
+  function onBeforeUploadBegin() {
+    setIsPhotoUploading(true);
+  }
+
+  function onClientUploadComplete(photo: Photo) {
+    setPhoto(photo);
+    setIsPhotoUploading(false);
   }
 
   return (
@@ -115,11 +133,27 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
           <input type="number" id="price" {...register("price")} />
         </div>
 
-        <UploadImageZone imageUploaded={imageUploaded} />
-        <div>
-          <label htmlFor="imageId">Main image</label>
-          <input type="text" id="imageId" {...register("imageId")} />
-        </div>
+        {photo?.url ? (
+          <div>
+            <Image
+              src={photo.url}
+              alt="Course image"
+              width={600}
+              height={400}
+              className="h-auto w-auto"
+              priority
+            />
+            <PhotoDeleteButton
+              Photo={photo}
+              onPhotoDeleted={handlePhotoDeleted}
+            />
+          </div>
+        ) : (
+          <PhotoUploadZone
+            onClientUploadComplete={onClientUploadComplete}
+            onBeforeUploadBegin={onBeforeUploadBegin}
+          />
+        )}
 
         <div>
           <label htmlFor="categoryId">Category</label>
@@ -130,10 +164,6 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
               </option>
             ))}
           </select>
-        </div>
-
-        <div>
-          <input type="hidden" id="courseId" {...register("courseId")} />
         </div>
 
         <div>

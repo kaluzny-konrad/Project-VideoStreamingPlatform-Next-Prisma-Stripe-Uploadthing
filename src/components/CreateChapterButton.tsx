@@ -27,7 +27,6 @@ export default function CreateChapterButton({
       chaptersStateId: chaptersStateId,
       name: "New Chapter",
     };
-    console.log(data);
     createChapter(data);
   }
 

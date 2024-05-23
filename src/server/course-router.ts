@@ -1,5 +1,8 @@
-import { privateProcedure, publicProcedure, router } from "./trpc";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { Prisma } from "@prisma/client";
+
+import { privateProcedure, publicProcedure, router } from "./trpc";
 import { db } from "@/db";
 import {
   CourseCreateValidator,
@@ -14,15 +17,13 @@ import {
   CourseWatch,
 } from "@/types/course";
 import { formatPrice, formatTimeToNow, shrinkDescription } from "@/lib/utils";
-import { z } from "zod";
-import { Prisma } from "@prisma/client";
 
 export const courseRouter = router({
   getCoursesListView: publicProcedure.query(async () => {
     const courses = await db.course.findMany({
       include: {
         Reviews: true,
-        CourseMainImage: true,
+        Photos: true,
       },
     });
 
@@ -40,12 +41,16 @@ export const courseRouter = router({
         rating,
       };
 
+      const courseMainImage = course.Photos.find(
+        (photo) => photo.isMainPhoto === true
+      );
+
       const courseOnList: CourseOnList = {
         id: course.id,
         name: course.name,
         description: shrinkDescription(course.description, 120),
         price: formatPrice(course.price),
-        imageUrl: course.CourseMainImage?.url || "",
+        imageUrl: courseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         categoryId: course.categoryId,
         stats,
@@ -83,15 +88,7 @@ export const courseRouter = router({
       },
       include: {
         Reviews: true,
-        CourseMainImage: true,
-      },
-    });
-
-    const images = await db.image.findMany({
-      where: {
-        id: {
-          in: courses.map((course) => course.imageId),
-        },
+        Photos: true,
       },
     });
 
@@ -109,12 +106,16 @@ export const courseRouter = router({
         rating,
       };
 
+      const courseMainImage = course.Photos.find(
+        (photo) => photo.isMainPhoto === true
+      );
+
       const courseOnList: CourseOnList = {
         id: course.id,
         name: course.name,
         description: shrinkDescription(course.description, 120),
         price: formatPrice(course.price),
-        imageUrl: course.CourseMainImage?.url || "",
+        imageUrl: courseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         categoryId: course.categoryId,
         stats,
@@ -140,7 +141,7 @@ export const courseRouter = router({
         },
         include: {
           Reviews: true,
-          CourseMainImage: true,
+          Photos: true,
         },
       });
 
@@ -164,16 +165,19 @@ export const courseRouter = router({
         rating,
       };
 
+      const courseMainImage = course.Photos.find(
+        (photo) => photo.isMainPhoto === true
+      );
+
       const courseOnMarketplace: CourseOnMarketplace = {
         id: course?.id || "",
         name: course?.name || "",
         description: course?.description || "",
         price: formatPrice(course?.price || new Prisma.Decimal(0)),
-        imageUrl: course.CourseMainImage?.url || "",
+        imageUrl: courseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         creatorId: course?.creatorId || "",
         stripeProductId: course?.stripeProductId || "",
-        imageId: course?.imageId || "",
         stats,
         reviews: course.Reviews,
       };
@@ -227,7 +231,7 @@ export const courseRouter = router({
           id: courseId,
         },
         include: {
-          CourseMainImage: true,
+          Photos: true,
           Reviews: true,
         },
       });
@@ -252,14 +256,17 @@ export const courseRouter = router({
         rating,
       };
 
+      const courseMainImage = course.Photos.find(
+        (photo) => photo.isMainPhoto === true
+      );
+
       const courseWatch: CourseWatch = {
         id: course.id,
         name: course.name,
         description: course.description,
-        imageUrl: course.CourseMainImage?.url || "",
+        imageUrl: courseMainImage?.url || "",
         publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
         creatorId: course.creatorId,
-        imageId: course.imageId,
         categoryId: course.categoryId,
         stats,
       };
@@ -281,6 +288,9 @@ export const courseRouter = router({
         where: {
           id: courseId,
         },
+        include: {
+          Photos: true,
+        },
       });
 
       if (!course) {
@@ -296,7 +306,7 @@ export const courseRouter = router({
   createCourse: privateProcedure
     .input(CourseCreateValidator)
     .mutation(async ({ input, ctx }) => {
-      const { name, description, imageId, categoryId } = input;
+      const { name, description, categoryId } = input;
       const { user } = ctx;
 
       const price = new Prisma.Decimal(input.price);
@@ -315,7 +325,6 @@ export const courseRouter = router({
           name,
           price,
           description,
-          imageId,
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
           creatorId: user.id,
@@ -345,13 +354,11 @@ export const courseRouter = router({
   editCourse: privateProcedure
     .input(CourseEditValidator)
     .mutation(async ({ input, ctx }) => {
-      const { name, description, imageId, courseId, categoryId } = input;
+      const { name, description, courseId, categoryId } = input;
       const { user } = ctx;
 
       const newPrice = new Prisma.Decimal(input.price);
       const newPrismaPrice = parseFloat(input.price.replace(",", ".")) * 100;
-
-      console.log("price", newPrice);
 
       const course = await db.course.findUnique({
         where: {
@@ -399,7 +406,6 @@ export const courseRouter = router({
           name,
           price: newPrice,
           description,
-          imageId,
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
           categoryId,

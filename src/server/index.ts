@@ -1,5 +1,4 @@
 import { router } from "./trpc";
-import { testRouter } from "./test-router";
 import { orderRouter } from "./order-router";
 import { courseRouter } from "./course-router";
 import { adminRouter } from "./admin-router";
@@ -8,9 +7,9 @@ import { videoRouter } from "./video-router";
 import { userRouter } from "./user-router";
 import { chapterRouter } from "./chapter-router";
 import { reviewRouter } from "./review-router";
+import { photoRouter } from "./photo-router";
 
 export const appRouter = router({
-  test: testRouter,
   order: orderRouter,
   course: courseRouter,
   admin: adminRouter,
@@ -19,6 +18,7 @@ export const appRouter = router({
   user: userRouter,
   chapter: chapterRouter,
   review: reviewRouter,
+  photo: photoRouter,
 });
 
 export type AppRouter = typeof appRouter;

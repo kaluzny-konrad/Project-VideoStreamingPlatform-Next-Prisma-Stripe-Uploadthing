@@ -9,7 +9,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function WatchSubChapterPage({ params }: Props) {
   const { courseId, subChapterId } = params;
 
   const subChapter = await db.subChapter.findFirst({

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "./ui/button";
 import { Video } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -45,7 +45,6 @@ export default function CreatorEditVideoModal({
   }, [errors]);
 
   async function onSubmit(data: VideoEditRequest) {
-    console.log(data);
     editVideo(data);
     setOpenEditVideoId(undefined);
   }
@@ -65,7 +64,7 @@ export default function CreatorEditVideoModal({
     setValue("name", videoData.videoName);
     setValue("courseId", videoData.courseId);
     setValue("videoId", videoData.id);
-  }, [videoData]);
+  }, [videoData, setValue]);
 
   if (!videoData) return null;
 

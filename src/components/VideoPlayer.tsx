@@ -7,7 +7,6 @@ import {
   defaultLayoutIcons,
   DefaultVideoLayout,
 } from "@vidstack/react/player/layouts/default";
-
 import {
   MediaPlayer,
   MediaProvider,

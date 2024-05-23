@@ -35,7 +35,6 @@ export default function CreateSubChapterButton({
       name: "New Sub Chapter",
       chapterId: chapterId,
     };
-    console.log(data);
     createSubChapter(data);
   }
 

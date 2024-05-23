@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { privateProcedure, publicProcedure, router } from "./trpc";
+import { privateProcedure, router } from "./trpc";
 import { z } from "zod";
 import { CategoryValidator } from "@/lib/validators/category";
 

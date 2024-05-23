@@ -1,5 +1,4 @@
 import { db } from "@/db";
-import React from "react";
 import CreatorDeleteVideoButton from "./CreatorDeleteVideoButton";
 import CreatorEditVideoModalTrigger from "./CreatorEditVideoModalTrigger";
 

@@ -1,23 +1,20 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   DragDropContext,
-  DragStart,
-  DragUpdate,
   DropResult,
   Droppable,
   ResponderProvided,
 } from "@hello-pangea/dnd";
-import { Chapter, ChaptersState, SubChapter } from "@prisma/client";
+import { Chapter, SubChapter } from "@prisma/client";
 import { ChaptersFullState } from "@/types/chapter";
 import CreatorCourseChaptersDndListChapter from "./CreatorCourseChaptersDndListChapter";
 import CreateChapterButton from "./CreateChapterButton";
 import {
   MoveSubChapterRequest,
   UpdateSubChapterIdsOrderRequest,
-  UpdateSubChapterRequest,
 } from "@/lib/validators/chapter";
 
 type Props = {
@@ -36,12 +33,11 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     error: chaptersError,
   } = trpc.chapter.getChaptersState.useQuery({ courseId });
 
-  const [chaptersState, setChaptersState] = React.useState<
+  const [chaptersState, setChaptersState] = useState<
     ChaptersFullState | undefined
   >(undefined);
 
   useEffect(() => {
-    console.log(chaptersInitialState);
     if (chaptersInitialState) {
       setChaptersState(chaptersInitialState);
     }
@@ -50,20 +46,17 @@ export default function CreatorCourseChapters({ courseId }: Props) {
   const { mutate: updateChapterIdsOrder } =
     trpc.chapter.updateChapterIdsOrder.useMutation({
       onSuccess: (res) => {
-        console.log(res);
       },
     });
 
   const { mutate: updateSubChapterIdsOrder } =
     trpc.chapter.updateSubChapterIdsOrder.useMutation({
       onSuccess: (res) => {
-        console.log(res);
       },
     });
 
   const { mutate: moveSubChapter } = trpc.chapter.moveSubChapter.useMutation({
     onSuccess: (res) => {
-      console.log(res);
     },
   });
 
@@ -138,8 +131,6 @@ export default function CreatorCourseChapters({ courseId }: Props) {
           Chapters: newChapters,
         };
 
-        console.log(newState);
-
         setChaptersState(newState);
         const updateData: UpdateSubChapterIdsOrderRequest = {
           chapterId: startChapter.id,
@@ -209,7 +200,6 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       Chapters: [...chaptersState.Chapters, chapter],
     };
 
-    console.log(newChaptersState);
     setChaptersState(newChaptersState);
   };
 
@@ -228,8 +218,6 @@ export default function CreatorCourseChapters({ courseId }: Props) {
         (chapter) => chapter.id !== chapterId
       ),
     };
-
-    console.log(newChaptersState);
 
     setChaptersState(newChaptersState);
   };

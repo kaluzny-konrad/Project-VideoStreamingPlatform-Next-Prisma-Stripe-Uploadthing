@@ -26,7 +26,6 @@ export type CourseOnMarketplace = {
   publicatedAt: string;
   creatorId: string;
   stripeProductId: string;
-  imageId: string;
   stats: CourseStats;
   reviews: CourseReview[];
 }
@@ -44,7 +43,6 @@ export type CourseWatch = {
   imageUrl: string;
   publicatedAt: string;
   creatorId: string;
-  imageId: string;
   categoryId: string;
   stats: CourseStats;
 }

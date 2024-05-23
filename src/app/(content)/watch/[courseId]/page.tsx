@@ -1,4 +1,3 @@
-import CourseWatchDescription from "@/components/CourseWatchDescription";
 import { db } from "@/db";
 
 import { notFound, redirect } from "next/navigation";
@@ -9,7 +8,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function WatchCoursePage({ params }: Props) {
   const { courseId } = params;
 
   const chaptersState = await db.chaptersState.findUnique({

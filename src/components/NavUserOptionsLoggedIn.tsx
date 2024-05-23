@@ -1,5 +1,8 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import UserAvatar from "./UserAvatar";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
 
 type Props = {
   user: {

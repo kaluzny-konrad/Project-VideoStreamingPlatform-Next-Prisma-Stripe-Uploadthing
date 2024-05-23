@@ -36,7 +36,6 @@ export default function CoursesPrivateList({}: Props) {
 
   if (error) {
     toast.error("Error loading courses");
-    console.log(error);
   }
 
   return (

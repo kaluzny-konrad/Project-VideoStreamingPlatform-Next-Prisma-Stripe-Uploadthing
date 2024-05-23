@@ -2,7 +2,6 @@
 
 import { trpc } from "@/server/client";
 import Link from "next/link";
-import React from "react";
 import { toast } from "sonner";
 import { buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";

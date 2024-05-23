@@ -8,7 +8,6 @@ generator client {
 datasource db {
   provider     = "postgresql"
   url          = env("DATABASE_URL")
-  directUrl    = env("DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -87,13 +86,10 @@ model Course {
   categoryId String
 
   Reviews Review[]
-
-  CourseMainImage   Image? @relation(fields: [imageId], references: [id])
-  imageId String @unique
+  Photos  Photo[]
 
   @@index([categoryId])
   @@index([chaptersStateId])
-  @@index([imageId])
 }
 
 model Order {
@@ -135,12 +131,14 @@ model Video {
   @@index([courseId])
 }
 
-model Image {
-  id     String  @id @default(cuid())
-  key    String  @unique
-  url    String
-  
-  Course Course?
+model Photo {
+  id  String @id @default(cuid())
+  key String @unique
+  url String
+
+  isMainPhoto Boolean @default(false)
+
+  Courses Course[]
 }
 
 model Category {

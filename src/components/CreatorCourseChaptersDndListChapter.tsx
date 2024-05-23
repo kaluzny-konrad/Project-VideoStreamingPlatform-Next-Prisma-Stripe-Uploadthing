@@ -2,7 +2,6 @@
 
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { Chapter, SubChapter } from "@prisma/client";
-import React from "react";
 import CreatorCourseChaptersDndListSubChapter from "./CreatorCourseChaptersDndListSubChapter";
 import { ChapterActionTypes } from "./CreatorCourseChapters";
 import { cn } from "@/lib/utils";

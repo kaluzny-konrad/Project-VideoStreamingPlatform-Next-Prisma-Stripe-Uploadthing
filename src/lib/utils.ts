@@ -1,9 +1,10 @@
 import { type ClassValue, clsx } from "clsx";
-import { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
 import { Prisma } from "@prisma/client";
+
+import { Metadata } from "next";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

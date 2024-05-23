@@ -1,5 +1,4 @@
 import CourseMarketplaceData from "@/components/CourseMarketplaceData";
-import TextHeader from "@/components/base/TextHeader";
 import { getAuthSession } from "@/lib/auth";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function CoursePage({ params }: Props) {
   const { courseId } = params;
   const session = await getAuthSession();
 

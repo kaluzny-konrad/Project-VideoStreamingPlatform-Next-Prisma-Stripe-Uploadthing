@@ -44,7 +44,6 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
   }, [errors]);
 
   async function onSubmit(data: UpdateSubChapterRequest) {
-    console.log(data);
     updateSubChapter(data);
   }
 
@@ -71,7 +70,7 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
         setValue("name", subChapter.name);
       }
     }
-  }, [chaptersStatePreviousData]);
+  }, [chaptersStatePreviousData, setValue, subChapterId]);
 
   if (databaseLoading) {
     return <div>Loading...</div>;

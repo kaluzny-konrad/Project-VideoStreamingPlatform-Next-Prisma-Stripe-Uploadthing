@@ -1,7 +1,8 @@
 import { TRPCError, initTRPC } from "@trpc/server";
+import superjson from 'superjson';
+
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/db";
-import superjson from 'superjson';
 
 const t = initTRPC.create(
   {

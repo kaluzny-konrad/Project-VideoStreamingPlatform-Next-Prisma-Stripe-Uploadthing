@@ -1,5 +1,4 @@
 import AdminCategoryInfo from "@/components/AdminCategoryInfo";
-import UploadVideoZone from "@/components/UploadVideoZone";
 import React from "react";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   };
 };
 
-export default function page({ params }: Props) {
+export default function AdminCategoryPage({ params }: Props) {
   const { categoryId } = params;
 
   return (

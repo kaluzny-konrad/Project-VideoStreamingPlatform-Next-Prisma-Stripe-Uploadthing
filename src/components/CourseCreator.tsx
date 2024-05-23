@@ -1,7 +1,6 @@
 "use client";
 
 import { trpc } from "@/server/client";
-import Image from "next/image";
 import UserInfoBox from "./UserInfoBox";
 
 type Props = {

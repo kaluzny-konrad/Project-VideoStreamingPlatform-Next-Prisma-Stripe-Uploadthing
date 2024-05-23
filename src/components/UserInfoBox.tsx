@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 type PartialUser = Pick<User, "name" | "image">;

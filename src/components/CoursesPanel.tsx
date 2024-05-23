@@ -24,7 +24,6 @@ export default function CoursesPanel({
 
   if (error) {
     toast.error("Error loading categories");
-    console.log(error);
   }
 
   function handleClick(categoryId: string | null) {

@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
 import { Button } from "./ui/button";
 import { EditIcon } from "lucide-react";
 import CreatorEditVideoModal from "./CreatorEditVideoModal";
 import { Video } from "@prisma/client";
+import { useState } from "react";
 
 type Props = {
   videoId: string;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function CreatorEditVideoModalTrigger({ videoId, videoData }: Props) {
-  const [openEditVideoId, setOpenEditVideoId] = React.useState<
+  const [openEditVideoId, setOpenEditVideoId] = useState<
     string | undefined
   >(undefined);
 

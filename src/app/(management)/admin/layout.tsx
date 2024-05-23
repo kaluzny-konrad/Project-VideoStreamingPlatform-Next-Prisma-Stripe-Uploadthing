@@ -1,6 +1,6 @@
 import AdminPanel from "@/components/AdminPanel";
 
-export default async function CreatorLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;

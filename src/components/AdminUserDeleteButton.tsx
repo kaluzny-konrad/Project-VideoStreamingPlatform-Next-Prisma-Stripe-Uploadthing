@@ -3,6 +3,7 @@ import { trpc } from "@/server/client";
 import { Button } from "./ui/button";
 import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Props = {
   userId: string;
@@ -13,7 +14,7 @@ export default function AdminUserDeleteButton({ userId }: Props) {
 
   const { mutate: deleteUser } = trpc.admin.deleteUser.useMutation({
     onSuccess: () => {
-      console.log("User deleted");
+      toast("User deleted");
       router.refresh();
     },
     onError: (error) => {
@@ -22,8 +23,6 @@ export default function AdminUserDeleteButton({ userId }: Props) {
   });
 
   const handleDeleteUser = (userId: string) => async () => {
-    console.log("Deleting user", userId);
-
     deleteUser({
       userId,
     });

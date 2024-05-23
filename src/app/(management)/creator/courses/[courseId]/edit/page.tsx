@@ -8,7 +8,7 @@ type Props = {
   };
 };
 
-export default async function page({ params }: Props) {
+export default async function CreatorCourseEditPage({ params }: Props) {
   const { courseId } = params;
   return (
     <div className="p-4 bg-white rounded-xl min-h-96">

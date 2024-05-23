@@ -7,7 +7,6 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import CoursesPanel from "./CoursesPanel";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "./ui/button";
 import { useRef } from "react";

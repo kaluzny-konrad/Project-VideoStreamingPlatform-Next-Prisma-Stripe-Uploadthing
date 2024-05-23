@@ -4,9 +4,7 @@ import WrapperMaxWidth from "./WrapperMaxWidth";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-type Props = {};
-
-export default function Footer({}: Props) {
+export default function Footer() {
   const pathsToMinimize = ["/verify-email", "/sign-up", "/sign-in"];
   const pathname = usePathname();
 

@@ -8,9 +8,7 @@ import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 import { buttonVariants } from "./ui/button";
 import { trpc } from "@/server/client";
 
-type Props = {};
-
-export default function NavMobileHamburger({}: Props) {
+export default function NavMobileHamburger() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const pathname = usePathname();

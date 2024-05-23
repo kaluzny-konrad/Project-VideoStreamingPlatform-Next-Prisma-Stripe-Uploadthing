@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { Draggable } from "@hello-pangea/dnd";
 import { SubChapter } from "@prisma/client";
-import React from "react";
 import DeleteSubChapterButton from "./DeleteSubChapterButton";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
@@ -24,7 +23,6 @@ export default function CreatorCourseChaptersDndListSubChapter({
   const router = useRouter();
   
   const handleEditButton = () => {
-    console.log("Edit button clicked");
     router.push(`/creator/courses/${courseId}/subchapters/${subChapter.id}`);
   };
 

@@ -10,7 +10,7 @@ type Props = {
   };
 };
 
-export default function page({ params }: Props) {
+export default function CreatorSubChapterPage({ params }: Props) {
   const { courseId, subChapterId } = params;
 
   return (

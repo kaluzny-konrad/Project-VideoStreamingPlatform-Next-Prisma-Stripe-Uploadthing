@@ -1,7 +1,5 @@
 import CreatorCourseChapters from "@/components/CreatorCourseChapters";
 import CreatorCourseInfo from "@/components/CreatorCourseInfo";
-import CreatorCourseVideos from "@/components/CreatorCourseVideos";
-import UploadVideoZone from "@/components/UploadVideoZone";
 import { EditIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -12,7 +10,7 @@ type Props = {
   };
 };
 
-export default function page({ params }: Props) {
+export default function CreatorCoursePage({ params }: Props) {
   const { courseId } = params;
 
   return (

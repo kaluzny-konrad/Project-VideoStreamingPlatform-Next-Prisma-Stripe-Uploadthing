@@ -1,7 +1,6 @@
 import { db } from "@/db";
 import { getAuthSession } from "@/lib/auth";
 import Link from "next/link";
-import React from "react";
 
 type Props = {};
 

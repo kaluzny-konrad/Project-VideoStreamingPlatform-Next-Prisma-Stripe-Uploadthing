@@ -1,7 +1,8 @@
 import { z } from "zod";
+import { User } from "@prisma/client";
+
 import { privateProcedure, router } from "./trpc";
 import { db } from "@/db";
-import { User } from "@prisma/client";
 
 export const userRouter = router({
   getOwnedCourses: privateProcedure.query(

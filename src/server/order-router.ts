@@ -1,9 +1,10 @@
-import { privateProcedure, publicProcedure, router } from "./trpc";
+import { OrderStatus, Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { stripe } from "../lib/stripe";
+
+import { privateProcedure, publicProcedure, router } from "./trpc";
+import { stripe } from "@/lib/stripe";
 import { db } from "@/db";
-import { OrderStatus, Prisma } from "@prisma/client";
 import { absoluteUrl, getPriceSum } from "@/lib/utils";
 
 export const orderRouter = router({
@@ -70,8 +71,6 @@ export const orderRouter = router({
             orderId: order.id,
           },
         });
-
-        console.log(stripeSession);
 
         return { url: stripeSession.url };
       } catch (error) {
