@@ -161,7 +161,7 @@ export default function CreatorCourseCreateForm({}: Props) {
                 alt="Course image"
                 width={600}
                 height={400}
-                className="h-auto w-auto"
+                className="aspect-video object-cover"
                 priority
               />
               <PhotoDeleteButton

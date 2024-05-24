@@ -2,19 +2,36 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  CourseEditRequest,
-  CourseEditValidator,
-} from "@/lib/validators/course";
-import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Photo } from "@prisma/client";
 import Image from "next/image";
+
+import {
+  CourseEditRequest,
+  CourseEditValidator,
+} from "@/lib/validators/course";
+import { trpc } from "@/server/client";
 import PhotoUploadZone from "./PhotoUploadZone";
 import PhotoDeleteButton from "./PhotoDeleteButton";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+  SelectItem,
+} from "./ui/select";
 
 type Props = {
   courseId: string;
@@ -37,12 +54,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
     error: categoriesError,
   } = trpc.category.getCategories.useQuery();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<CourseEditRequest>({
+  const form = useForm<CourseEditRequest>({
     resolver: zodResolver(CourseEditValidator),
     defaultValues: {
       name: "",
@@ -53,12 +65,12 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
   });
 
   useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [key, value] of Object.entries(errors)) {
+    if (Object.keys(form.formState.errors).length) {
+      for (const [key, value] of Object.entries(form.formState.errors)) {
         toast.error(`Something went wrong: ${value.message}`);
       }
     }
-  }, [errors]);
+  }, [form.formState.errors]);
 
   async function onSubmit(data: CourseEditRequest) {
     editCourse(data);
@@ -86,14 +98,14 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
 
   useEffect(() => {
     if (coursePreviousData) {
-      setValue("name", coursePreviousData.name);
-      setValue("description", coursePreviousData.description);
-      setValue("price", coursePreviousData.price.toString());
-      setValue("categoryId", coursePreviousData.categoryId.toString());
-      setValue("courseId", coursePreviousData.id);
+      form.setValue("courseId", coursePreviousData.id);
+      form.setValue("name", coursePreviousData.name);
+      form.setValue("description", coursePreviousData.description);
+      form.setValue("price", coursePreviousData.price.toString());
+      form.setValue("categoryId", coursePreviousData.categoryId);
       setPhoto(coursePreviousData.Photos[0] ?? undefined);
     }
-  }, [coursePreviousData, databaseLoading, databaseError, setValue]);
+  }, [coursePreviousData, databaseLoading, databaseError, form.setValue]);
 
   if (categoriesLoading || databaseLoading) {
     return false;
@@ -119,57 +131,114 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
 
   return (
     <div>
-      <form id="edit-course" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="name">Course name</label>
-          <input type="text" id="name" {...register("name")} />
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <input type="text" id="description" {...register("description")} />
-        </div>
-        <div>
-          <label htmlFor="price">Price</label>
-          <input type="number" id="price" {...register("price")} />
-        </div>
-
-        {photo?.url ? (
-          <div>
-            <Image
-              src={photo.url}
-              alt="Course image"
-              width={600}
-              height={400}
-              className="h-auto w-auto"
-              priority
-            />
-            <PhotoDeleteButton
-              Photo={photo}
-              onPhotoDeleted={handlePhotoDeleted}
-            />
-          </div>
-        ) : (
-          <PhotoUploadZone
-            onClientUploadCompleted={onClientUploadCompleted}
-            onBeforeUploadBegined={onBeforeUploadBegined}
+      <Form {...form}>
+        <form
+          id="edit-course"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-4"
+        >
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Course name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Course name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        )}
 
-        <div>
-          <label htmlFor="categoryId">Category</label>
-          <select id="categoryId" {...register("categoryId")}>
-            {categories?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input placeholder="Course description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div>
-          <Button type="submit">Save course</Button>
-        </div>
-      </form>
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    placeholder="Course price"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {photo?.url ? (
+            <div>
+              <Image
+                src={photo.url}
+                alt="Course image"
+                width={600}
+                height={400}
+                className="aspect-video object-cover"
+                priority
+              />
+              <PhotoDeleteButton
+                Photo={photo}
+                onPhotoDeleted={handlePhotoDeleted}
+              />
+            </div>
+          ) : (
+            <PhotoUploadZone
+              onClientUploadCompleted={onClientUploadCompleted}
+              onBeforeUploadBegined={onBeforeUploadBegined}
+            />
+          )}
+
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={coursePreviousData.categoryId}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories?.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div>
+            <Button type="submit">Save course</Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
