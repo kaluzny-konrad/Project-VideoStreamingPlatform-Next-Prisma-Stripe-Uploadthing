@@ -16,9 +16,8 @@ export default function PhotoUploadZone({
 }: Props) {
   return (
     <UploadDropzone
-      className=""
+      className="ut-label:hidden"
       endpoint="photoUploader"
-      
       onBeforeUploadBegin={(files: File[]) => {
         onBeforeUploadBegined();
         return files;
