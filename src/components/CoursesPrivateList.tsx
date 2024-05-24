@@ -23,16 +23,18 @@ export default function CoursesPrivateList({}: Props) {
   useEffect(() => {
     if (isLoading || error) return;
 
-    if (categoriesStateValue.activeCategoryId === null) {
+    if (categoriesStateValue.activeCategoryIds.length === 0) {
       setActiveCourses(allCourses);
     } else {
       setActiveCourses(
         allCourses.filter((course) => {
-          return course.categoryId === categoriesStateValue.activeCategoryId;
+          return categoriesStateValue.activeCategoryIds.includes(
+            course.categoryId
+          );
         })
       );
     }
-  }, [isLoading, error, categoriesStateValue.activeCategoryId, allCourses]);
+  }, [isLoading, error, categoriesStateValue.activeCategoryIds, allCourses]);
 
   if (error) {
     toast.error("Error loading courses");

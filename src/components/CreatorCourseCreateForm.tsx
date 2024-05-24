@@ -15,6 +15,17 @@ import Image from "next/image";
 import PhotoDeleteButton from "./PhotoDeleteButton";
 import PhotoUploadZone from "./PhotoUploadZone";
 import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
+import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { SelectItem } from "@radix-ui/react-select";
 
 type Props = {};
 
@@ -29,12 +40,7 @@ export default function CreatorCourseCreateForm({}: Props) {
     error: categoriesError,
   } = trpc.category.getCategories.useQuery();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<CourseCreateRequest>({
+  const form = useForm<CourseCreateRequest>({
     resolver: zodResolver(CourseCreateValidator),
     defaultValues: {
       name: "",
@@ -45,12 +51,12 @@ export default function CreatorCourseCreateForm({}: Props) {
   });
 
   useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [key, value] of Object.entries(errors)) {
+    if (Object.keys(form.formState.errors).length) {
+      for (const [key, value] of Object.entries(form.formState.errors)) {
         toast.error(`Something went wrong: ${value.message}`);
       }
     }
-  }, [errors]);
+  }, [form.formState.errors]);
 
   async function onSubmit(data: CourseCreateRequest) {
     createCourse(data);
@@ -80,11 +86,11 @@ export default function CreatorCourseCreateForm({}: Props) {
     setPhoto(undefined);
   }
 
-  function onBeforeUploadBegin() {
+  function onBeforeUploadBegined() {
     setIsPhotoUploading(true);
   }
 
-  function onClientUploadComplete(photo: Photo) {
+  function onClientUploadCompleted(photo: Photo) {
     setPhoto(photo);
     setIsPhotoUploading(false);
   }
@@ -100,57 +106,110 @@ export default function CreatorCourseCreateForm({}: Props) {
 
   return (
     <div>
-      <form id="create-course" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="name">Course name</label>
-          <input type="text" id="name" {...register("name")} />
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <input type="text" id="description" {...register("description")} />
-        </div>
-        <div>
-          <label htmlFor="price">Price</label>
-          <input type="number" step="0.01" id="price" {...register("price")} />
-        </div>
-
-        {photo?.url ? (
-          <div>
-            <Image
-              src={photo.url}
-              alt="Course image"
-              width={600}
-              height={400}
-              className="h-auto w-auto"
-              priority
-            />
-            <PhotoDeleteButton
-              Photo={photo}
-              onPhotoDeleted={handlePhotoDeleted}
-            />
-          </div>
-        ) : (
-          <PhotoUploadZone
-            onClientUploadComplete={onClientUploadComplete}
-            onBeforeUploadBegin={onBeforeUploadBegin}
+      <Form {...form}>
+        <form id="create-course" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Course name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Course name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        )}
 
-        <div>
-          <label htmlFor="categoryId">Category</label>
-          <select id="categoryId" {...register("categoryId")}>
-            {categories?.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input placeholder="Course description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <div>
-          <Button type="submit">Save course</Button>
-        </div>
-      </form>
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    placeholder="Course price"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {photo?.url ? (
+            <div>
+              <Image
+                src={photo.url}
+                alt="Course image"
+                width={600}
+                height={400}
+                className="h-auto w-auto"
+                priority
+              />
+              <PhotoDeleteButton
+                Photo={photo}
+                onPhotoDeleted={handlePhotoDeleted}
+              />
+            </div>
+          ) : (
+            <PhotoUploadZone
+              onClientUploadCompleted={onClientUploadCompleted}
+              onBeforeUploadBegined={onBeforeUploadBegined}
+            />
+          )}
+
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a verified email to display" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories?.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div>
+            <Button type="submit">Save course</Button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }

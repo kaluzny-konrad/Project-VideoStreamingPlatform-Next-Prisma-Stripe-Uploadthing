@@ -21,7 +21,7 @@ type Props = {
 
 export default function NavUserOptionsLoggedIn({ user }: Props) {
   return (
-    <DropdownMenu data-testid="user-account-nav">
+    <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2">
         <UserAvatar
           user={{

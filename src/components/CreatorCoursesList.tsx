@@ -15,7 +15,7 @@ export default async function CreatorCoursesList({}: Props) {
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {courses.map((course) => (
         <Link key={course.id} href={`/creator/courses/${course.id}`}>
           <div>

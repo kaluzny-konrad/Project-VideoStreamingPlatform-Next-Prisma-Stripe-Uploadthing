@@ -1,11 +1,11 @@
 import { atom, useRecoilState } from "recoil";
 
 interface CategoriesState {
-  activeCategoryId: string | null;
+  activeCategoryIds: string[];
 }
 
 const defaultCategoriesState: CategoriesState = {
-  activeCategoryId: null,
+  activeCategoryIds: [],
 };
 
 export const categoriesState = atom<CategoriesState>({
@@ -17,15 +17,23 @@ export function useCategories() {
   const [categoriesStateValue, setCategoriesStateValue] =
     useRecoilState(categoriesState);
 
-  const setActive = (id: string | null) => {
-    setCategoriesStateValue({
-      ...categoriesStateValue,
-      activeCategoryId: id,
+  const toggleActive = (id: string) => {
+    setCategoriesStateValue((prev) => {
+      const isActive = prev.activeCategoryIds.includes(id);
+      if (isActive) {
+        return {
+          activeCategoryIds: prev.activeCategoryIds.filter((c) => c !== id),
+        };
+      } else {
+        return {
+          activeCategoryIds: [...prev.activeCategoryIds, id],
+        };
+      }
     });
   };
 
   return {
     categoriesStateValue,
-    setActive,
+    toggleActive,
   };
 }

@@ -11,6 +11,7 @@ import {
 import { stripe } from "../lib/stripe";
 import {
   CourseCreatorInfo,
+  CourseCreatorStats,
   CourseOnList,
   CourseOnMarketplace,
   CourseStats,
@@ -414,4 +415,38 @@ export const courseRouter = router({
 
       return updatedCourse;
     }),
+
+  getCourseCreatorStats: privateProcedure.query(async ({ ctx }) => {
+    const { user } = ctx;
+
+    const courses = await db.course.findMany({
+      where: {
+        creatorId: user.id,
+      },
+      include: {
+        Reviews: true,
+        Photos: true,
+      },
+    });
+
+    const stats: CourseCreatorStats = {
+      coursesCount: courses.length,
+      reviewsCount: courses.reduce(
+        (acc, course) => acc + course.Reviews.length,
+        0
+      ),
+      rating: courses.reduce((acc, course) => {
+        if (course.Reviews.length > 0) {
+          return (
+            acc +
+            course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
+              course.Reviews.length
+          );
+        }
+        return acc;
+      }, 0),
+    };
+
+    return stats;
+  }),
 });

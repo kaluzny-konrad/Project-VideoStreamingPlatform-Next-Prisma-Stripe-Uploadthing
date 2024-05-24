@@ -27,7 +27,8 @@ export default function CourseRow({ course, redirectToWatch }: Props) {
             priority
             className={cn(
               "lg:h-42 rounded-lg object-cover",
-              "group-hover:opacity-80 transition-opacity duration-300"
+              "group-hover:opacity-80 transition-opacity duration-300",
+              "aspect-video"
             )}
           />
         </div>

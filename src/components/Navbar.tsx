@@ -2,8 +2,8 @@ import WrapperMaxWidth from "./WrapperMaxWidth";
 import NavUserOptions from "./NavUserOptions";
 import Link from "next/link";
 import NavDesktopItems from "./NavDesktopItems";
-import NavMobileHamburger from "./NavMobileHamburger";
 import Image from "next/image";
+import NavMobileMenu from "./NavMobileMenu";
 
 export default function Navbar() {
   return (
@@ -11,8 +11,8 @@ export default function Navbar() {
       <header className="relative bg-white">
         <WrapperMaxWidth>
           <div className="flex justify-between p-4">
-            <div className="lg:hidden">
-              <NavMobileHamburger />
+            <div className="lg:hidden flex">
+              <NavMobileMenu />
             </div>
 
             <Link href="/" className="flex items-center">

@@ -64,6 +64,7 @@
 - [ ] Features: Creator Panel - List of courses - backend
 - [ ] Features: Admin Panel - deep delete backend
 - [ ] Features: Delete data in stripe
+- [ ] Fix: Images should have default ratio 16:9
 - [ ] Styling: all pages
 - [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions

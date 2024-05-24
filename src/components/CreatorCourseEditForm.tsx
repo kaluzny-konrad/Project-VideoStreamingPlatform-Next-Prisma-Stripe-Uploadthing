@@ -108,11 +108,11 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
     setPhoto(undefined);
   }
 
-  function onBeforeUploadBegin() {
+  function onBeforeUploadBegined() {
     setIsPhotoUploading(true);
   }
 
-  function onClientUploadComplete(photo: Photo) {
+  function onClientUploadCompleted(photo: Photo) {
     setPhoto(photo);
     setIsPhotoUploading(false);
   }
@@ -150,8 +150,8 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
           </div>
         ) : (
           <PhotoUploadZone
-            onClientUploadComplete={onClientUploadComplete}
-            onBeforeUploadBegin={onBeforeUploadBegin}
+            onClientUploadCompleted={onClientUploadCompleted}
+            onBeforeUploadBegined={onBeforeUploadBegined}
           />
         )}
 

@@ -3,30 +3,31 @@
 import { Photo } from "@prisma/client";
 import { toast } from "sonner";
 
-import { UploadButton } from "@/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 type Props = {
-  onClientUploadComplete: (photo: Photo) => void;
-  onBeforeUploadBegin: () => void;
+  onClientUploadCompleted: (photo: Photo) => void;
+  onBeforeUploadBegined: () => void;
 };
 
 export default function PhotoUploadZone({
-  onClientUploadComplete,
-  onBeforeUploadBegin,
+  onClientUploadCompleted,
+  onBeforeUploadBegined,
 }: Props) {
   return (
-    <UploadButton
-      className="w-full p-8"
+    <UploadDropzone
+      className=""
       endpoint="photoUploader"
+      
       onBeforeUploadBegin={(files: File[]) => {
-        onBeforeUploadBegin();
+        onBeforeUploadBegined();
         return files;
       }}
       onClientUploadComplete={(res: any) => {
         if (typeof res === "undefined") return;
         const photo = res[0].serverData?.uploadedFile as Photo;
         if (typeof photo === "undefined") return;
-        onClientUploadComplete(photo);
+        onClientUploadCompleted(photo);
       }}
       onUploadError={(error: Error) => {
         if (typeof error.message === "string") {
@@ -37,6 +38,6 @@ export default function PhotoUploadZone({
         }
         toast.error(`Something went wrong.`);
       }}
-    ></UploadButton>
+    />
   );
 }

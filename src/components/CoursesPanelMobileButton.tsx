@@ -39,7 +39,7 @@ export default function CoursesPanelMobileButton({}: Props) {
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild ref={dialogCloseRef}>
             <Button type="button" variant="secondary">
-              Close
+              Show courses
             </Button>
           </DialogClose>
         </DialogFooter>

@@ -46,3 +46,9 @@ export type CourseWatch = {
   categoryId: string;
   stats: CourseStats;
 }
+
+export type CourseCreatorStats = {
+  coursesCount: number;
+  reviewsCount: number;
+  rating: number;
+}
