@@ -24,8 +24,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
-import { SelectItem } from "@radix-ui/react-select";
+import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from "./ui/select";
 
 type Props = {};
 
@@ -189,7 +188,7 @@ export default function CreatorCourseCreateForm({}: Props) {
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a verified email to display" />
+                      <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
