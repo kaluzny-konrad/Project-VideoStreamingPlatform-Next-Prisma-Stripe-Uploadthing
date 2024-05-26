@@ -11,9 +11,9 @@ type Props = {
 export default async function WatchCoursePage({ params }: Props) {
   const { courseId } = params;
 
-  const chaptersState = await db.chaptersState.findUnique({
+  const course = await db.course.findUnique({
     where: {
-      courseId,
+      id: courseId,
     },
     include: {
       Chapters: true,
@@ -21,13 +21,13 @@ export default async function WatchCoursePage({ params }: Props) {
     }
   });
 
-  if (!chaptersState) {
+  if (!course) {
     notFound();
   }
 
-  if (chaptersState) {
-    const firstChapterId = chaptersState.ChapterIdsOrder[0];
-    const firstChapter = chaptersState.Chapters.find(
+  if (course) {
+    const firstChapterId = course.ChapterIdsOrder[0];
+    const firstChapter = course.Chapters.find(
       (chapter) => chapter.id === firstChapterId
     );
     const firstSubChapterId = firstChapter?.SubChapterIdsOrder[0];

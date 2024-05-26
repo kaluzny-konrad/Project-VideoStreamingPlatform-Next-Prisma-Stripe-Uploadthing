@@ -30,7 +30,6 @@ const onVideoUploadComplete = async ({
         key: file.key,
         fileName: file.name,
         url: file.url,
-        courseId: "",
         videoName: file.name,
         subChapterId: "",
       },

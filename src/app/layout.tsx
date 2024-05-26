@@ -5,7 +5,6 @@ import { cn, constructMetadata } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
 
 const inter = Inter({ subsets: ["latin"] });
 

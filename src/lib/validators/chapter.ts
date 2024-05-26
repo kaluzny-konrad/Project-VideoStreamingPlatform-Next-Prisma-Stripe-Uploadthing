@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const GetChaptersStateValidator = z.object({
+  courseId: z.string(),
+});
+
 export const UpdateChapterIdsOrderValidator = z.object({
   courseId: z.string(),
   chaptersIdsOrder: z.array(z.string()),
@@ -66,5 +70,7 @@ export type UpdateSubChapterRequest = z.infer<typeof UpdateSubChapterValidator>;
 export type DeleteChapterRequest = z.infer<typeof DeleteChapterValidator>;
 export type DeleteSubChapterRequest = z.infer<typeof DeleteSubChapterValidator>;
 
-export type UpdateSubChapterIdsOrderRequest = z.infer<typeof UpdateSubChapterIdsOrderValidator>;
+export type UpdateSubChapterIdsOrderRequest = z.infer<
+  typeof UpdateSubChapterIdsOrderValidator
+>;
 export type MoveSubChapterRequest = z.infer<typeof MoveSubChapterValidator>;

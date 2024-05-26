@@ -7,6 +7,7 @@ import {
   CreateSubChapterValidator,
   DeleteChapterValidator,
   DeleteSubChapterValidator,
+  GetChaptersStateValidator,
   MoveSubChapterValidator,
   UpdateChapterIdsOrderValidator,
   UpdateChapterValidator,
@@ -15,6 +16,28 @@ import {
 } from "@/lib/validators/chapter";
 
 export const chapterRouter = router({
+  getChaptersState: privateProcedure
+    .input(GetChaptersStateValidator)
+    .query(async ({ input }) => {
+      const { courseId } = input;
+
+      const course = await db.course.findFirst({
+        where: {
+          id: courseId,
+        },
+        include: {
+          Chapters: true,
+          SubChapters: true,
+        }
+      });
+
+      if (!course) {
+        throw new Error("No chapters state");
+      }
+
+      return course;
+    }),
+
   createChapter: privateProcedure
     .input(CreateChapterValidator)
     .mutation(async ({ input }) => {
