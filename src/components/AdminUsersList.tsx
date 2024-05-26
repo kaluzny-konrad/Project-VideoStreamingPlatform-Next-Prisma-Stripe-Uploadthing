@@ -2,9 +2,7 @@ import { db } from "@/db";
 import React from "react";
 import AdminUserDeleteButton from "./AdminUserDeleteButton";
 
-type Props = {};
-
-export default async function AdminUsersList({}: Props) {
+export default async function AdminUsersList() {
   const users = await db.user.findMany();
 
   return (

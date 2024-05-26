@@ -25,7 +25,7 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
     data: course,
     error,
     isLoading,
-  } = trpc.course.getCourseMarketplaceView.useQuery({ courseId });
+  } = trpc.course.getCourse.useQuery({ courseId });
 
   const { data: courseOwned, error: errorCourseOwned } =
     trpc.user.isCourseOwned.useQuery({
@@ -53,8 +53,9 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
               height={400}
               priority
               className={cn(
-                "h-36 rounded-lg object-cover",
-                "group-hover:opacity-80 transition-opacity duration-300"
+                "rounded-lg object-cover",
+                "group-hover:opacity-80 transition-opacity duration-300",
+                "aspect-video"
               )}
             />
             <div className="flex flex-col mb-2 space-y-4">
@@ -74,20 +75,19 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
                   </Link>
                 )}
               </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 lg:flex-row">
-            <div className="w-full lg:w-fit">
-              <CourseCreator creatorId={course.creatorId} />
-            </div>
-            <div>
-              <TextSubHeader text="Course stats" />
-              <CourseStatsRow
-                price={course.price}
-                publicatedAt={course.publicatedAt}
-                rating={course.stats.rating}
-                reviews={course.stats.reviews}
-              />
+              <div className="flex flex-col gap-4 lg:flex-row items-center">
+                <div className="w-full lg:w-fit">
+                  <CourseCreator creatorId={course.creatorId} />
+                </div>
+                <div>
+                  <CourseStatsRow
+                    price={course.price}
+                    publicatedAt={course.publicatedAt}
+                    rating={course.stats.rating}
+                    reviews={course.stats.reviews}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div>

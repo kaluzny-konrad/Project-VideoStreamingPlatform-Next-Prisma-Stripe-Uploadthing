@@ -8,7 +8,7 @@ type Props = {
   courseId: string;
   chapter: Chapter;
   subChapters: SubChapter[];
-  chaptersStateId: string;
+  courseId: string;
   closeModal?: () => void;
 };
 
@@ -16,7 +16,7 @@ export default function CourseChaptersList({
   courseId,
   chapter,
   subChapters,
-  chaptersStateId,
+  courseId,
   closeModal
 }: Props) {
   const pathname = usePathname();

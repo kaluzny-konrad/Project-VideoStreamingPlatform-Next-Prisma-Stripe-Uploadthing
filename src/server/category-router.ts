@@ -10,7 +10,7 @@ export const categoryRouter = router({
   getActiveCategories: publicProcedure.query(async () => {
     const categories = await db.category.findMany({
       include: {
-        CoursesInCategory: {
+        Courses: {
           select: {
             id: true,
           },
@@ -19,7 +19,7 @@ export const categoryRouter = router({
     });
 
     return categories.filter(
-      (category) => category.CoursesInCategory.length > 0
+      (category) => category.Courses.length > 0
     );
   }),
 });

@@ -2,9 +2,7 @@ import { db } from '@/db';
 import React from 'react'
 import AdminVideoDeleteButton from './AdminVideoDeleteButton';
 
-type Props = {}
-
-export default async function AdminVideosList({}: Props) {
+export default async function AdminVideosList() {
     const videos = await db.video.findMany();
   
     return (

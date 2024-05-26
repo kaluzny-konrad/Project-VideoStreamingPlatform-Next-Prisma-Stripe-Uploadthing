@@ -16,7 +16,7 @@ export default function CoursesPublicList({}: Props) {
     data: allCourses,
     isLoading,
     error,
-  } = trpc.course.getCoursesListView.useQuery();
+  } = trpc.course.getCourses.useQuery();
 
   const { categoriesStateValue } = useCategories();
 

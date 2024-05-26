@@ -6,9 +6,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import IconLoader from "./IconLoader";
 
-type Props = {};
-
-export default function AuthLogInGoogle({}: Props) {
+export default function AuthLogInGoogle() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const loginWithGoogle = async () => {

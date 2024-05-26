@@ -8,19 +8,10 @@ import {
   CourseCreateValidator,
   CourseEditValidator,
 } from "@/lib/validators/course";
-import { stripe } from "../lib/stripe";
-import {
-  CourseCreatorInfo,
-  CourseCreatorStats,
-  CourseOnList,
-  CourseOnMarketplace,
-  CourseStats,
-  CourseWatch,
-} from "@/types/course";
-import { formatPrice, formatTimeToNow, shrinkDescription } from "@/lib/utils";
+import { stripe } from "@/lib/stripe";
 
 export const courseRouter = router({
-  getCoursesListView: publicProcedure.query(async () => {
+  getCourses: publicProcedure.query(async () => {
     const courses = await db.course.findMany({
       include: {
         Reviews: true,
@@ -28,41 +19,10 @@ export const courseRouter = router({
       },
     });
 
-    const coursesOnList = courses.map((course) => {
-      let rating = 0;
-      if (course.Reviews.length > 0) {
-        rating =
-          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
-          course.Reviews.length;
-      }
-
-      const stats: CourseStats = {
-        views: 0,
-        reviews: course.Reviews.length,
-        rating,
-      };
-
-      const courseMainImage = course.Photos.find(
-        (photo) => photo.isMainPhoto === true
-      );
-
-      const courseOnList: CourseOnList = {
-        id: course.id,
-        name: course.name,
-        description: shrinkDescription(course.description, 120),
-        price: formatPrice(course.price),
-        imageUrl: courseMainImage?.url || "",
-        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
-        categoryId: course.categoryId,
-        stats,
-      };
-      return courseOnList;
-    });
-
-    return coursesOnList;
+    return courses;
   }),
 
-  getBoughtCoursesListView: privateProcedure.query(async ({ ctx }) => {
+  getCoursesOwnedByUser: privateProcedure.query(async ({ ctx }) => {
     const { user } = ctx;
 
     const userDb = await db.user.findUnique({
@@ -93,41 +53,10 @@ export const courseRouter = router({
       },
     });
 
-    const coursesOnList = courses.map((course) => {
-      let rating = 0;
-      if (course.Reviews.length > 0) {
-        rating =
-          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
-          course.Reviews.length;
-      }
-
-      const stats: CourseStats = {
-        views: 0,
-        reviews: course.Reviews.length,
-        rating,
-      };
-
-      const courseMainImage = course.Photos.find(
-        (photo) => photo.isMainPhoto === true
-      );
-
-      const courseOnList: CourseOnList = {
-        id: course.id,
-        name: course.name,
-        description: shrinkDescription(course.description, 120),
-        price: formatPrice(course.price),
-        imageUrl: courseMainImage?.url || "",
-        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
-        categoryId: course.categoryId,
-        stats,
-      };
-      return courseOnList;
-    });
-
-    return coursesOnList;
+    return courses;
   }),
 
-  getCourseMarketplaceView: publicProcedure
+  getCourse: publicProcedure
     .input(
       z.object({
         courseId: z.string(),
@@ -142,154 +71,6 @@ export const courseRouter = router({
         },
         include: {
           Reviews: true,
-          Photos: true,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
-
-      let rating = 0;
-      if (course.Reviews.length > 0) {
-        rating =
-          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
-          course.Reviews.length;
-      }
-
-      const stats: CourseStats = {
-        views: 0,
-        reviews: course.Reviews.length,
-        rating,
-      };
-
-      const courseMainImage = course.Photos.find(
-        (photo) => photo.isMainPhoto === true
-      );
-
-      const courseOnMarketplace: CourseOnMarketplace = {
-        id: course?.id || "",
-        name: course?.name || "",
-        description: course?.description || "",
-        price: formatPrice(course?.price || new Prisma.Decimal(0)),
-        imageUrl: courseMainImage?.url || "",
-        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
-        creatorId: course?.creatorId || "",
-        stripeProductId: course?.stripeProductId || "",
-        stats,
-        reviews: course.Reviews,
-      };
-
-      return courseOnMarketplace;
-    }),
-
-  getCourseCreatorInfo: publicProcedure
-    .input(
-      z.object({
-        creatorId: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      const { creatorId } = input;
-
-      const creator = await db.user.findUnique({
-        where: {
-          id: creatorId,
-        },
-      });
-
-      if (!creator) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Creator not found",
-        });
-      }
-
-      const creatorInfo: CourseCreatorInfo = {
-        id: creator.id,
-        name: creator.name || "Anonim",
-        image: creator.image || "",
-      };
-
-      return creatorInfo;
-    }),
-
-  getCourseWatchView: privateProcedure
-    .input(
-      z.object({
-        courseId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { courseId } = input;
-      const { user } = ctx;
-
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-        include: {
-          Photos: true,
-          Reviews: true,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
-
-      let rating = 0;
-      if (course.Reviews.length > 0) {
-        rating =
-          course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
-          course.Reviews.length;
-      }
-
-      const stats: CourseStats = {
-        views: 0,
-        reviews: course.Reviews.length,
-        rating,
-      };
-
-      const courseMainImage = course.Photos.find(
-        (photo) => photo.isMainPhoto === true
-      );
-
-      const courseWatch: CourseWatch = {
-        id: course.id,
-        name: course.name,
-        description: course.description,
-        imageUrl: courseMainImage?.url || "",
-        publicatedAt: formatTimeToNow(new Date()), // ToDo: add publicatedAt to the course
-        creatorId: course.creatorId,
-        categoryId: course.categoryId,
-        stats,
-      };
-
-      return courseWatch;
-    }),
-
-  getCourse: privateProcedure
-    .input(
-      z.object({
-        courseId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { courseId } = input;
-      const { user } = ctx;
-
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-        include: {
           Photos: true,
         },
       });
@@ -330,25 +111,9 @@ export const courseRouter = router({
           stripeProductId: stripeProduct.id,
           creatorId: user.id,
           categoryId,
-          chaptersStateId: "",
         },
       });
-
-      const chaptersState = await db.chaptersState.create({
-        data: {
-          courseId: course.id,
-        },
-      });
-
-      await db.course.update({
-        where: {
-          id: course.id,
-        },
-        data: {
-          chaptersStateId: chaptersState.id,
-        },
-      });
-
+      
       return course;
     }),
 
@@ -415,38 +180,4 @@ export const courseRouter = router({
 
       return updatedCourse;
     }),
-
-  getCourseCreatorStats: privateProcedure.query(async ({ ctx }) => {
-    const { user } = ctx;
-
-    const courses = await db.course.findMany({
-      where: {
-        creatorId: user.id,
-      },
-      include: {
-        Reviews: true,
-        Photos: true,
-      },
-    });
-
-    const stats: CourseCreatorStats = {
-      coursesCount: courses.length,
-      reviewsCount: courses.reduce(
-        (acc, course) => acc + course.Reviews.length,
-        0
-      ),
-      rating: courses.reduce((acc, course) => {
-        if (course.Reviews.length > 0) {
-          return (
-            acc +
-            course.Reviews.reduce((acc, review) => acc + review.rating, 0) /
-              course.Reviews.length
-          );
-        }
-        return acc;
-      }, 0),
-    };
-
-    return stats;
-  }),
 });

@@ -28,8 +28,8 @@ export default function CourseCheckoutButton({
   }
 
   return (
-    <Button onClick={handleCourseCheckout} variant={"destructive"}>
-      CourseCheckoutButton
+    <Button onClick={handleCourseCheckout}>
+      Buy now
     </Button>
   );
 }

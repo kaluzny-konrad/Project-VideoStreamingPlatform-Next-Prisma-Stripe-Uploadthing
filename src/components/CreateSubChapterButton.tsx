@@ -8,7 +8,7 @@ import { SubChapter } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 
 type Props = {
-  chaptersStateId: string;
+  courseId: string;
   chapterId: string;
   pushSubChapterToChaptersState: (
     SubChapter: SubChapter,
@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function CreateSubChapterButton({
-  chaptersStateId,
+  courseId,
   chapterId,
   pushSubChapterToChaptersState,
 }: Props) {
@@ -31,7 +31,7 @@ export default function CreateSubChapterButton({
 
   async function handleCreateSubChapter() {
     const data: CreateSubChapterRequest = {
-      chaptersStateId: chaptersStateId,
+      courseId: courseId,
       name: "New Sub Chapter",
       chapterId: chapterId,
     };

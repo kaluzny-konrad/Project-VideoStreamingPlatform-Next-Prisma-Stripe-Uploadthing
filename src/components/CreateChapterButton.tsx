@@ -7,12 +7,12 @@ import { CreateChapterRequest } from "@/lib/validators/chapter";
 import { Chapter } from "@prisma/client";
 
 type Props = {
-  chaptersStateId: string;
+  courseId: string;
   pushChapterToChaptersState: (Chapter: Chapter) => void;
 };
 
 export default function CreateChapterButton({
-  chaptersStateId,
+  courseId,
   pushChapterToChaptersState,
 }: Props) {
   const { mutate: createChapter } = trpc.chapter.createChapter.useMutation({
@@ -24,7 +24,7 @@ export default function CreateChapterButton({
 
   async function handleCreateChapter() {
     const data: CreateChapterRequest = {
-      chaptersStateId: chaptersStateId,
+      courseId: courseId,
       name: "New Chapter",
     };
     createChapter(data);

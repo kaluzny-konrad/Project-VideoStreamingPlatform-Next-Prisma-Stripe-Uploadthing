@@ -9,7 +9,6 @@ import {
   VideoEditValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
-import { VideoOnList, VideoToWatch } from "@/types/video";
 
 export const videoRouter = router({
   getVideosIncludedInCourse: privateProcedure

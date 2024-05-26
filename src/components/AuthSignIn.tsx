@@ -13,9 +13,7 @@ import { Label } from "@/components/ui/label"
 
 import AuthLogInGoogle from './AuthLogInGoogle'
 
-type Props = {}
-
-export default function AuthSignIn({}: Props) {
+export default function AuthSignIn() {
 
   return (
     <Card className="mx-auto max-w-sm">

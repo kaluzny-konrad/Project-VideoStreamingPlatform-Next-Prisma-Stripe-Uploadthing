@@ -6,6 +6,6 @@ export default function CourseDescriptionButton({
     courseId
 }: Props) {
   return (
-    <div>CourseDescriptionButton</div>
+    <div>CourseDescriptionButton</div>  // ToDo: Implement CourseDescriptionButton
   )
 }

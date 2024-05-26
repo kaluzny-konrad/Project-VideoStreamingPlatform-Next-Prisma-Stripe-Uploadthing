@@ -50,7 +50,7 @@ export default function CourseChapters({ courseId, closeModal }: Props) {
                     courseId={courseId}
                     chapter={chapter}
                     subChapters={subChapters}
-                    chaptersStateId={chaptersState.id}
+                    courseId={chaptersState.id}
                     closeModal={closeModal}
                 />
             )

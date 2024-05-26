@@ -16,7 +16,7 @@ type Props = {
   chapter: Chapter;
   chapterIndex: number;
   subChapters: SubChapter[];
-  chaptersStateId: string;
+  courseId: string;
   pushSubChapterToChaptersState: (
     subChapter: SubChapter,
     chapterId: string
@@ -31,7 +31,7 @@ export default function CreatorCourseChaptersDndListChapter({
   chapter,
   chapterIndex,
   subChapters,
-  chaptersStateId,
+  courseId,
   pushSubChapterToChaptersState,
   deleteChapterFromChaptersState,
   deleteSubChapterFromChaptersState,
@@ -104,7 +104,7 @@ export default function CreatorCourseChaptersDndListChapter({
 
                 <div className="flex">
                   <CreateSubChapterButton
-                    chaptersStateId={chaptersStateId}
+                    courseId={courseId}
                     chapterId={chapter.id}
                     pushSubChapterToChaptersState={
                       pushSubChapterToChaptersState

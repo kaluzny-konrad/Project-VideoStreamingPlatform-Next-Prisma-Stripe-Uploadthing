@@ -90,7 +90,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
 
       setChaptersState(newChaptersState);
       updateChapterIdsOrder({
-        chaptersStateId: chaptersState.id,
+        courseId: chaptersState.id,
         chaptersIdsOrder: newChapterIdsOrder,
       });
       return;
@@ -334,7 +334,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                           chapter={chapter}
                           chapterIndex={chapterIndex}
                           subChapters={subChapters}
-                          chaptersStateId={chaptersState.id}
+                          courseId={chaptersState.id}
                           pushSubChapterToChaptersState={
                             pushSubChapterToChaptersState
                           }
@@ -356,7 +356,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
           </DragDropContext>
 
           <CreateChapterButton
-            chaptersStateId={chaptersState.id}
+            courseId={chaptersState.id}
             pushChapterToChaptersState={pushChapterToChaptersState}
           />
         </>
