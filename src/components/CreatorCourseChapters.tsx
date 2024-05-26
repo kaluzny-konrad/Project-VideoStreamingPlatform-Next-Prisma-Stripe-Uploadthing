@@ -9,7 +9,6 @@ import {
   ResponderProvided,
 } from "@hello-pangea/dnd";
 import { Chapter, SubChapter } from "@prisma/client";
-import { ChaptersFullState } from "@/types/chapter";
 import CreatorCourseChaptersDndListChapter from "./CreatorCourseChaptersDndListChapter";
 import CreateChapterButton from "./CreateChapterButton";
 import {
@@ -33,9 +32,9 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     error: chaptersError,
   } = trpc.chapter.getChaptersState.useQuery({ courseId });
 
-  const [chaptersState, setChaptersState] = useState<
-    ChaptersFullState | undefined
-  >(undefined);
+  const [chaptersState, setChaptersState] = useState<typeof chaptersInitialState | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (chaptersInitialState) {
@@ -45,19 +44,16 @@ export default function CreatorCourseChapters({ courseId }: Props) {
 
   const { mutate: updateChapterIdsOrder } =
     trpc.chapter.updateChapterIdsOrder.useMutation({
-      onSuccess: (res) => {
-      },
+      onSuccess: (res) => {},
     });
 
   const { mutate: updateSubChapterIdsOrder } =
     trpc.chapter.updateSubChapterIdsOrder.useMutation({
-      onSuccess: (res) => {
-      },
+      onSuccess: (res) => {},
     });
 
   const { mutate: moveSubChapter } = trpc.chapter.moveSubChapter.useMutation({
-    onSuccess: (res) => {
-    },
+    onSuccess: (res) => {},
   });
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
@@ -83,7 +79,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       newChapterIdsOrder.splice(source.index, 1);
       newChapterIdsOrder.splice(destination.index, 0, draggableId);
 
-      const newChaptersState: ChaptersFullState = {
+      const newChaptersState: typeof chaptersInitialState = {
         ...chaptersState,
         ChapterIdsOrder: newChapterIdsOrder,
       };
@@ -126,7 +122,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
           return chapter;
         });
 
-        const newState: ChaptersFullState = {
+        const newState: typeof chaptersInitialState = {
           ...chaptersState,
           Chapters: newChapters,
         };
@@ -163,7 +159,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
           return chapter;
         });
 
-        const newState: ChaptersFullState = {
+        const newState: typeof chaptersInitialState = {
           ...chaptersState,
           Chapters: newChapters,
         };
@@ -194,7 +190,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     }
 
-    const newChaptersState: ChaptersFullState = {
+    const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       ChapterIdsOrder: [...chaptersState.ChapterIdsOrder, chapter.id],
       Chapters: [...chaptersState.Chapters, chapter],
@@ -209,7 +205,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     }
 
-    const newChaptersState: ChaptersFullState = {
+    const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       ChapterIdsOrder: chaptersState.ChapterIdsOrder.filter(
         (id) => id !== chapterId
@@ -231,7 +227,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     }
 
-    const newChaptersState: ChaptersFullState = {
+    const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       SubChapters: [...chaptersState.SubChapters, subChapter],
       Chapters: chaptersState.Chapters.map((chapter) => {
@@ -255,7 +251,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     }
 
-    const newChaptersState: ChaptersFullState = {
+    const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       SubChapters: chaptersState.SubChapters.filter(
         (subChapter) => subChapter.id !== subChapterId
@@ -279,7 +275,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     }
 
-    const newChaptersState: ChaptersFullState = {
+    const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       Chapters: chaptersState.Chapters.map((chapter) => {
         if (chapter.id === chapterId) {
@@ -334,7 +330,6 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                           chapter={chapter}
                           chapterIndex={chapterIndex}
                           subChapters={subChapters}
-                          courseId={chaptersState.id}
                           pushSubChapterToChaptersState={
                             pushSubChapterToChaptersState
                           }

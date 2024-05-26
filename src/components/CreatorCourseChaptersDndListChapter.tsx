@@ -16,7 +16,6 @@ type Props = {
   chapter: Chapter;
   chapterIndex: number;
   subChapters: SubChapter[];
-  courseId: string;
   pushSubChapterToChaptersState: (
     subChapter: SubChapter,
     chapterId: string
@@ -31,7 +30,6 @@ export default function CreatorCourseChaptersDndListChapter({
   chapter,
   chapterIndex,
   subChapters,
-  courseId,
   pushSubChapterToChaptersState,
   deleteChapterFromChaptersState,
   deleteSubChapterFromChaptersState,
