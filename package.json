@@ -32,7 +32,7 @@
     "@trpc/react-query": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "@uploadthing/react": "^6.5.4",
-    "@vidstack/react": "^0.6.15",
+    "@vidstack/react": "^1.11.21",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
