@@ -13,7 +13,7 @@ type Props = {
 
 export default function VideoUploadZone({ courseId, subChapterId }: Props) {
   const router = useRouter();
-  const { mutate: addVideo } = trpc.video.addVideoToCourse.useMutation({
+  const { mutate: addVideo } = trpc.video.connectVideoWithCourse.useMutation({
     onSuccess: (res) => {
       toast.success("Video added to course");
       router.refresh();

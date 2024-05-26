@@ -11,7 +11,7 @@ export default function CourseVideo({ subChapterId }: Props) {
     data: video,
     error,
     isLoading,
-  } = trpc.video.getVideoToWatch.useQuery({
+  } = trpc.video.getVideo.useQuery({
     subChapterId,
   });
 

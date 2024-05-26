@@ -4,53 +4,14 @@ import { TRPCError } from "@trpc/server";
 import { privateProcedure, router } from "./trpc";
 import { db } from "@/db";
 import {
-  AddVideoValidator,
+  ConnectVideoWithCourseValidator,
   DeleteVideoValidator,
   VideoEditValidator,
 } from "@/lib/validators/video";
 import { utapi } from "./uploadthing";
 
 export const videoRouter = router({
-  getVideosIncludedInCourse: privateProcedure
-    .input(
-      z.object({
-        courseId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { courseId } = input;
-      const { user } = ctx;
-
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-        include: {
-          VideosIncluded: true,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
-
-      const videosOnList: Array<VideoOnList> = course.VideosIncluded.map(
-        (video) => {
-          const videoOnList: VideoOnList = {
-            id: video.id,
-            name: video.videoName,
-          };
-          return videoOnList;
-        }
-      );
-
-      return videosOnList;
-    }),
-
-  getVideoToWatch: privateProcedure
+  getVideo: privateProcedure
     .input(
       z.object({
         subChapterId: z.string(),
@@ -73,33 +34,14 @@ export const videoRouter = router({
         });
       }
 
-      const videoToWatch: VideoToWatch = {
-        id: video.id,
-        name: video.videoName,
-        url: video.url,
-      };
-
-      return videoToWatch;
+      return video;
     }),
 
-  addVideoToCourse: privateProcedure
-    .input(AddVideoValidator)
+  connectVideoWithCourse: privateProcedure
+    .input(ConnectVideoWithCourseValidator)
     .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId, subChapterId } = input;
+      const { videoId, subChapterId } = input;
       const { user } = ctx;
-
-      const course = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-      });
-
-      if (!course) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Course not found",
-        });
-      }
 
       const video = await db.video.findUnique({
         where: {
@@ -127,39 +69,26 @@ export const videoRouter = router({
         },
       });
 
-      await db.course.update({
-        where: {
-          id: courseId,
-        },
-        data: {
-          VideosIncluded: {
-            connect: {
-              id: videoId,
-            },
-          },
-        },
-      });
-
       return video;
     }),
 
   deleteVideoFromCourse: privateProcedure
     .input(DeleteVideoValidator)
     .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId } = input;
+      const { subChapterId, videoId } = input;
       const { user } = ctx;
 
       // Ensure the course exists
-      const course = await db.course.findUnique({
+      const subChapter = await db.subChapter.findUnique({
         where: {
-          id: courseId,
+          id: subChapterId,
         },
       });
 
-      if (!course) {
+      if (!subChapter) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Course not found",
+          message: "Sub Chapter not found",
         });
       }
 
@@ -167,7 +96,7 @@ export const videoRouter = router({
       const video = await db.video.findUnique({
         where: {
           id: videoId,
-          courseId: courseId,
+          subChapterId: subChapterId,
         },
       });
 
@@ -186,31 +115,25 @@ export const videoRouter = router({
 
       utapi.deleteFiles(video.fileName);
 
-      const updatedCourse = await db.course.findUnique({
-        where: {
-          id: courseId,
-        },
-      });
-
-      return updatedCourse;
+      return video;
     }),
 
   editVideo: privateProcedure
     .input(VideoEditValidator)
     .mutation(async ({ input, ctx }) => {
-      const { courseId, videoId, name } = input;
+      const { subChapterId, videoId, name } = input;
       const { user } = ctx;
 
-      const course = await db.course.findUnique({
+      const subChapter = await db.subChapter.findUnique({
         where: {
-          id: courseId,
+          id: subChapterId,
         },
       });
 
-      if (!course) {
+      if (!subChapter) {
         throw new TRPCError({
           code: "NOT_FOUND",
-          message: "Course not found",
+          message: "Sub Chapter not found",
         });
       }
 
