@@ -28,6 +28,7 @@ export default function AuthLogInGoogle() {
         disabled={isLoading}
         variant="outline"
         className="w-full"
+        data-test="auth-login-google"
       >
         <IconLoader isLoading={isLoading} />
         Google

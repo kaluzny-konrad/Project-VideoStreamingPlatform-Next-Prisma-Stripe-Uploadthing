@@ -34,6 +34,7 @@ export default function AdminUserDeleteButton({ userId }: Props) {
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      data-test="admin-users-delete-button"
     >
       <TrashIcon className="w-4 h-4" />
     </Button>

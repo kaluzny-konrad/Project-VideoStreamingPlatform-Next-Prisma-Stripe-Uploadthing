@@ -39,6 +39,7 @@ export default function AdminUserCourseDeleteButton({
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      data-test="admin-user-courses-delete-button"
     >
       <TrashIcon className="w-4 h-4" />
     </Button>

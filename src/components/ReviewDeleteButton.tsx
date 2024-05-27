@@ -84,11 +84,14 @@ export default function ReviewDeleteButton({
             onClick={handleOptimisticDelete}
             disabled={optimisticUpdateLoading}
             variant={"destructive"}
+            data-test="review-delete-button"
           >
             Delete review
           </Button>
           <DialogClose asChild ref={closeDialogButtonRef}>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary"
+              data-test="review-delete-cancel-button"
+            >Cancel</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

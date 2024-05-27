@@ -36,6 +36,7 @@ export default function DeleteChapterButton({
       className="mt-2"
       disabled={disabled}
       size={"icon"}
+      data-test="delete-chapter-button"
     >
       <Trash2Icon size={16} />
     </Button>

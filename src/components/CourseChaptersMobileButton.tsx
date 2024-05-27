@@ -40,7 +40,9 @@ export default function CourseChaptersMobileButton({ courseId }: Props) {
         </div>
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild ref={dialogCloseRef}>
-            <Button type="button" variant="secondary">
+            <Button type="button" variant="secondary"
+              data-test="course-chapters-mobile-button-close"
+            >
               Close
             </Button>
           </DialogClose>

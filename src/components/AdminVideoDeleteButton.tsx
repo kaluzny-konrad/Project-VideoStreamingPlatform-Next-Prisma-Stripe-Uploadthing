@@ -34,6 +34,7 @@ export default function AdminVideoDeleteButton({ videoId }: Props) {
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      data-test="admin-videos-delete-button"
     >
       <TrashIcon className="w-4 h-4" />
     </Button>

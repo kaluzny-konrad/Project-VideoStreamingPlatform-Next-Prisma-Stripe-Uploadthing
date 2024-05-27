@@ -104,8 +104,12 @@ export default function CreatorEditVideoModal({
             />
           </div>
           <div className="flex justify-between">
-            <Button type="submit">Save</Button>
-            <Button onClick={() => setOpenEditVideoId(undefined)}>
+            <Button type="submit"
+              data-test="creator-videos-edit-button"
+            >Save</Button>
+            <Button onClick={() => setOpenEditVideoId(undefined)}
+              data-test="creator-videos-cancel-button"
+            >
               Cancel
             </Button>
           </div>

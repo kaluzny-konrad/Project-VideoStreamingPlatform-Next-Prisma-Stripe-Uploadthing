@@ -88,7 +88,9 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
           <input type="text" id="name" {...register("name")} />
         </div>
 
-        <Button type="submit">Update SubChapter</Button>
+        <Button type="submit"
+          data-test="creator-subchapter-edit-button"
+        >Update SubChapter</Button>
       </form>
     </div>
   );

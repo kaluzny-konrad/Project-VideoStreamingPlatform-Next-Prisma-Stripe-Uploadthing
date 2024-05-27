@@ -22,6 +22,7 @@ export default function CreatorEditVideoModalTrigger({ videoId, videoData }: Pro
         size={"icon"}
         className="h-6 w-6"
         onClick={() => setOpenEditVideoId(videoId)}
+        data-test="creator-videos-edit-button"
       >
         <EditIcon className="w-4 h-4" />
       </Button>

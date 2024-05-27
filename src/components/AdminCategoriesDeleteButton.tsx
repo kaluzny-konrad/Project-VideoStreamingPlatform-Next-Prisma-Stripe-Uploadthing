@@ -34,6 +34,7 @@ export default function AdminCategoriesDeleteButton({ categoryId }: Props) {
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      data-test="admin-categories-delete-button"
     >
       <TrashIcon className="w-4 h-4" />
     </Button>

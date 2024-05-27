@@ -30,5 +30,13 @@ export default function CreateChapterButton({
     createChapter(data);
   }
 
-  return <Button className="w-full mt-4" onClick={handleCreateChapter}>Add Chapter</Button>;
+  return (
+    <Button
+      className="w-full mt-4"
+      onClick={handleCreateChapter}
+      data-test="create-chapter-button"
+    >
+      Add Chapter
+    </Button>
+  );
 }

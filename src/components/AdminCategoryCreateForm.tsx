@@ -64,7 +64,9 @@ export default function CreatorCategoryCreateForm({}: Props) {
         </div>
 
         <div>
-          <button type="submit">Create category</button>
+          <button type="submit" data-test="admin-categories-create-button">
+            Create category
+          </button>
         </div>
       </form>
     </div>

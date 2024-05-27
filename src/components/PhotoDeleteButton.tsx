@@ -35,6 +35,7 @@ export default function PhotoDeleteButton({ Photo, onPhotoDeleted }: Props) {
         onClick={onDeleteButtonClick}
         variant={"destructive"}
         disabled={isLoading}
+        data-test="photo-delete-button"
       >
         {isLoading && <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />}
         Delete image

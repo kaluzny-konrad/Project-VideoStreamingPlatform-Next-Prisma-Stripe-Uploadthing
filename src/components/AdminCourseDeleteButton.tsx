@@ -34,6 +34,7 @@ export default function AdminCourseDeleteButton({ courseId }: Props) {
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      data-test="admin-courses-delete-button"
     >
       <TrashIcon className="w-4 h-4" />
     </Button>

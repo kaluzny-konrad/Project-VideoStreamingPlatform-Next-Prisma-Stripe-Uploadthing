@@ -189,11 +189,15 @@ export default function ReviewEditButton({
             />
 
             <DialogFooter className="grid grid-cols-2 gap-2">
-              <Button type="submit" disabled={editReviewLoading}>
+              <Button type="submit" disabled={editReviewLoading}
+                data-test="review-edit-button"
+              >
                 {(editReviewLoading && "Saving...") || "Save changes"}
               </Button>
               <DialogClose asChild ref={closeDialogButtonRef}>
-                <Button variant="secondary">Cancel</Button>
+                <Button variant="secondary"
+                  data-test="review-edit-cancel-button"
+                >Cancel</Button>
               </DialogClose>
             </DialogFooter>
           </form>

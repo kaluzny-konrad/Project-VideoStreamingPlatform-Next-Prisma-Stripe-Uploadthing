@@ -28,7 +28,9 @@ export default function CourseCheckoutButton({
   }
 
   return (
-    <Button onClick={handleCourseCheckout}>
+    <Button onClick={handleCourseCheckout}
+      data-test="course-checkout-button"
+    >
       Buy now
     </Button>
   );

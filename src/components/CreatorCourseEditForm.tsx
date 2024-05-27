@@ -235,7 +235,9 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
           />
 
           <div>
-            <Button type="submit">Save course</Button>
+            <Button type="submit"
+              data-test="creator-course-edit-button"
+            >Save course</Button>
           </div>
         </form>
       </Form>

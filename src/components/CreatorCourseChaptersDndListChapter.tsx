@@ -69,6 +69,7 @@ export default function CreatorCourseChaptersDndListChapter({
               className="ml-2"
               variant="outline"
               size="icon"
+              data-test="edit-chapter-button"
             >
               <Edit2Icon size={16} />
             </Button>

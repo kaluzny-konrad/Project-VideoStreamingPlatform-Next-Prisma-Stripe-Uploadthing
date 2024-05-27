@@ -48,6 +48,7 @@ export default function CreatorCourseChaptersDndListSubChapter({
             onClick={handleEditButton}
             className="ml-auto"
             variant="secondary"
+            data-test="creator-course-chapters-dnd-list-subchapter-edit"
           >
             Edit
           </Button>

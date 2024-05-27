@@ -103,7 +103,7 @@ export default function ReviewAddButton({
     <Dialog>
       <DialogTrigger
         disabled={optimisticUpdateLoading}
-        className={buttonVariants({ size: "sm"})}
+        className={buttonVariants({ size: "sm" })}
       >
         <PenIcon className="mr-2" /> Write a review
       </DialogTrigger>
@@ -166,11 +166,20 @@ export default function ReviewAddButton({
             />
 
             <DialogFooter className="grid grid-cols-2 gap-2">
-              <Button type="submit" disabled={createReviewLoading}>
+              <Button
+                type="submit"
+                disabled={createReviewLoading}
+                data-test="review-add-button"
+              >
                 {(createReviewLoading && "Saving...") || "Add review"}
               </Button>
               <DialogClose asChild ref={closeDialogButtonRef}>
-                <Button variant="secondary">Cancel</Button>
+                <Button
+                  variant="secondary"
+                  data-test="review-add-cancel-button"
+                >
+                  Cancel
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

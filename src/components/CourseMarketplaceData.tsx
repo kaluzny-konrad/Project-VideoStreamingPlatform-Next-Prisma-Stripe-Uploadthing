@@ -6,7 +6,7 @@ import { Skeleton } from "./ui/skeleton";
 import CourseCreator from "./CourseCreator";
 import Image from "next/image";
 import CourseCheckoutButton from "./CourseCheckoutButton";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import Link from "next/link";
 import { cn, getPublicPhotoUrl, getPublicPrice } from "@/lib/utils";
 import CourseWatchButton from "./CourseWatchButton";
@@ -75,8 +75,12 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
             ) : isLoggedIn ? (
               <CourseCheckoutButton courseId={course.id} />
             ) : (
-              <Link href="/sign-in">
-                <Button>Login to buy</Button>
+              <Link
+                href="/sign-in"
+                className={cn(buttonVariants())}
+                data-test="course-marketplace-login-to-buy"
+              >
+                Login to buy
               </Link>
             )}
           </div>
