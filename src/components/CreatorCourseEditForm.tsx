@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "./ui/button";
 import { Photo } from "@prisma/client";
 import Image from "next/image";
 
@@ -16,6 +15,7 @@ import {
 import { trpc } from "@/server/client";
 import PhotoUploadZone from "./PhotoUploadZone";
 import PhotoDeleteButton from "./PhotoDeleteButton";
+import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
