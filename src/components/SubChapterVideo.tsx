@@ -5,12 +5,10 @@ import VideoUploadZone from "./VideoUploadZone";
 
 type Props = {
   subChapterId: string;
-  courseId: string;
 };
 
 export default async function SubChapterVideo({
   subChapterId,
-  courseId,
 }: Props) {
   const subChapter = await db.subChapter.findUnique({
     where: {
@@ -34,14 +32,14 @@ export default async function SubChapterVideo({
             />
             <CreatorDeleteVideoButton
               videoId={subChapter?.Video.id}
-              courseId={courseId}
+              subChapterId={subChapterId}
             />
           </div>
         </>
       ) : (
         <>
           <h2 className="mb-4 mt-8 font-bold text-slate-600">Upload video</h2>
-          <VideoUploadZone courseId={courseId} subChapterId={subChapterId} />
+          <VideoUploadZone subChapterId={subChapterId} />
         </>
       )}
     </div>

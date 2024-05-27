@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function CourseCreator({ creatorId }: Props) {
-  const { data: creator, error } = trpc.course.getCourseCreatorInfo.useQuery({
+  const { data: creator, error } = trpc.creator.getCreator.useQuery({
     creatorId,
   });
 

@@ -2,7 +2,9 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
-import { Prisma } from "@prisma/client";
+import { Photo, Prisma } from "@prisma/client";
+import { PHOTO_REPLACEMENT_URL } from "@/config/photo";
+import { DEFAULT_PRICE_CURRENCY } from "@/config/price";
 
 import { Metadata } from "next";
 
@@ -15,25 +17,38 @@ export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`;
 }
 
+export function getPublicPrice(price: Prisma.Decimal): string {
+  if(price.toNumber() === 0) return "Free";
+  return formatPrice(price, { currency: DEFAULT_PRICE_CURRENCY });
+}
+
 export function formatPrice(
   price: Prisma.Decimal | string,
   options: {
-    currency?: "PLN" | "USD" | "EUR" | "GBP" | "BDT";
+    currency?: "PLN" | "USD" | "EUR" | "GBP";
     notation?: Intl.NumberFormatOptions["notation"];
   } = {}
 ) {
-  const { currency = "PLN", notation = "compact" } = options;
+  const { currency = "PLN", notation = "standard" } = options;
 
   const numericPrice =
     typeof price === "string"
       ? new Prisma.Decimal(price).toNumber()
       : price.toNumber();
 
-  return new Intl.NumberFormat("pl-PL", {
+  const locales =
+    currency === "PLN"
+      ? "pl-PL"
+      : currency === "USD"
+      ? "en-US"
+      : currency === "EUR"
+      ? "de-DE"
+      : "en-GB";
+
+  return new Intl.NumberFormat(locales, {
     style: "currency",
     currency,
     notation,
-    maximumFractionDigits: 2,
   }).format(numericPrice);
 }
 
@@ -152,4 +167,13 @@ export function constructMetadata({
       },
     }),
   };
+}
+
+export function getPublicPhotoUrl(photos: Photo[]): string {
+  if (photos.length === 0) return PHOTO_REPLACEMENT_URL;
+
+  let mainPhoto = photos.find((photo) => photo.isMainPhoto === true);
+  if (mainPhoto) return mainPhoto.url;
+
+  return photos[0].url;
 }

@@ -8,12 +8,12 @@ import { Course, Photo, Review } from "@prisma/client";
 
 type Props = {
   course: Course;
-  photo?: Photo | undefined;
+  photoUrl: string;
   reviewsCount: number;
   redirectToWatch: boolean;
 };
 
-export default function CourseRow({ course, photo, redirectToWatch, reviewsCount }: Props) {
+export default function CourseRow({ course, photoUrl, redirectToWatch, reviewsCount }: Props) {
   return (
     <Link
       href={redirectToWatch ? `/watch/${course.id}` : `/courses/${course.id}`}
@@ -22,7 +22,7 @@ export default function CourseRow({ course, photo, redirectToWatch, reviewsCount
       <div className="flex flex-col py-6 border-b lg:flex-row">
         <div className="my-auto mb-4 lg:mr-4 lg:w-1/2 lg:mb-2">
           <Image
-            src={photo?.url ?? "/placeholder.jpg"}
+            src={photoUrl}
             alt={course.name}
             width={600}
             height={400}

@@ -30,7 +30,7 @@ export default function CreatorEditVideoModal({
     resolver: zodResolver(VideoEditValidator),
     defaultValues: {
       name: "",
-      courseId: "",
+      subChapterId: "",
       videoId: "",
     },
   });
@@ -62,7 +62,7 @@ export default function CreatorEditVideoModal({
 
   useEffect(() => {
     setValue("name", videoData.videoName);
-    setValue("courseId", videoData.courseId);
+    setValue("subChapterId", videoData.subChapterId);
     setValue("videoId", videoData.id);
   }, [videoData, setValue]);
 
@@ -90,7 +90,7 @@ export default function CreatorEditVideoModal({
             <input
               type="text"
               id="courseId"
-              {...register("courseId")}
+              {...register("subChapterId")}
               className="input"
             />
           </div>

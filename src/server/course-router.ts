@@ -113,7 +113,7 @@ export const courseRouter = router({
           categoryId,
         },
       });
-      
+
       return course;
     }),
 

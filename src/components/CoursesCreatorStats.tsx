@@ -5,28 +5,34 @@ import { toast } from "sonner";
 
 export default function CoursesCreatorStats() {
   const {
-    data: stats,
+    data: courses,
     isLoading,
     error,
-  } = trpc.course.getCourseCreatorStats.useQuery();
+  } = trpc.creator.getCourses.useQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (error || !courses) {
     toast.error("Error loading stats");
+    return null;
   }
 
   return (
-    <>
-      {stats && (
-        <div>
-          <div>Courses: {stats.coursesCount}</div>
-          <div>Reviews: {stats.reviewsCount}</div>
-          <div>Rating: {stats.rating}</div>
-        </div>
-      )}
-    </>
+    <div>
+      <div>Courses: {courses.length}</div>
+      <div>
+        Reviews:{" "}
+        {courses.reduce((acc, course) => acc + course.Reviews.length, 0)}
+      </div>
+      <div>
+        Rating:
+        {courses.length > 0
+          ? courses.reduce((acc, course) => acc + course.rating, 0) /
+            courses.length
+          : "N/A"}
+      </div>
+    </div>
   );
 }

@@ -8,10 +8,10 @@ import { toast } from "sonner";
 
 type Props = {
   videoId: string;
-  courseId: string;
+  subChapterId: string;
 };
 
-export default function CreatorDeleteVideoButton({ videoId, courseId }: Props) {
+export default function CreatorDeleteVideoButton({ videoId, subChapterId }: Props) {
   const router = useRouter();
 
   const { mutate: deleteVideo } = trpc.video.deleteVideoFromCourse.useMutation(
@@ -29,7 +29,7 @@ export default function CreatorDeleteVideoButton({ videoId, courseId }: Props) {
   const handleDeleteVideo = (videoId: string) => async () => {
     deleteVideo({
       videoId,
-      courseId
+      subChapterId
     });
   };
 

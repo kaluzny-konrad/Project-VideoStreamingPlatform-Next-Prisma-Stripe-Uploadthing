@@ -26,7 +26,7 @@ export default function CreatorSubChapterPage({ params }: Props) {
         Back to course
       </Link>
 
-      <SubChapterVideo subChapterId={subChapterId} courseId={courseId} />
+      <SubChapterVideo subChapterId={subChapterId} />
     </div>
   );
 }

@@ -4,14 +4,14 @@ import { trpc } from "@/server/client";
 import CourseRow from "./CourseRow";
 import { useCategories } from "@/hooks/use-categories";
 import { useEffect, useState } from "react";
-import { CourseOnList } from "@/types/course";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
+import { getPublicPhotoUrl } from "@/lib/utils";
 
 type Props = {};
 
 export default function CoursesPublicList({}: Props) {
-  const [activeCourses, setActiveCourses] = useState<CourseOnList[]>([]);
+  const [activeCourses, setActiveCourses] = useState<typeof allCourses>([]);
   const {
     data: allCourses,
     isLoading,
@@ -36,8 +36,9 @@ export default function CoursesPublicList({}: Props) {
     }
   }, [isLoading, error, categoriesStateValue.activeCategoryIds, allCourses]);
 
-  if (error) {
+  if (error || !activeCourses) {
     toast.error("Error loading courses");
+    return null;
   }
 
   return (
@@ -54,6 +55,8 @@ export default function CoursesPublicList({}: Props) {
             <CourseRow
               key={course.id}
               course={course}
+              photoUrl={getPublicPhotoUrl(course.Photos)}
+              reviewsCount={course.Reviews.length}
               redirectToWatch={false}
             />
           ))}

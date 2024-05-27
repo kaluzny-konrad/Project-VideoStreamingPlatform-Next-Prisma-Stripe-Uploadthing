@@ -6,6 +6,7 @@ import { useCategories } from "@/hooks/use-categories";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
+import { getPublicPhotoUrl } from "@/lib/utils";
 
 type Props = {};
 
@@ -58,10 +59,6 @@ export default function CoursesPrivateList({}: Props) {
         const course = allCourses.find((course) => course.id === courseId)!;
         if (!course) return <></>;
 
-        let mainPhoto = course.Photos.find((photo) => photo.isMainPhoto);
-        if (!mainPhoto && course.Photos.length > 0)
-          mainPhoto = course.Photos[0];
-
         const reviewsCount = course.Reviews.length;
 
         return (
@@ -69,7 +66,7 @@ export default function CoursesPrivateList({}: Props) {
             key={course.id}
             course={course}
             redirectToWatch={true}
-            photo={mainPhoto}
+            photoUrl={getPublicPhotoUrl(course.Photos)}
             reviewsCount={reviewsCount}
           />
         );

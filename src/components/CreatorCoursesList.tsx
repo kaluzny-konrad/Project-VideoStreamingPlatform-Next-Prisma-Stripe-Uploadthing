@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { getAuthSession } from "@/lib/auth";
+import CreatorCourseRow from "./CreatorCourseRow";
 
 type Props = {};
 

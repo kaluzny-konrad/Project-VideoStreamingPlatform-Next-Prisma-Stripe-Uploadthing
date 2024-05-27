@@ -7,11 +7,10 @@ import { UploadButton } from "@/lib/uploadthing";
 import { trpc } from "@/server/client";
 
 type Props = {
-  courseId: string;
   subChapterId: string;
 };
 
-export default function VideoUploadZone({ courseId, subChapterId }: Props) {
+export default function VideoUploadZone({ subChapterId }: Props) {
   const router = useRouter();
   const { mutate: addVideo } = trpc.video.connectVideoWithCourse.useMutation({
     onSuccess: (res) => {
@@ -27,7 +26,7 @@ export default function VideoUploadZone({ courseId, subChapterId }: Props) {
         if (typeof res === "undefined") return;
         const fileId = res[0].serverData?.fileId;
         if (typeof fileId === "undefined") return;
-        addVideo({ courseId, videoId: fileId, subChapterId });
+        addVideo({ videoId: fileId, subChapterId });
       }}
       onUploadError={(error: Error) => {}}
     />
