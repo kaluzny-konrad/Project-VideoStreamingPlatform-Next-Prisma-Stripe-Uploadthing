@@ -89,6 +89,13 @@ describe("getPublicPrice", () => {
     const price = getPublicPrice(prismaPrice);
     expect(price).toBe("Free");
   });
+
+  it("should handle string price '10' like Decimal", () => {
+    const wrongPrice = "10";
+    // @ts-ignore
+    const price = getPublicPrice(wrongPrice);
+    expect(price).toBe("10,00 zł");
+  });
 });
 
 describe("formatPrice", () => {

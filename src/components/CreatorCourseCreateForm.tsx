@@ -45,7 +45,7 @@ export default function CreatorCourseCreateForm({}: Props) {
       name: "",
       description: "",
       price: "0",
-      categoryId: categories?.[0].id,
+      categoryId: "",
     },
   });
 

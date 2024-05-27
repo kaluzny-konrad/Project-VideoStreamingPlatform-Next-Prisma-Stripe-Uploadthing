@@ -18,7 +18,8 @@ export function absoluteUrl(path: string) {
 }
 
 export function getPublicPrice(price: Prisma.Decimal): string {
-  if(price.toNumber() === 0) return "Free";
+  if (typeof price === "string") price = new Prisma.Decimal(price);
+  if (price.toNumber() === 0) return "Free";
   return formatPrice(price, { currency: DEFAULT_PRICE_CURRENCY });
 }
 
