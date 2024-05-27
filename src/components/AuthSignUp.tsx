@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 
 import AuthLogInGoogle from "./AuthLogInGoogle";
-import AuthSignUpForm from "./AuthSignUpForm";
 
 export default function AuthSignUp() {
   return (
@@ -22,7 +21,6 @@ export default function AuthSignUp() {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <AuthSignUpForm />
           <AuthLogInGoogle />
         </div>
         <div className="mt-4 text-center text-sm">

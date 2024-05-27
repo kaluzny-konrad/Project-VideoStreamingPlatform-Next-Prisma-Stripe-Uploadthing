@@ -9,7 +9,6 @@ import { chapterRouter } from "./chapter-router";
 import { reviewRouter } from "./review-router";
 import { photoRouter } from "./photo-router";
 import { creatorRouter } from "./creator-router";
-import { authRouter } from "./auth-router";
 
 export const appRouter = router({
   order: orderRouter,
@@ -22,7 +21,6 @@ export const appRouter = router({
   review: reviewRouter,
   photo: photoRouter,
   creator: creatorRouter,
-  auth: authRouter,
 });
 
 export type AppRouter = typeof appRouter;
