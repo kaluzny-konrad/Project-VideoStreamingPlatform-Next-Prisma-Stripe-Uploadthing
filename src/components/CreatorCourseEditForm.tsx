@@ -130,117 +130,113 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
   }
 
   return (
-    <div>
-      <Form {...form}>
-        <form
-          id="edit-course"
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Course name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Course name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Input placeholder="Course description" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    placeholder="Course price"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          {photo?.url ? (
-            <div>
-              <Image
-                src={photo.url}
-                alt="Course image"
-                width={600}
-                height={400}
-                className="aspect-video object-cover"
-                priority
-              />
-              <PhotoDeleteButton
-                Photo={photo}
-                onPhotoDeleted={handlePhotoDeleted}
-              />
-            </div>
-          ) : (
-            <PhotoUploadZone
-              onClientUploadCompleted={onClientUploadCompleted}
-              onBeforeUploadBegined={onBeforeUploadBegined}
-            />
+    <Form {...form}>
+      <form
+        id="edit-course"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Course name</FormLabel>
+              <FormControl>
+                <Input placeholder="Course name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
+        />
 
-          <FormField
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={coursePreviousData.categoryId}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {categories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Course description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Price</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  step="0.01"
+                  placeholder="Course price"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {photo?.url ? (
           <div>
-            <Button type="submit"
-              data-test="creator-course-edit-button"
-            >Save course</Button>
+            <Image
+              src={photo.url}
+              alt="Course image"
+              width={600}
+              height={400}
+              className="aspect-video object-cover"
+              priority
+            />
+            <PhotoDeleteButton
+              Photo={photo}
+              onPhotoDeleted={handlePhotoDeleted}
+            />
           </div>
-        </form>
-      </Form>
-    </div>
+        ) : (
+          <PhotoUploadZone
+            onClientUploadCompleted={onClientUploadCompleted}
+            onBeforeUploadBegined={onBeforeUploadBegined}
+          />
+        )}
+
+        <FormField
+          control={form.control}
+          name="categoryId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Category</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={coursePreviousData.categoryId}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories?.map((category) => (
+                    <SelectItem key={category.id} value={category.id}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" data-test="creator-course-edit-button">
+          Save course
+        </Button>
+      </form>
+    </Form>
   );
 }

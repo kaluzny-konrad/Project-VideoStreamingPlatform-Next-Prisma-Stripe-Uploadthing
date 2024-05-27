@@ -47,7 +47,7 @@ export default function ReviewAddButton({
   optimisticUpdateLoading,
   setOptimisticUpdateLoading,
 }: Props) {
-  const reviewForm = useForm<CreateReviewRequest>({
+  const form = useForm<CreateReviewRequest>({
     defaultValues: {
       courseId,
       rating: "5",
@@ -57,14 +57,14 @@ export default function ReviewAddButton({
   });
 
   useEffect(() => {
-    if (Object.keys(reviewForm.formState.errors).length) {
-      const errors = reviewForm.formState.errors;
+    if (Object.keys(form.formState.errors).length) {
+      const errors = form.formState.errors;
       for (const [key, value] of Object.entries(errors)) {
         toast.error(`Something went wrong: ${value.message}`);
         console.error(errors);
       }
     }
-  }, [reviewForm.formState.errors]);
+  }, [form.formState.errors]);
 
   async function onSubmit(newReviewFormData: CreateReviewRequest) {
     setOptimisticUpdateLoading(true);
@@ -114,14 +114,14 @@ export default function ReviewAddButton({
             Make changes to your review here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <Form {...reviewForm}>
+        <Form {...form}>
           <form
             id="review-add-form"
-            onSubmit={reviewForm.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8"
           >
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="rating"
               render={({ field }) => (
                 <FormItem>
@@ -136,7 +136,7 @@ export default function ReviewAddButton({
             />
 
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
@@ -151,7 +151,7 @@ export default function ReviewAddButton({
             />
 
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="comment"
               render={({ field }) => (
                 <FormItem>

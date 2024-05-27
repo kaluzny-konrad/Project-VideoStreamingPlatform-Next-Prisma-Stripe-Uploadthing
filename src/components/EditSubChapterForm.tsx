@@ -7,6 +7,15 @@ import { useEffect } from "react";
 import { UpdateSubChapterRequest } from "@/lib/validators/chapter";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
 
 type Props = {
   courseId: string;
@@ -22,12 +31,7 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
     error: databaseError,
   } = trpc.chapter.getChaptersState.useQuery({ courseId });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<UpdateSubChapterRequest>({
+  const form = useForm<UpdateSubChapterRequest>({
     defaultValues: {
       id: "",
       name: "",
@@ -35,13 +39,12 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
   });
 
   useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [key, value] of Object.entries(errors)) {
+    if (Object.keys(form.formState.errors).length) {
+      for (const [key, value] of Object.entries(form.formState.errors)) {
         toast.error(`Something went wrong: ${value.message}`);
-        console.error(errors);
       }
     }
-  }, [errors]);
+  }, [form.formState.errors]);
 
   async function onSubmit(data: UpdateSubChapterRequest) {
     updateSubChapter(data);
@@ -66,11 +69,11 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
       );
 
       if (subChapter) {
-        setValue("id", subChapter.id);
-        setValue("name", subChapter.name);
+        form.setValue("id", subChapter.id);
+        form.setValue("name", subChapter.name);
       }
     }
-  }, [chaptersStatePreviousData, setValue, subChapterId]);
+  }, [chaptersStatePreviousData, form.setValue, subChapterId]);
 
   if (databaseLoading) {
     return <div>Loading...</div>;
@@ -81,17 +84,29 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
   }
 
   return (
-    <div>
-      <form id="edit-subchapter" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" {...register("name")} />
-        </div>
+    <Form {...form}>
+      <form
+        id="edit-subchapter"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Sub Chapter name" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-        <Button type="submit"
-          data-test="creator-subchapter-edit-button"
-        >Update SubChapter</Button>
+        <Button type="submit" data-test="creator-subchapter-edit-button">
+          Update SubChapter
+        </Button>
       </form>
-    </div>
+    </Form>
   );
 }

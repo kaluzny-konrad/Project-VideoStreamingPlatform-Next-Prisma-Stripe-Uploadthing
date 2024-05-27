@@ -10,17 +10,21 @@ import { trpc } from "@/server/client";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { Button } from "./ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Input } from "./ui/input";
 
-type Props = {};
-
-export default function CreatorCategoryCreateForm({}: Props) {
+export default function CreatorCategoryCreateForm() {
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CategoryCreationRequest>({
+  const form = useForm<CategoryCreationRequest>({
     resolver: zodResolver(CategoryValidator),
     defaultValues: {
       name: "",
@@ -29,13 +33,12 @@ export default function CreatorCategoryCreateForm({}: Props) {
   });
 
   useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [key, value] of Object.entries(errors)) {
+    if (Object.keys(form.formState.errors).length) {
+      for (const [key, value] of Object.entries(form.formState.errors)) {
         toast.error(`Something went wrong: ${value.message}`);
-        console.error(errors);
       }
     }
-  }, [errors]);
+  }, [form.formState.errors]);
 
   async function onSubmit(data: CategoryCreationRequest) {
     createCategory(data);
@@ -52,23 +55,44 @@ export default function CreatorCategoryCreateForm({}: Props) {
   });
 
   return (
-    <div>
-      <form id="create-category" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="name">Category name</label>
-          <input type="text" id="name" {...register("name")} />
-        </div>
-        <div>
-          <label htmlFor="slug">Slug</label>
-          <input type="text" id="slug" {...register("slug")} />
-        </div>
+    <Form {...form}>
+      <form
+        id="create-category"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="name">Category name</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Category name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div>
-          <button type="submit" data-test="admin-categories-create-button">
-            Create category
-          </button>
-        </div>
+        <FormField
+          control={form.control}
+          name="slug"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="slug">Slug</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Slug" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" data-test="admin-categories-create-button">
+          Create category
+        </Button>
       </form>
-    </div>
+    </Form>
   );
 }

@@ -47,7 +47,7 @@ export default function ReviewEditButton({
   optimisticUpdateLoading,
   setOptimisticUpdateLoading,
 }: Props) {
-  const reviewForm = useForm<EditReviewRequest>({
+  const form = useForm<EditReviewRequest>({
     defaultValues: {
       reviewId,
       rating: initialReview.rating.toString(),
@@ -57,23 +57,23 @@ export default function ReviewEditButton({
   });
 
   useEffect(() => {
-    reviewForm.reset({
+    form.reset({
       reviewId,
       rating: initialReview.rating.toString(),
       title: initialReview.title || "",
       comment: initialReview.comment || "",
     });
-  }, [initialReview, reviewForm, reviewId]);
+  }, [initialReview, form, reviewId]);
 
   useEffect(() => {
-    if (Object.keys(reviewForm.formState.errors).length) {
-      const errors = reviewForm.formState.errors;
+    if (Object.keys(form.formState.errors).length) {
+      const errors = form.formState.errors;
       for (const [key, value] of Object.entries(errors)) {
         toast.error(`Something went wrong: ${value.message}`);
         console.error(errors);
       }
     }
-  }, [reviewForm.formState.errors]);
+  }, [form.formState.errors]);
 
   function isReviewChanged(updatedReviewFormData: EditReviewRequest) {
     return (
@@ -137,14 +137,14 @@ export default function ReviewEditButton({
             Make changes to your review here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <Form {...reviewForm}>
+        <Form {...form}>
           <form
             id="review-add-form"
-            onSubmit={reviewForm.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-8"
           >
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="rating"
               render={({ field }) => (
                 <FormItem>
@@ -159,7 +159,7 @@ export default function ReviewEditButton({
             />
 
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
@@ -174,7 +174,7 @@ export default function ReviewEditButton({
             />
 
             <FormField
-              control={reviewForm.control}
+              control={form.control}
               name="comment"
               render={({ field }) => (
                 <FormItem>
