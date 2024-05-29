@@ -36,16 +36,17 @@ export default function CoursesPanel({ closeModal }: Props) {
         <>
           {allCategories?.map((category) => {
             return (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2" key={category.id}>
                 <Checkbox
                   id={category.id}
-                  key={category.id}
                   checked={categoriesStateValue.activeCategoryIds.includes(
                     category.id
                   )}
                   onCheckedChange={() => toggleActive(category.id)}
                 />
-                <Label htmlFor={category.id} className="">{category.name}</Label>
+                <Label htmlFor={category.id} className="">
+                  {category.name}
+                </Label>
               </div>
             );
           })}

@@ -1,5 +1,6 @@
 import OrderInfo from "@/components/OrderInfo";
-import { getAuthSession } from "@/lib/auth";
+import { getUserEmail } from "@/lib/session-emails";
+import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {
   params: {
@@ -9,12 +10,12 @@ type Props = {
 
 export default async function BasketOrderPage({ params }: Props) {
   const { orderId } = params;
-  const session = await getAuthSession();
+  const user = await currentUser();
 
   return (
     <div>
       <h1>Order</h1>
-      <OrderInfo orderId={orderId} userEmail={session?.user?.email} />
+      <OrderInfo orderId={orderId} userEmail={getUserEmail(user)} />
     </div>
   );
 }

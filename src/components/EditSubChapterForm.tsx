@@ -73,7 +73,7 @@ export default function EditSubChapterForm({ courseId, subChapterId }: Props) {
         form.setValue("name", subChapter.name);
       }
     }
-  }, [chaptersStatePreviousData, form.setValue, subChapterId]);
+  }, [chaptersStatePreviousData, form.setValue, subChapterId, form]);
 
   if (databaseLoading) {
     return <div>Loading...</div>;

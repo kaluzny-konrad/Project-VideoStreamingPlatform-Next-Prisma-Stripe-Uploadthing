@@ -1,17 +1,21 @@
 import Link from "next/link";
-import { getAuthSession } from "@/lib/auth";
 import { buttonVariants } from "./ui/button";
 
-export default async function NavDesktopLoggedItems() {
-  const session = await getAuthSession();
-  const user = session?.user;
-  if (!user) {
-    return null;
-  }
+type Props = {
+  isUser: boolean;
+  isCreator: boolean;
+  isAdmin: boolean;
+};
+
+export default async function NavDesktopLoggedItems({ 
+  isUser,
+  isAdmin,
+  isCreator,
+ }: Props) {
 
   return (
     <>
-      {user.role == "USER" || user.role == "CREATOR" || user.role == "ADMIN" ? (
+      {isUser ? (
         <>
           <Link
             href={"/watch"}
@@ -21,7 +25,7 @@ export default async function NavDesktopLoggedItems() {
           </Link>
         </>
       ) : null}
-      {user.role == "CREATOR" || user.role == "ADMIN" ? (
+      {isCreator ? (
         <>
           <Link
             href={"/creator"}
@@ -31,7 +35,7 @@ export default async function NavDesktopLoggedItems() {
           </Link>
         </>
       ) : null}
-      {user.role == "ADMIN" ? (
+      {isAdmin ? (
         <>
           <Link
             href={"/admin"}

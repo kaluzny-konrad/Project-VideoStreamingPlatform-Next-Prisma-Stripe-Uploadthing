@@ -2,8 +2,6 @@
 
 import { MenuIcon } from "lucide-react";
 import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { trpc } from "@/server/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +10,13 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function NavMobileMenu() {
-  const {
-    data: userData,
-    isLoading: userIsLoading,
-    error: userDataError,
-  } = trpc.user.getUserData.useQuery();
+type Props = {
+  isUser: boolean;
+  isCreator: boolean;
+  isAdmin: boolean;
+};
 
+export default function NavMobileMenu({ isUser, isCreator, isAdmin }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="">
@@ -31,12 +29,12 @@ export default function NavMobileMenu() {
 
         <DropdownMenuSeparator className="" />
 
-        {userData && (
+        {isUser && (
           <>
             <DropdownMenuItem asChild className="py-2 pr-10 cursor-pointer">
               <Link href={"/watch"}>Watch course</Link>
             </DropdownMenuItem>
-            {userData.role == "CREATOR" || userData.role == "ADMIN" ? (
+            {isCreator ? (
               <>
                 <DropdownMenuSeparator className="" />
                 <DropdownMenuItem asChild className="py-2 pr-10 cursor-pointer">
@@ -44,7 +42,7 @@ export default function NavMobileMenu() {
                 </DropdownMenuItem>
               </>
             ) : null}
-            {userData.role == "ADMIN" ? (
+            {isAdmin ? (
               <DropdownMenuItem asChild className="py-2 pr-10 cursor-pointer">
                 <Link href={"/admin"}>Admin Panel</Link>
               </DropdownMenuItem>

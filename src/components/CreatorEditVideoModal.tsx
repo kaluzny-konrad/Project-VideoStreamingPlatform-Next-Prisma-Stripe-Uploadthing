@@ -67,7 +67,7 @@ export default function CreatorEditVideoModal({
     form.setValue("name", videoData.videoName);
     form.setValue("subChapterId", videoData.subChapterId);
     form.setValue("videoId", videoData.id);
-  }, [videoData, form.setValue]);
+  }, [videoData, form.setValue, form]);
 
   if (!videoData) return null;
 

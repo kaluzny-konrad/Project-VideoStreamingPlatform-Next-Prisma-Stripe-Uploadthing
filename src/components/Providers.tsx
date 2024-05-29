@@ -1,14 +1,14 @@
 "use client";
 
-import React from "react";
-import { RecoilRoot } from "recoil";
-import superjson from "superjson";
 import { PropsWithChildren, useState } from "react";
 import { httpBatchLink } from "@trpc/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 import { trpc } from "@/server/client";
 import { absoluteUrl } from "@/lib/utils";
+import React from "react";
+import { RecoilRoot } from "recoil";
+import superjson from "superjson";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export default function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient({}));
@@ -31,13 +31,15 @@ export default function Providers({ children }: PropsWithChildren) {
 
   return (
     <React.StrictMode>
-      <RecoilRoot>
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </trpc.Provider>
-      </RecoilRoot>
+      <ClerkProvider>
+        <RecoilRoot>
+          <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            <QueryClientProvider client={queryClient}>
+              {children}
+            </QueryClientProvider>
+          </trpc.Provider>
+        </RecoilRoot>
+      </ClerkProvider>
     </React.StrictMode>
   );
 }

@@ -105,7 +105,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
       form.setValue("categoryId", coursePreviousData.categoryId);
       setPhoto(coursePreviousData.Photos[0] ?? undefined);
     }
-  }, [coursePreviousData, databaseLoading, databaseError, form.setValue]);
+  }, [coursePreviousData, databaseLoading, databaseError, form.setValue, form]);
 
   if (categoriesLoading || databaseLoading) {
     return false;

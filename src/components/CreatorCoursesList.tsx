@@ -1,12 +1,12 @@
 import { db } from "@/db";
-import { getAuthSession } from "@/lib/auth";
+import { currentUser } from "@clerk/nextjs/server";
 import CreatorCourseRow from "./CreatorCourseRow";
 
 type Props = {};
 
 export default async function CreatorCoursesList({}: Props) {
-  const session = await getAuthSession();
-  const creatorId = session?.user?.id;
+  const user = await currentUser();
+  const creatorId = user?.id;
 
   const courses = await db.course.findMany({
     where: {

@@ -1,22 +1,18 @@
-import { getAuthSession } from "@/lib/auth";
-import NavUserOptionsLoggedOut from "./NavUserOptionsLoggedOut";
-import NavUserOptionsLoggedIn from "./NavUserOptionsLoggedIn";
+import { buttonVariants } from "@/components/ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function NavUserOptions() {
-  const session = await getAuthSession();
-
-  if (!session?.user) return <NavUserOptionsLoggedOut />;
-
-  const user = session?.user;
-  const email = user?.email;
-  const image = user?.image;
-
   return (
-    <NavUserOptionsLoggedIn
-      user={{
-        email: email,
-        image: image,
-      }}
-    />
+    <div className="flex items-center">
+      <SignedOut>
+        <Link href="/sign-in" className={buttonVariants({ variant: "ghost" })}>
+          Sign In
+        </Link>
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </div>
   );
 }

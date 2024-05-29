@@ -1,13 +1,12 @@
 import { db } from "@/db";
-import { getAuthSession } from "@/lib/auth";
+import { currentUser } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 
 const middleware = async () => {
-  const session = await getAuthSession();
-  const user = session?.user;
-
+  const user = await currentUser();
+  
   if (!user || !user.id) throw new Error("Unauthorized");
 
   return { userId: user.id };
