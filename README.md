@@ -57,6 +57,7 @@
 - [X] Styles: Add basic styles to all pages
 - [X] Features: Auth with login and password and email confirmation
 - [ ] Bug: Adding chapters error
+- [ ] SetUp Testing: Jest, Cypress
 - [ ] Features: Add base content to all pages
 - [ ] Features: Course page - reviews - create use context for reviews
 - [ ] Refactor: Undo all strings to correct types
@@ -68,7 +69,6 @@
 - [ ] Features: Delete data in stripe
 - [ ] Fix: Images should have default ratio 16:9
 - [ ] Styling: all pages
-- [ ] SetUp Testing: Jest, Cypress
 - [ ] SetUp CI/CD: Github Actions
 - [ ] SetUp Mailing: SendGrid
 - [ ] SetUp Cache: Redis, Upstash (?)
@@ -113,3 +113,41 @@ effect: secret to .env.local
 3. Test webhook with localtunnel.
 
 effect: secret and webhook secret to .env.local
+
+
+# Tests
+
+## Playright
+
+Inside that directory, you can run several commands:
+
+  npx playwright test
+    Runs the end-to-end tests.
+
+  npx playwright test --ui
+    Starts the interactive UI mode.
+
+  npx playwright test --project=chromium
+    Runs the tests only on Desktop Chrome.
+
+  npx playwright test example
+    Runs the tests in a specific file.
+
+  npx playwright test --debug
+    Runs the tests in debug mode.
+
+  npx playwright codegen
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+    npx playwright test
+
+And check out the following files:
+  - .\tests\example.spec.ts - Example end-to-end test
+  - .\tests-examples\demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+  - .\playwright.config.ts - Playwright Test configuration
+
+Visit https://playwright.dev/docs/intro for more information. ✨
+
+Happy hacking! 🎭
