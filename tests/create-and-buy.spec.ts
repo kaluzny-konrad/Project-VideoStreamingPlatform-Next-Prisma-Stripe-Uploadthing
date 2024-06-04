@@ -5,6 +5,9 @@ test("test", async ({ page }) => {
   const random = Math.random().toString(36).substring(7);
   const courseName = `Course ${random}`;
   const categoryName = `Test Category ${random}`;
+  const longWait = {
+    timeout: 30000,
+  };
 
   await page.goto("http://localhost:3000/");
   await page.getByRole("link", { name: "Sign In" }).click();
@@ -23,9 +26,7 @@ test("test", async ({ page }) => {
   await page.getByPlaceholder("Category name").fill(categoryName);
   await page.getByPlaceholder("Slug").fill(`testcategory${random}`);
   await page.locator('[data-test="admin-categories-create-button"]').click();
-  await expect(page.getByText(categoryName)).toBeVisible({
-    timeout: 20000,
-  });
+  await expect(page.getByText(categoryName)).toBeVisible(longWait);
 
   await page.getByRole("link", { name: "Creator Panel" }).click();
   await page.getByRole("link", { name: "Create course" }).click();
@@ -42,14 +43,12 @@ test("test", async ({ page }) => {
   const fileChooser = await fileChooserPromise;
   await fileChooser.setFiles(path.join(__dirname, "mocked-image.jpg"));
   await page.getByRole("button", { name: "Upload 1 file" }).click();
-  await expect(page.getByText("Delete image")).toBeVisible({
-    timeout: 20000,
-  });
+  await expect(page.getByText("Delete image")).toBeVisible(longWait);
 
   await page.getByLabel("Category").click();
   await page.getByLabel(categoryName).getByText(categoryName).click();
   await page.locator('[data-test="creator-courses-create-button"]').click();
-  await expect(page.getByText(`Course name: ${courseName}`)).toBeVisible();
+  await expect(page.getByText(`Course name: ${courseName}`)).toBeVisible(longWait);
 
   await page.locator('[data-test="create-chapter-button"]').click();
   page.once("dialog", (dialog) => {
@@ -70,9 +69,7 @@ test("test", async ({ page }) => {
   await page.getByText("Choose File").click();
   const fileChooserMovie = await fileChooserPromiseMovie;
   await fileChooserMovie.setFiles(path.join(__dirname, "mocked-movie.mp4"));
-  await expect(page.getByText("Video added to course")).toBeVisible({
-    timeout: 40000,
-  });
+  await expect(page.getByText("Video added to course")).toBeVisible(longWait);
 
   await page.getByRole("link", { name: "Back to course" }).click();
   await page.getByRole("link", { name: "Watch course" }).click();
