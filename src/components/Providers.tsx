@@ -9,6 +9,7 @@ import React from "react";
 import { RecoilRoot } from "recoil";
 import superjson from "superjson";
 import { ClerkProvider } from "@clerk/nextjs";
+import { plPL } from "@clerk/localizations";
 
 export default function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient({}));
@@ -31,7 +32,7 @@ export default function Providers({ children }: PropsWithChildren) {
 
   return (
     <React.StrictMode>
-      <ClerkProvider>
+      <ClerkProvider localization={plPL}>
         <RecoilRoot>
           <trpc.Provider client={trpcClient} queryClient={queryClient}>
             <QueryClientProvider client={queryClient}>
