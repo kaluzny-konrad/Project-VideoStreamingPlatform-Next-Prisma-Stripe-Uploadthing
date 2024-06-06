@@ -35,7 +35,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env
-/test-results/
-/playwright-report/
+/e2e/test-results/
+/e2e/playwright-report/
 /blob-report/
 /playwright/.cache/
+playwright-report
+test-results
+playwright/.auth/user.json

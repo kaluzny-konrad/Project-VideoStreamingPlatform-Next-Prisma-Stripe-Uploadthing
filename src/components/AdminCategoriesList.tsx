@@ -10,7 +10,7 @@ export default async function AdminCategoriesList({}: Props) {
     return (
       <div>
         {categories.map((category) => (
-            <div key={category.id}>
+            <div key={category.id} data-test={`category-row-${category.slug}`}>
                 <h2>{category.name}</h2>
                 <AdminCategoriesDeleteButton categoryId={category.id} />
             </div>
