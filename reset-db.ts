@@ -7,7 +7,7 @@ const seed = async () => {
   try {
     const seed = await createSeedClient();
 
-    await seed.$resetDatabase();
+    await seed.$resetDatabase(); // eslint-disable-line
 
     const userId = process.env.SEED_INITIAL_USER_ID;
     const userName = process.env.SEED_INITIAL_USER_NAME;
