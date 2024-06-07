@@ -16,6 +16,7 @@ export const courseRouter = router({
       include: {
         Reviews: true,
         Photos: true,
+        Categories: true,
       },
     });
 
@@ -50,6 +51,7 @@ export const courseRouter = router({
       include: {
         Reviews: true,
         Photos: true,
+        Categories: true,
       },
     });
 
@@ -72,6 +74,7 @@ export const courseRouter = router({
         include: {
           Reviews: true,
           Photos: true,
+          Categories: true,
         },
       });
 
@@ -110,7 +113,12 @@ export const courseRouter = router({
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
           creatorId: user.id,
-          categoryId,
+
+          Categories: {
+            connect: {
+              id: categoryId,
+            },
+          },
         },
       });
 
@@ -129,6 +137,9 @@ export const courseRouter = router({
       const course = await db.course.findUnique({
         where: {
           id: courseId,
+        },
+        include: {
+          Categories: true,
         },
       });
 
@@ -164,6 +175,17 @@ export const courseRouter = router({
         }
       );
 
+      await db.course.update({
+        where: {
+          id: courseId,
+        },
+        data: {
+          Categories: {
+            set: [],
+          },
+        },
+      });
+
       const updatedCourse = await db.course.update({
         where: {
           id: courseId,
@@ -174,7 +196,12 @@ export const courseRouter = router({
           description,
           priceId: stripeProduct.default_price as string,
           stripeProductId: stripeProduct.id,
-          categoryId,
+
+          Categories: {
+            connect: {
+              id: categoryId,
+            },
+          },
         },
       });
 

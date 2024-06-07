@@ -8,9 +8,8 @@ import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
 import { getPublicPhotoUrl } from "@/lib/utils";
 
-type Props = {};
-
-export default function CoursesPrivateList({}: Props) {
+// Analogous to CoursesPublicList.tsx
+export default function CoursesPrivateList() {
   const [activeCourseIds, setActiveCourseIds] = useState<string[]>([]);
   const {
     data: allCourses,
@@ -29,8 +28,8 @@ export default function CoursesPrivateList({}: Props) {
       setActiveCourseIds(
         allCourses
           .filter((course) => {
-            return categoriesStateValue.activeCategoryIds.includes(
-              course.categoryId
+            return course.Categories.some((category) =>
+              categoriesStateValue.activeCategoryIds.includes(category.id)
             );
           })
           .map((course) => course.id)

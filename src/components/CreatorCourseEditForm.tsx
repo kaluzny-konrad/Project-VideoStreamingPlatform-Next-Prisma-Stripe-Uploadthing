@@ -102,7 +102,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
       form.setValue("name", coursePreviousData.name);
       form.setValue("description", coursePreviousData.description);
       form.setValue("price", coursePreviousData.price.toString());
-      form.setValue("categoryId", coursePreviousData.categoryId);
+      form.setValue("categoryId", coursePreviousData.Categories[0].id);
       setPhoto(coursePreviousData.Photos[0] ?? undefined);
     }
   }, [coursePreviousData, databaseLoading, databaseError, form.setValue, form]);
@@ -213,7 +213,7 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
               <FormLabel>Category</FormLabel>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={coursePreviousData.categoryId}
+                defaultValue={coursePreviousData.Categories[0].id}
               >
                 <FormControl>
                   <SelectTrigger>

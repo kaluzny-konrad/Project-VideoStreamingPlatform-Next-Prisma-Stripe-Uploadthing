@@ -8,10 +8,9 @@ import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
 import { getPublicPhotoUrl } from "@/lib/utils";
 
-type Props = {};
-
-export default function CoursesPublicList({}: Props) {
-  const [activeCourses, setActiveCourses] = useState<typeof allCourses>([]);
+// Analogous to CoursesPrivateList.tsx
+export default function CoursesPublicList() {
+  const [activeCourseIds, setActiveCourseIds] = useState<string[]>([]);
   const {
     data: allCourses,
     isLoading,
@@ -24,44 +23,53 @@ export default function CoursesPublicList({}: Props) {
     if (isLoading || error) return;
 
     if (categoriesStateValue.activeCategoryIds.length === 0) {
-      setActiveCourses(allCourses);
+      setActiveCourseIds(allCourses.map((course) => course.id));
     } else {
-      setActiveCourses(
-        allCourses.filter((course) => {
-          return categoriesStateValue.activeCategoryIds.includes(
-            course.categoryId
-          );
-        })
+      setActiveCourseIds(
+        allCourses
+          .filter((course) => {
+            return course.Categories.some((category) =>
+              categoriesStateValue.activeCategoryIds.includes(category.id)
+            );
+          })
+          .map((course) => course.id)
       );
     }
   }, [isLoading, error, categoriesStateValue.activeCategoryIds, allCourses]);
 
-  if (error || !activeCourses) {
+  if (error) {
     toast.error("Error loading courses");
-    return null;
   }
+
+  if (isLoading)
+    return (
+      <>
+        <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+        <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+        <Skeleton className="w-full h-24 mt-4 rounded-lg" />
+      </>
+    );
+
+  if (!allCourses) return <></>;
 
   return (
     <>
-      {isLoading ? (
-        <>
-          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
-          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
-          <Skeleton className="w-full h-24 mt-4 rounded-lg" />
-        </>
-      ) : (
-        <>
-          {activeCourses.map((course) => (
-            <CourseRow
-              key={course.id}
-              course={course}
-              photoUrl={getPublicPhotoUrl(course.Photos)}
-              reviewsCount={course.Reviews.length}
-              redirectToWatch={false}
-            />
-          ))}
-        </>
-      )}
+      {activeCourseIds.map((courseId) => {
+        const course = allCourses.find((course) => course.id === courseId)!;
+        if (!course) return <></>;
+
+        const reviewsCount = course.Reviews.length;
+
+        return (
+          <CourseRow
+            key={course.id}
+            course={course}
+            redirectToWatch={true}
+            photoUrl={getPublicPhotoUrl(course.Photos)}
+            reviewsCount={reviewsCount}
+          />
+        );
+      })}
     </>
   );
 }

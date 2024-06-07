@@ -295,20 +295,6 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
-        },
-        {
-          "id": "public.Course.categoryId",
-          "name": "categoryId",
-          "columnName": "categoryId",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
         }
       ],
       "uniqueConstraints": [
@@ -881,6 +867,51 @@
           "name": "Video_subChapterId_key",
           "fields": [
             "subChapterId"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
+    "_CategoryToCourse": {
+      "id": "public._CategoryToCourse",
+      "schemaName": "public",
+      "tableName": "_CategoryToCourse",
+      "fields": [
+        {
+          "id": "public._CategoryToCourse.A",
+          "name": "A",
+          "columnName": "A",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public._CategoryToCourse.B",
+          "name": "B",
+          "columnName": "B",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "_CategoryToCourse_AB_unique",
+          "fields": [
+            "A",
+            "B"
           ],
           "nullNotDistinct": false
         }

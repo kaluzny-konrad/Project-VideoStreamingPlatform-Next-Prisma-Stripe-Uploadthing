@@ -34,10 +34,34 @@
     "tableName": "Chapter",
     "predictions": [
       {
+        "input": "public chapter course_id",
+        "column": "courseId",
+        "shape": "UUID",
+        "confidence": 0.9983592629432678,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public chapter id",
         "column": "id",
         "shape": "UUID",
         "confidence": 0.9861764311790466,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public chapter name",
+        "column": "name",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.3170039057731628,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public chapter sub_chapter_ids_order",
+        "column": "SubChapterIdsOrder",
+        "shape": "UUID",
+        "confidence": 0.9905808568000793,
         "context": "GENERAL",
         "confidenceContext": 0
       }
@@ -48,6 +72,22 @@
     "tableName": "Course",
     "predictions": [
       {
+        "input": "public course chapter_ids_order",
+        "column": "ChapterIdsOrder",
+        "shape": "UUID",
+        "confidence": 0.9928752183914185,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course creator_id",
+        "column": "creatorId",
+        "shape": "UUID",
+        "confidence": 0.997098445892334,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public course description",
         "column": "description",
         "shape": "COMMERCE_PRODUCT_DESCRIPTION",
@@ -56,10 +96,34 @@
         "confidenceContext": 0
       },
       {
+        "input": "public course id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9987456798553467,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public course name",
         "column": "name",
         "shape": "COMMERCE_PRODUCT_NAME",
         "confidence": 0.9112593531608582,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course price_id",
+        "column": "priceId",
+        "shape": "UUID",
+        "confidence": 0.9980016350746155,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course stripe_product_id",
+        "column": "stripeProductId",
+        "shape": "UUID",
+        "confidence": 0.996705949306488,
         "context": "GENERAL",
         "confidenceContext": 0
       }
@@ -138,6 +202,14 @@
         "confidenceContext": 0
       },
       {
+        "input": "public review course_id",
+        "column": "courseId",
+        "shape": "UUID",
+        "confidence": 0.9969657063484192,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public review id",
         "column": "id",
         "shape": "UUID",
@@ -166,7 +238,32 @@
   {
     "schemaName": "public",
     "tableName": "SubChapter",
-    "predictions": []
+    "predictions": [
+      {
+        "input": "public sub_chapter course_id",
+        "column": "courseId",
+        "shape": "UUID",
+        "confidence": 0.9983391761779785,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public sub_chapter id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9975780844688416,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public sub_chapter name",
+        "column": "name",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.43231400847435,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
   },
   {
     "schemaName": "public",
@@ -219,10 +316,34 @@
     "tableName": "Video",
     "predictions": [
       {
+        "input": "public video file_name",
+        "column": "fileName",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.9814181923866272,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public video id",
         "column": "id",
         "shape": "UUID",
         "confidence": 0.9952071309089661,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public video key",
+        "column": "key",
+        "shape": "TOKEN",
+        "confidence": 0.772200882434845,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public video sub_chapter_id",
+        "column": "subChapterId",
+        "shape": "UUID",
+        "confidence": 0.9942650198936462,
         "context": "GENERAL",
         "confidenceContext": 0
       },
@@ -233,22 +354,103 @@
         "confidence": 0.8669668436050415,
         "context": "GENERAL",
         "confidenceContext": 0
+      },
+      {
+        "input": "public video video_name",
+        "column": "videoName",
+        "shape": "MOVIE_TITLE",
+        "confidence": 0.1924378126859665,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "_CategoryToCourse",
+    "predictions": [
+      {
+        "input": "public category_to_course a",
+        "column": "A",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.9086301326751709,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public category_to_course b",
+        "column": "B",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.9560679197311401,
+        "context": "GENERAL",
+        "confidenceContext": 0
       }
     ]
   },
   {
     "schemaName": "public",
     "tableName": "_CourseToOrder",
-    "predictions": []
+    "predictions": [
+      {
+        "input": "public course_to_order a",
+        "column": "A",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.7476481795310974,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course_to_order b",
+        "column": "B",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.9834066033363342,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
   },
   {
     "schemaName": "public",
     "tableName": "_CourseToPhoto",
-    "predictions": []
+    "predictions": [
+      {
+        "input": "public course_to_photo a",
+        "column": "A",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.732557475566864,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course_to_photo b",
+        "column": "B",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.7524623274803162,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
   },
   {
     "schemaName": "public",
     "tableName": "_CourseToUser",
-    "predictions": []
+    "predictions": [
+      {
+        "input": "public course_to_user a",
+        "column": "A",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.5989881157875061,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course_to_user b",
+        "column": "B",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.8953250050544739,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
   }
 ]
