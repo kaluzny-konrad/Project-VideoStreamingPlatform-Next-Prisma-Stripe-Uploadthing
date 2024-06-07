@@ -43,10 +43,12 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
     </div>;
   }
 
-  if (error || !course) {
+  if (error) {
     toast.error("Error loading course");
-    return <TextSubHeader text="Error loading course" />;
+    return;
   }
+
+  if (!course) return;
 
   const mainPhoto = getPublicPhotoUrl(course.Photos);
 

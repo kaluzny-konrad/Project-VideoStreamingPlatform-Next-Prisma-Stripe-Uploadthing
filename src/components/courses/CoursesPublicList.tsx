@@ -66,7 +66,7 @@ export default function CoursesPublicList() {
           <CourseRow
             key={course.id}
             course={course}
-            redirectToWatch={true}
+            redirectToWatch={false}
             photoUrl={getPublicPhotoUrl(course.Photos)}
             reviewsCount={reviewsCount}
           />

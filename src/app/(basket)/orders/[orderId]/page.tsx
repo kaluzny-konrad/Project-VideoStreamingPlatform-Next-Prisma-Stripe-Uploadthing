@@ -1,4 +1,5 @@
 import OrderInfo from "@/components/order/OrderInfo";
+import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 import { getUserEmail } from "@/lib/session-emails";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -13,9 +14,9 @@ export default async function BasketOrderPage({ params }: Props) {
   const user = await currentUser();
 
   return (
-    <div>
+    <WrapperMaxWidth>
       <h1>Order</h1>
       <OrderInfo orderId={orderId} userEmail={getUserEmail(user)} />
-    </div>
+    </WrapperMaxWidth>
   );
 }
