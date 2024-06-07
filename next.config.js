@@ -21,7 +21,7 @@ const nextConfig = {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
-    // !! WARN !!
+    // !! WARN !! ToDo: find way to fix snaplet seed build error
     ignoreBuildErrors: true,
   },
 };
