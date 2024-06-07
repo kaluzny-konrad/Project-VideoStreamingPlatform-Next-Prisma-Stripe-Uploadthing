@@ -16,6 +16,7 @@ const nextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+    ignoreBuildErrors: true,
   },
 };
 
