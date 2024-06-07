@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ChevronLeftIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import AuthSignUp from "@/components/AuthSignUp";
+import AuthSignUp from "@/components/auth/AuthSignUp";
 import { buttonVariants } from "@/components/ui/button";
 
 export default function SignUpPage() {

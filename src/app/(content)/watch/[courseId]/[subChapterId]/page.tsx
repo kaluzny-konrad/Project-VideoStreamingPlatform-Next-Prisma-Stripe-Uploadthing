@@ -1,4 +1,4 @@
-import CourseVideo from "@/components/CourseVideo";
+import CourseVideo from "@/components/course/CourseVideo";
 import { db } from "@/db";
 import { notFound } from "next/navigation";
 

@@ -1,4 +1,4 @@
-import CreatorCourseCreateForm from "@/components/CreatorCourseCreateForm";
+import CreatorCourseCreateForm from "@/components/creator-course/CreatorCourseCreateForm";
 
 export default async function CreatorCourseCreatePage() {
   return (

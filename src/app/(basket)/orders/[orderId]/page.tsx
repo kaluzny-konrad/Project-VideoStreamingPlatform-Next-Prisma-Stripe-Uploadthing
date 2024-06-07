@@ -1,4 +1,4 @@
-import OrderInfo from "@/components/OrderInfo";
+import OrderInfo from "@/components/order/OrderInfo";
 import { getUserEmail } from "@/lib/session-emails";
 import { currentUser } from "@clerk/nextjs/server";
 

@@ -1,7 +1,7 @@
-import EditSubChapterForm from "@/components/EditSubChapterForm";
-import SubChapterVideo from "@/components/SubChapterVideo";
+import SubChapterVideo from "@/components/video/SubChapterVideo";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import EditSubChapterForm from "@/components/creator-chapters/EditSubChapterForm";
 
 type Props = {
   params: {

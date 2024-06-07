@@ -1,4 +1,4 @@
-import CourseMarketplaceData from "@/components/CourseMarketplaceData";
+import CourseMarketplaceData from "@/components/course/CourseMarketplaceData";
 import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {

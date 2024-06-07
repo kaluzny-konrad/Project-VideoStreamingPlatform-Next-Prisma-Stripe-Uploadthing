@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
 import { Photo, Prisma } from "@prisma/client";
+
 import { PHOTO_REPLACEMENT_URL } from "@/config/photo";
 import { DEFAULT_PRICE_CURRENCY } from "@/config/price";
 

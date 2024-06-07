@@ -1,4 +1,4 @@
-import AdminCategoryInfo from "@/components/AdminCategoryInfo";
+import AdminCategoryInfo from "@/components/admin/AdminCategoryInfo";
 import React from "react";
 
 type Props = {

@@ -1,4 +1,4 @@
-import CreatorCourseEditForm from "@/components/CreatorCourseEditForm";
+import CreatorCourseEditForm from "@/components/creator-course/CreatorCourseEditForm";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 

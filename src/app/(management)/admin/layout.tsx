@@ -1,5 +1,5 @@
-import AdminPanel from "@/components/AdminPanel";
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
+import AdminPanel from "@/components/admin/AdminPanel";
+import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 
 export default async function AdminLayout({
   children,

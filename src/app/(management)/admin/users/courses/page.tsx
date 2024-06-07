@@ -1,4 +1,4 @@
-import AdminUsersCoursesList from "@/components/AdminUsersCoursesList";
+import AdminUsersCoursesList from "@/components/admin/AdminUsersCoursesList";
 
 type Props = {};
 

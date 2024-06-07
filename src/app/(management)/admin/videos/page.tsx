@@ -1,4 +1,4 @@
-import AdminVideosList from "@/components/AdminVideosList";
+import AdminVideosList from "@/components/admin/AdminVideosList";
 
 export default async function AdminVideosPage() {
   return (

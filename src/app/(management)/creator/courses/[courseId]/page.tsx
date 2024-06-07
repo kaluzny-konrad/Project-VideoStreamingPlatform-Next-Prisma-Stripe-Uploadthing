@@ -1,5 +1,5 @@
-import CreatorCourseChapters from "@/components/CreatorCourseChapters";
-import CreatorCourseInfo from "@/components/CreatorCourseInfo";
+import CreatorCourseChapters from "@/components/creator-chapters/CreatorCourseChapters";
+import CreatorCourseInfo from "@/components/creator-course/CreatorCourseInfo";
 import { EditIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";

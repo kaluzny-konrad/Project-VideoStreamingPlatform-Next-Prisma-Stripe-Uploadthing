@@ -1,4 +1,4 @@
-import CreatorCoursesList from "@/components/CreatorCoursesList";
+import CreatorCoursesList from "@/components/creator/CreatorCoursesList";
 
 export default async function CreatorCoursesPage() {
   return (

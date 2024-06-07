@@ -1,6 +1,6 @@
-import CoursesPanel from "@/components/CoursesPanel";
-import CoursesPanelMobileButton from "@/components/CoursesPanelMobileButton";
-import CoursesPublicList from "@/components/CoursesPublicList";
+import CoursesPanel from "@/components/courses/CoursesPanel";
+import CoursesPanelMobileButton from "@/components/courses/CoursesPanelMobileButton";
+import CoursesPublicList from "@/components/courses/CoursesPublicList";
 
 export default function CoursesPage() {
   return (

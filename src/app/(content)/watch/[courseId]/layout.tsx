@@ -1,9 +1,8 @@
-import CourseChapters from "@/components/CourseChapters";
-import CourseChaptersMobileButton from "@/components/CourseChaptersMobileButton";
-import CourseWatchDescription from "@/components/CourseWatchDescription";
-import ReviewUser from "@/components/ReviewUser";
-import ReviewsOtherUsers from "@/components/ReviewsOtherUsers";
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
+import CourseChapters from "@/components/course/CourseChapters";
+import CourseChaptersMobileButton from "@/components/course/CourseChaptersMobileButton";
+import CourseWatchDescription from "@/components/course/CourseWatchDescription";
+import ReviewUser from "@/components/review/ReviewUser";
+import ReviewsOtherUsers from "@/components/review/ReviewsOtherUsers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Props = {

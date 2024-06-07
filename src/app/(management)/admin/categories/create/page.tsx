@@ -1,4 +1,4 @@
-import AdminCategoryCreateForm from "@/components/AdminCategoryCreateForm";
+import AdminCategoryCreateForm from "@/components/admin/AdminCategoryCreateForm";
 
 type Props = {};
 

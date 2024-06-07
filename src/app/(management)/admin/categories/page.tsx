@@ -1,4 +1,4 @@
-import AdminCategoriesList from "@/components/AdminCategoriesList";
+import AdminCategoriesList from "@/components/admin/AdminCategoriesList";
 
 type Props = {};
 

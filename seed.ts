@@ -83,10 +83,70 @@ const main = async () => {
     },
   });
 
-  await prisma.chapter.create({
+  const chapter = await prisma.chapter.create({
     data: {
       name: "Test",
       courseId: course.id,
+    },
+  });
+
+  await prisma.course.update({
+    where: {
+      id: course.id,
+    },
+    data: {
+      ChapterIdsOrder: [course.id],
+    },
+  });
+
+  const subChapter = await prisma.subChapter.create({
+    data: {
+      name: "Test",
+      courseId: course.id,
+    },
+  });
+
+  const subChapter2 = await prisma.subChapter.create({
+    data: {
+      name: "Test2",
+      courseId: course.id,
+    },
+  });
+
+  await prisma.video.create({
+    data: {
+      key: "seeded",
+      videoName: "Test",
+      fileName: "test.mp4",
+      url: mockedMovie,
+      SubChapter: {
+        connect: {
+          id: subChapter.id,
+        },
+      },
+    },
+  });
+
+  await prisma.video.create({
+    data: {
+      key: "seeded2",
+      videoName: "Test",
+      fileName: "test.mp4",
+      url: mockedMovie,
+      SubChapter: {
+        connect: {
+          id: subChapter2.id,
+        },
+      },
+    },
+  });
+
+  await prisma.chapter.update({
+    where: {
+      id: chapter.id,
+    },
+    data: {
+      SubChapterIdsOrder: [subChapter.id, subChapter2.id],
     },
   });
 

@@ -1,5 +1,5 @@
-import CreatorPanel from "@/components/CreatorPanel";
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
+import CreatorPanel from "@/components/creator/CreatorPanel";
+import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 
 export default async function CreatorLayout({
   children,

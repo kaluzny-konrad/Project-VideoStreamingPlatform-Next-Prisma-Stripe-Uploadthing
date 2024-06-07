@@ -1,4 +1,4 @@
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
+import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 
 export default async function ContentLayout({
   children,

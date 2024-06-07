@@ -1,6 +1,6 @@
-import CoursesPanel from "@/components/CoursesPanel";
-import CoursesPanelMobileButton from "@/components/CoursesPanelMobileButton";
-import CoursesPrivateList from "@/components/CoursesPrivateList";
+import CoursesPanel from "@/components/courses/CoursesPanel";
+import CoursesPanelMobileButton from "@/components/courses/CoursesPanelMobileButton";
+import CoursesPrivateList from "@/components/courses/CoursesPrivateList";
 
 export default function WatchPage() {
   return (

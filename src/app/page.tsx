@@ -1,4 +1,4 @@
-import WrapperMaxWidth from "@/components/WrapperMaxWidth";
+import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 import { ArrowDownToLineIcon, CheckCircleIcon, LeafIcon } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
