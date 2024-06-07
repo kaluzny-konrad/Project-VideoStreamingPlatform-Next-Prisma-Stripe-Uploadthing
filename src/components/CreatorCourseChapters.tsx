@@ -15,6 +15,7 @@ import {
   MoveSubChapterRequest,
   UpdateSubChapterIdsOrderRequest,
 } from "@/lib/validators/chapter";
+import { toast } from "sonner";
 
 type Props = {
   courseId: string;
@@ -32,15 +33,15 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     error: chaptersError,
   } = trpc.chapter.getChaptersState.useQuery({ courseId });
 
-  const [chaptersState, setChaptersState] = useState<typeof chaptersInitialState | undefined>(
-    undefined
-  );
+  const [chaptersState, setChaptersState] = useState<
+    typeof chaptersInitialState | undefined
+  >(undefined);
 
   useEffect(() => {
-    if (chaptersInitialState) {
+    if (chaptersInitialState && !chaptersLoading) {
       setChaptersState(chaptersInitialState);
     }
-  }, [chaptersInitialState]);
+  }, [chaptersInitialState, chaptersLoading]);
 
   const { mutate: updateChapterIdsOrder } =
     trpc.chapter.updateChapterIdsOrder.useMutation({
@@ -181,7 +182,8 @@ export default function CreatorCourseChapters({ courseId }: Props) {
   }
 
   if (chaptersError) {
-    return <div>{chaptersError.message}</div>;
+    toast.error("Error loading chapters");
+    return;
   }
 
   const pushChapterToChaptersState = (chapter: Chapter) => {
@@ -292,70 +294,70 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
-  return (
-    <>
-      {chaptersState && (
-        <>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable
-              droppableId="all-chapters"
-              type={ChapterActionTypes.MOVE_CHAPTER}
-            >
-              {(providedDroppableChapter) => (
-                <div
-                  className="flex flex-col w-full"
-                  ref={providedDroppableChapter.innerRef}
-                  {...providedDroppableChapter.droppableProps}
-                >
-                  {chaptersState.ChapterIdsOrder.map(
-                    (chapterId, chapterIndex) => {
-                      const chapter = chaptersState.Chapters.find(
-                        (chapter) => chapter.id === chapterId
-                      );
-                      if (!chapter) {
-                        return null;
-                      }
-
-                      const subChapters = chapter.SubChapterIdsOrder.map(
-                        (subChapterId) =>
-                          chaptersState.SubChapters.find(
-                            (subChapter) => subChapter.id === subChapterId
-                          )
-                      ).filter(Boolean) as SubChapter[];
-
-                      return (
-                        <CreatorCourseChaptersDndListChapter
-                          key={chapter.id}
-                          courseId={courseId}
-                          chapter={chapter}
-                          chapterIndex={chapterIndex}
-                          subChapters={subChapters}
-                          pushSubChapterToChaptersState={
-                            pushSubChapterToChaptersState
-                          }
-                          deleteChapterFromChaptersState={
-                            deleteChapterFromChaptersState
-                          }
-                          deleteSubChapterFromChaptersState={
-                            deleteSubChapterFromChaptersState
-                          }
-                          editChapterName={editChapterName}
-                        />
-                      );
+  if (chaptersState) {
+    return (
+      <>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId="all-chapters"
+            type={ChapterActionTypes.MOVE_CHAPTER}
+          >
+            {(providedDroppableChapter) => (
+              <div
+                className="flex flex-col w-full"
+                ref={providedDroppableChapter.innerRef}
+                {...providedDroppableChapter.droppableProps}
+              >
+                {chaptersState.ChapterIdsOrder.map(
+                  (chapterId, chapterIndex) => {
+                    const chapter = chaptersState.Chapters.find(
+                      (chapter) => chapter.id === chapterId
+                    );
+                    if (!chapter) {
+                      return null;
                     }
-                  )}
-                  {providedDroppableChapter.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
 
-          <CreateChapterButton
-            courseId={chaptersState.id}
-            pushChapterToChaptersState={pushChapterToChaptersState}
-          />
-        </>
-      )}
-    </>
-  );
+                    const subChapters = chapter.SubChapterIdsOrder.map(
+                      (subChapterId) =>
+                        chaptersState.SubChapters.find(
+                          (subChapter) => subChapter.id === subChapterId
+                        )
+                    ).filter(Boolean) as SubChapter[];
+
+                    return (
+                      <CreatorCourseChaptersDndListChapter
+                        key={chapter.id}
+                        courseId={courseId}
+                        chapter={chapter}
+                        chapterIndex={chapterIndex}
+                        subChapters={subChapters}
+                        pushSubChapterToChaptersState={
+                          pushSubChapterToChaptersState
+                        }
+                        deleteChapterFromChaptersState={
+                          deleteChapterFromChaptersState
+                        }
+                        deleteSubChapterFromChaptersState={
+                          deleteSubChapterFromChaptersState
+                        }
+                        editChapterName={editChapterName}
+                      />
+                    );
+                  }
+                )}
+                {providedDroppableChapter.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        <CreateChapterButton
+          courseId={chaptersState.id}
+          pushChapterToChaptersState={pushChapterToChaptersState}
+        />
+      </>
+    );
+  }
+
+  return;
 }

@@ -27,7 +27,7 @@ export default function CoursesCreatorStats() {
         {courses.reduce((acc, course) => acc + course.Reviews.length, 0)}
       </div>
       <div>
-        Rating:
+        Rating:{" "}
         {courses.length > 0
           ? courses.reduce((acc, course) => acc + course.rating, 0) /
             courses.length

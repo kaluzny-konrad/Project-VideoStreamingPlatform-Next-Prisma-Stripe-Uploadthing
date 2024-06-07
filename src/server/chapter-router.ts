@@ -28,7 +28,7 @@ export const chapterRouter = router({
         include: {
           Chapters: true,
           SubChapters: true,
-        }
+        },
       });
 
       if (!course) {
@@ -42,10 +42,30 @@ export const chapterRouter = router({
     .input(CreateChapterValidator)
     .mutation(async ({ input }) => {
       const { courseId, name } = input;
+
+      const course = await db.course.findFirst({
+        where: {
+          id: courseId,
+        },
+      });
+
+      if (!course) {
+        throw new Error("No course found");
+      }
+
       const chapter = await db.chapter.create({
         data: {
           courseId,
           name,
+        },
+      });
+
+      await db.course.update({
+        data: {
+          ChapterIdsOrder: [...course.ChapterIdsOrder, chapter.id],
+        },
+        where: {
+          id: courseId,
         },
       });
 

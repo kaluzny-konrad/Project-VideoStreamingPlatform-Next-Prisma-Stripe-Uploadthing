@@ -1,0 +1,254 @@
+[
+  {
+    "schemaName": "public",
+    "tableName": "Category",
+    "predictions": [
+      {
+        "input": "public category id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9866438508033752,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public category name",
+        "column": "name",
+        "shape": "COMMERCE_DEPARTMENT",
+        "confidence": 1,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public category slug",
+        "column": "slug",
+        "shape": "AIRLINE_AIRLINE_NAME",
+        "confidence": 0.7,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Chapter",
+    "predictions": [
+      {
+        "input": "public chapter id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9861764311790466,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Course",
+    "predictions": [
+      {
+        "input": "public course description",
+        "column": "description",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.9528364539146423,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public course name",
+        "column": "name",
+        "shape": "COMMERCE_PRODUCT_NAME",
+        "confidence": 0.9112593531608582,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Order",
+    "predictions": [
+      {
+        "input": "public order currency",
+        "column": "currency",
+        "shape": "FINANCE_CURRENCY_NAME",
+        "confidence": 0.9797673225402832,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public order id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9865091443061829,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public order user_id",
+        "column": "userId",
+        "shape": "UUID",
+        "confidence": 0.9865207672119141,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Photo",
+    "predictions": [
+      {
+        "input": "public photo id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9983789920806885,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public photo key",
+        "column": "key",
+        "shape": "TOKEN",
+        "confidence": 0.5483436584472656,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public photo url",
+        "column": "url",
+        "shape": "IMAGE_URL",
+        "confidence": 0.9219947457313538,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Review",
+    "predictions": [
+      {
+        "input": "public review comment",
+        "column": "comment",
+        "shape": "POST_COMMENT",
+        "confidence": 0.3552515208721161,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public review id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9859504103660583,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public review title",
+        "column": "title",
+        "shape": "REVIEW",
+        "confidence": 0.7853562831878662,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public review user_id",
+        "column": "userId",
+        "shape": "UUID",
+        "confidence": 0.9857050180435181,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "SubChapter",
+    "predictions": []
+  },
+  {
+    "schemaName": "public",
+    "tableName": "User",
+    "predictions": [
+      {
+        "input": "public user email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.99404376745224,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9964122176170349,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user image",
+        "column": "image",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.9280387163162231,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user name",
+        "column": "name",
+        "shape": "USERNAME",
+        "confidence": 0.9706624150276184,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user username",
+        "column": "username",
+        "shape": "USERNAME",
+        "confidence": 0.9716823697090149,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "Video",
+    "predictions": [
+      {
+        "input": "public video id",
+        "column": "id",
+        "shape": "UUID",
+        "confidence": 0.9952071309089661,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public video url",
+        "column": "url",
+        "shape": "MEDIA_LINK",
+        "confidence": 0.8669668436050415,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "_CourseToOrder",
+    "predictions": []
+  },
+  {
+    "schemaName": "public",
+    "tableName": "_CourseToPhoto",
+    "predictions": []
+  },
+  {
+    "schemaName": "public",
+    "tableName": "_CourseToUser",
+    "predictions": []
+  }
+]

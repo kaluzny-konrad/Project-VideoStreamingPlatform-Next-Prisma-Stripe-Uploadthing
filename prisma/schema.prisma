@@ -45,13 +45,10 @@ model Course {
 
   ChapterIdsOrder String[]
 
-  Category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
+  Categories   Category[]
 
   Reviews Review[]
   Photos  Photo[]
-
-  @@index([categoryId])
 }
 
 model Chapter {
