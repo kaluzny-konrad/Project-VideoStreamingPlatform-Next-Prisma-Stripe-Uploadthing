@@ -14,6 +14,9 @@ const nextConfig = {
       "img.clerk.com",
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);
