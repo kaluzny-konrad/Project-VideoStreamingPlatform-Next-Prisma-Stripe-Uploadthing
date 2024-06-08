@@ -167,10 +167,19 @@ Happy hacking! 🎭
 
 
 # Updates bun
+
+## Dont update:
+
+
+## @next updates
+```
+bun add @vidstack/react@next
+```
+
 ## Deps
 
 ```
-bun add @clerk/localizations@latest @clerk/nextjs@latest @hello-pangea/dnd@latest @hookform/resolvers@latest @next-auth/prisma-adapter@latest @next/bundle-analyzer@latest @prisma/client@latest @radix-ui/react-avatar@latest @radix-ui/react-checkbox@latest @radix-ui/react-dialog@latest @radix-ui/react-dropdown-menu@latest @radix-ui/react-label@latest @radix-ui/react-progress@latest @radix-ui/react-radio-group@latest @radix-ui/react-select@latest @radix-ui/react-slot@latest @radix-ui/react-switch@latest @radix-ui/react-tabs@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest @uploadthing/react@latest @vidstack/react@latest bcrypt@latest class-variance-authority@latest clsx@latest date-fns@latest lucide-react@latest next@latest next-themes@latest react@latest react-beautiful-dnd@latest react-dom@latest react-hook-form@latest recoil@latest sonner@latest stripe@latest superjson@latest svix@latest swiper@latest tailwind-merge@latest tailwindcss-animate@latest uploadthing@latest zod@latest
+bun add @clerk/localizations@latest @clerk/nextjs@latest @hello-pangea/dnd@latest @hookform/resolvers@latest @next-auth/prisma-adapter@latest @next/bundle-analyzer@latest @prisma/client@latest @radix-ui/react-avatar@latest @radix-ui/react-checkbox@latest @radix-ui/react-dialog@latest @radix-ui/react-dropdown-menu@latest @radix-ui/react-label@latest @radix-ui/react-progress@latest @radix-ui/react-radio-group@latest @radix-ui/react-select@latest @radix-ui/react-slot@latest @radix-ui/react-switch@latest @radix-ui/react-tabs@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest @uploadthing/react@latest bcrypt@latest class-variance-authority@latest clsx@latest date-fns@latest lucide-react@latest next@latest next-themes@latest react@latest react-beautiful-dnd@latest react-dom@latest react-hook-form@latest recoil@latest sonner@latest stripe@latest superjson@latest svix@latest swiper@latest tailwind-merge@latest tailwindcss-animate@latest uploadthing@latest zod@latest
 ```
 
 ## DevDeps
