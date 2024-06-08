@@ -67,6 +67,7 @@
 ### V 0.2
 - [ ] Refactor: Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead.
 - [ ] Refactor: Third-party cookie will be blocked. Learn more in the Issues tab.
+- [X] Refactor: The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
 - [ ] Feature: auto upload image to course
 
 ### V 0.X
@@ -77,7 +78,6 @@
 - [ ] Fix: Creator Dashboard correct rating calculate
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
-- [ ] The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
 - [ ] Feature: when u end one subchapter, then is auto redirect to next after X seconds.
 - [ ] Feature: Edit modals should be closed after save
 - [ ] Feature: Adding files to Course

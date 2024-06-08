@@ -5,13 +5,17 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "uploadthing.com",
-      "utfs.io",
-      "stream.mux.com",
-      "lh3.googleusercontent.com",
-      "tailwindui.com",
-      "img.clerk.com",
+    remotePatterns: [
+      { protocol: "https", pathname: "**", hostname: "uploadthing.com" },
+      { protocol: "https", pathname: "**", hostname: "utfs.io" },
+      { protocol: "https", pathname: "**", hostname: "stream.mux.com" },
+      {
+        protocol: "https",
+        pathname: "**",
+        hostname: "lh3.googleusercontent.com",
+      },
+      { protocol: "https", pathname: "**", hostname: "tailwindui.com" },
+      { protocol: "https", pathname: "**", hostname: "img.clerk.com" },
     ],
   },
   // eslint: {
