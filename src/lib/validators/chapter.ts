@@ -16,7 +16,6 @@ export const CreateChapterValidator = z.object({
     .min(3, { message: "Chapter name must be minimum 3 characters long" })
     .max(128, { message: "Chapter name must be at least 128 characters" }),
 });
-
 export const CreateSubChapterValidator = z.object({
   courseId: z.string(),
   chapterId: z.string(),

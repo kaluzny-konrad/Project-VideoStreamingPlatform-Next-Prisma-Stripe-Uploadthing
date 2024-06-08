@@ -273,7 +273,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
-  const editChapterName = (chapterId: string, chapterName: string) => {
+  const editChapter = (updatedChapter: Chapter) => {
     if (!chaptersState) {
       console.error("No chapters state");
       return;
@@ -282,10 +282,10 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       Chapters: chaptersState.Chapters.map((chapter) => {
-        if (chapter.id === chapterId) {
+        if (chapter.id === updatedChapter.id) {
           return {
             ...chapter,
-            name: chapterName,
+            name: updatedChapter.name,
           };
         }
 
@@ -342,7 +342,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                         deleteSubChapterFromChaptersState={
                           deleteSubChapterFromChaptersState
                         }
-                        editChapterName={editChapterName}
+                        editChapter={editChapter}
                       />
                     );
                   }

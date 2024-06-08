@@ -1,15 +1,18 @@
 "use client";
 
 import { EditIcon } from "lucide-react";
-import { Video } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
-import { VideoEditRequest, VideoEditValidator } from "@/lib/validators/video";
 import { trpc } from "@/server/client";
+import {
+  UpdateChapterRequest,
+  UpdateChapterValidator,
+} from "@/lib/validators/chapter";
 
 import {
   Form,
@@ -27,18 +30,18 @@ import {
   DialogContent,
   DialogFooter,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 
 type Props = {
-  video: Video;
-  onVideoChanged: (video: Video) => void;
+  chapter: Chapter;
+  onChapterChanged: (chapter: Chapter) => void;
 };
 
-export default function EditVideoModal({ video, onVideoChanged }: Props) {
+export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
   const router = useRouter();
 
-  const form = useForm<VideoEditRequest>({
-    resolver: zodResolver(VideoEditValidator),
+  const form = useForm<UpdateChapterRequest>({
+    resolver: zodResolver(UpdateChapterValidator),
     defaultValues: {
       id: "",
       name: "",
@@ -53,10 +56,10 @@ export default function EditVideoModal({ video, onVideoChanged }: Props) {
     }
   }, [form.formState.errors]);
 
-  const { mutate: editVideo } = trpc.video.editVideo.useMutation({
+  const { mutate: editChapter } = trpc.chapter.updateChapter.useMutation({
     onSuccess: (res) => {
-      toast.success(`Video edited.`);
-      onVideoChanged(res);
+      toast.success(`Chapter changes saved.`);
+      onChapterChanged(res);
       router.refresh();
     },
     onError: (err) => {
@@ -65,16 +68,16 @@ export default function EditVideoModal({ video, onVideoChanged }: Props) {
     },
   });
 
-  async function onSubmit(data: VideoEditRequest) {
-    editVideo(data);
+  async function onSubmit(data: UpdateChapterRequest) {
+    editChapter(data);
   }
 
   useEffect(() => {
-    form.setValue("id", video.id);
-    form.setValue("name", video.videoName);
-  }, [video, form.setValue, form]);
+    form.setValue("id", chapter.id);
+    form.setValue("name", chapter.name);
+  }, [chapter, form.setValue, form]);
 
-  if (!video) return null;
+  if (!chapter) return null;
 
   return (
     <Dialog>
@@ -82,7 +85,7 @@ export default function EditVideoModal({ video, onVideoChanged }: Props) {
         <Button
           size={"icon"}
           className="h-6 w-6"
-          data-test="edit-video-modal-trigger"
+          data-test="edit-chapter-modal-trigger"
         >
           <EditIcon className="w-4 h-4" />
         </Button>
@@ -91,7 +94,7 @@ export default function EditVideoModal({ video, onVideoChanged }: Props) {
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form
-            id={`edit-video-${video.id}`}
+            id={`edit-chapter-${chapter.id}`}
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4"
           >
@@ -113,12 +116,12 @@ export default function EditVideoModal({ video, onVideoChanged }: Props) {
               <DialogClose asChild>
                 <Button
                   variant={"ghost"}
-                  data-test="edit-video-modal-cancel-button"
+                  data-test="edit-chapter-modal-cancel-button"
                 >
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit" data-test="edit-video-modal-save-button">
+              <Button type="submit" data-test="edit-chapter-modal-save-button">
                 Save changes
               </Button>
             </DialogFooter>

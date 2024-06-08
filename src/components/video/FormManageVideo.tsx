@@ -48,6 +48,10 @@ export default function FormManageVideo({ subChapterId }: Props) {
     setVideo(undefined);
   }
 
+  function onVideoChanged(video: Video) {
+    setVideo(video);
+  }
+
   useEffect(() => {
     if (subChapter?.Videos[0]) {
       setVideo(subChapter.Videos[0]);
@@ -69,7 +73,7 @@ export default function FormManageVideo({ subChapterId }: Props) {
           <h2 className="mb-4 mt-8 font-bold text-slate-600">Uploaded video</h2>
           <div key={video.id} className="flex">
             <p>{video.videoName}</p>
-            <EditVideoModal video={video} />
+            <EditVideoModal video={video} onVideoChanged={onVideoChanged} />
             <CreatorDeleteVideoButton
               videoId={video.id}
               onVideoDeleted={handleVideoDeleted}

@@ -2,16 +2,14 @@
 
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { Chapter, SubChapter } from "@prisma/client";
-import { Edit2Icon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { trpc } from "@/server/client";
 
-import { Button } from "@/components/ui/button";
 import { ChapterActionTypes } from "@/components/creator-chapters/CreatorCourseChapters";
 import CreateSubChapterButton from "@/components/creator-chapters/CreateSubChapterButton";
 import CreatorCourseChaptersDndListSubChapter from "@/components/creator-chapters/CreatorCourseChaptersDndListSubChapter";
 import DeleteChapterButton from "@/components/creator-chapters/DeleteChapterButton";
+import EditChapterModal from "./EditChapterModal";
 
 type Props = {
   courseId: string;
@@ -24,7 +22,7 @@ type Props = {
   ) => void;
   deleteChapterFromChaptersState: (chapterId: string) => void;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
-  editChapterName: (chapterId: string, chapterName: string) => void;
+  editChapter: (chapter: Chapter) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({
@@ -35,22 +33,11 @@ export default function CreatorCourseChaptersDndListChapter({
   pushSubChapterToChaptersState,
   deleteChapterFromChaptersState,
   deleteSubChapterFromChaptersState,
-  editChapterName,
+  editChapter,
 }: Props) {
-  const { mutate: updateChapterName } = trpc.chapter.updateChapter.useMutation({
-    onSuccess: (res) => {
-      editChapterName(chapter.id, res.name);
-    },
-  });
-
-  async function handleEditChapterName() {
-    const newChapterName = prompt("Enter new chapter name", chapter.name);
-    if (newChapterName) {
-      updateChapterName({
-        id: chapter.id,
-        name: newChapterName,
-      });
-    }
+  
+  function onChapterChanged(chapter: Chapter) {
+    editChapter(chapter);
   }
 
   return (
@@ -66,15 +53,10 @@ export default function CreatorCourseChaptersDndListChapter({
             {...providedDraggableChapter.dragHandleProps}
           >
             {chapter.name}
-            <Button
-              onClick={handleEditChapterName}
-              className="ml-2"
-              variant="outline"
-              size="icon"
-              data-test="edit-chapter-button"
-            >
-              <Edit2Icon size={16} />
-            </Button>
+            <EditChapterModal
+              chapter={chapter}
+              onChapterChanged={onChapterChanged}
+            />
           </h3>
           <Droppable
             droppableId={chapter.id}
