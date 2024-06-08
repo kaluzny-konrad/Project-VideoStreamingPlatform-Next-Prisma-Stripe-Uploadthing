@@ -81,6 +81,7 @@ Reason: Clerk bug
 - [ ] Features: Admin - list of courses should be table and should be deletable (deep delete)
 - [ ] Features: Delete data in stripe, when course is deleted
 - [ ] Fix: Images should have default ratio 16:9
+- [ ] Fix: Video ratio for fill page
 - [ ] Fix: Creator Dashboard correct rating calculate
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app

@@ -8,12 +8,14 @@ import { toast } from "sonner";
 import { Photo } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { Loader2Icon } from "lucide-react";
 
 import {
   CourseEditRequest,
   CourseEditValidator,
 } from "@/lib/validators/course";
 import { trpc } from "@/server/client";
+
 import PhotoUploadZone from "@/components/photo/PhotoUploadZone";
 import PhotoDeleteButton from "@/components/photo/PhotoDeleteButton";
 import { Button, buttonVariants } from "@/components/ui/button";

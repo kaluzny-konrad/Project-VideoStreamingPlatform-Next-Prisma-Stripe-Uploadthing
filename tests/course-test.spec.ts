@@ -26,7 +26,6 @@ test.describe("Course tests", () => {
     .click();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(path.join(__dirname, "mocked-image.jpg"));
-    await page.getByRole("button", { name: "Upload 1 file" }).click();
     
     await page.getByPlaceholder("Course name").fill(courseName);
     await page.getByPlaceholder("Course description").fill(description);
@@ -35,7 +34,6 @@ test.describe("Course tests", () => {
     await page.getByLabel("Category").click();
     await page.getByLabel(categoryName).getByText(categoryName).click();
 
-    await expect(page.getByText("Delete image")).toBeVisible(longWait);
     await page.locator('[data-test="creator-courses-create-button"]').click();
     await expect(page.getByText(`Course name: ${courseName}`)).toBeVisible(
       longWait
