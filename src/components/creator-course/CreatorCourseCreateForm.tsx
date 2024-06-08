@@ -33,10 +33,9 @@ import {
   SelectValue,
   SelectItem,
 } from "@/components/ui/select";
+import { Loader2Icon } from "lucide-react";
 
-type Props = {};
-
-export default function CreatorCourseCreateForm({}: Props) {
+export default function CreatorCourseCreateForm() {
   const router = useRouter();
   const [photo, setPhoto] = useState<Photo | undefined>(undefined);
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
@@ -76,7 +75,11 @@ export default function CreatorCourseCreateForm({}: Props) {
     },
   });
 
-  const { mutate: createCourse } = trpc.course.createCourse.useMutation({
+  const {
+    mutate: createCourse,
+    error,
+    isLoading,
+  } = trpc.course.createCourse.useMutation({
     onSuccess: (res) => {
       if (photo?.id) {
         addPhoto({ courseId: res.id, photoId: photo.id });
@@ -139,7 +142,11 @@ export default function CreatorCourseCreateForm({}: Props) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Course description" {...field} />
+                <Input
+                  type="text"
+                  placeholder="Course description"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -166,7 +173,13 @@ export default function CreatorCourseCreateForm({}: Props) {
         />
 
         {photo?.url ? (
-          <div>
+          <div className="relative">
+            <div className="absolute top-0">
+              <PhotoDeleteButton
+                Photo={photo}
+                onPhotoDeleted={handlePhotoDeleted}
+              />
+            </div>
             <Image
               src={photo.url}
               alt="Course image"
@@ -174,10 +187,6 @@ export default function CreatorCourseCreateForm({}: Props) {
               height={400}
               className="aspect-video object-cover"
               priority
-            />
-            <PhotoDeleteButton
-              Photo={photo}
-              onPhotoDeleted={handlePhotoDeleted}
             />
           </div>
         ) : (
@@ -212,9 +221,16 @@ export default function CreatorCourseCreateForm({}: Props) {
           )}
         />
 
-        <Button type="submit" data-test="creator-courses-create-button">
-          Save course
-        </Button>
+        <div className="flex gap-2 justify-end">
+          <Button
+            type="submit"
+            data-test="creator-courses-create-button"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader2Icon className="w-4 h-4 animate-spin" />}
+            Save course
+          </Button>
+        </div>
       </form>
     </Form>
   );

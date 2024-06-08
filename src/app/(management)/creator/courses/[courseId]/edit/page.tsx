@@ -1,6 +1,4 @@
 import CreatorCourseEditForm from "@/components/creator-course/CreatorCourseEditForm";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 
 type Props = {
   params: {
@@ -15,12 +13,6 @@ export default async function CreatorCourseEditPage({ params }: Props) {
       <h2 className="mb-6 text-lg font-bold text-slate-800">Edit course</h2>
 
       <CreatorCourseEditForm courseId={courseId} />
-      <Link
-        href={`/creator/courses/${courseId}`}
-        className={buttonVariants({ variant: "ghost" })}
-      >
-        Back to course
-      </Link>
     </div>
   );
 }

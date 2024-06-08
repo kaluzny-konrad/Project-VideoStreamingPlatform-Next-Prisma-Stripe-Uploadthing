@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Photo } from "@prisma/client";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   CourseEditRequest,
@@ -15,7 +16,7 @@ import {
 import { trpc } from "@/server/client";
 import PhotoUploadZone from "@/components/photo/PhotoUploadZone";
 import PhotoDeleteButton from "@/components/photo/PhotoDeleteButton";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -83,7 +84,11 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
     },
   });
 
-  const { mutate: editCourse } = trpc.course.editCourse.useMutation({
+  const {
+    mutate: editCourse,
+    error,
+    isLoading,
+  } = trpc.course.editCourse.useMutation({
     onSuccess: (res) => {
       if (photo?.id) {
         addPhoto({ courseId: res.id, photoId: photo.id });
@@ -184,7 +189,13 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
         />
 
         {photo?.url ? (
-          <div>
+          <div className="relative">
+            <div className="absolute top-0">
+              <PhotoDeleteButton
+                Photo={photo}
+                onPhotoDeleted={handlePhotoDeleted}
+              />
+            </div>
             <Image
               src={photo.url}
               alt="Course image"
@@ -192,10 +203,6 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
               height={400}
               className="aspect-video object-cover"
               priority
-            />
-            <PhotoDeleteButton
-              Photo={photo}
-              onPhotoDeleted={handlePhotoDeleted}
             />
           </div>
         ) : (
@@ -233,9 +240,23 @@ export default function CreatorCourseEditForm({ courseId }: Props) {
           )}
         />
 
-        <Button type="submit" data-test="creator-course-edit-button">
-          Save course
-        </Button>
+        <div className="flex gap-2 justify-end">
+          <Link
+            href={`/creator/courses/${courseId}`}
+            className={buttonVariants({ variant: "ghost" })}
+          >
+            Back to course
+          </Link>
+
+          <Button
+            type="submit"
+            data-test="creator-course-edit-button"
+            disabled={isLoading}
+          >
+            {isLoading && <Loader2Icon className="w-4 h-4 animate-spin" />}
+            Save course
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -18,6 +18,9 @@ export default function PhotoUploadZone({
     <UploadDropzone
       className="ut-label:hidden"
       endpoint="photoUploader"
+      config={{
+        mode: 'auto'
+      }}
       onBeforeUploadBegin={(files: File[]) => {
         onBeforeUploadBegined();
         return files;

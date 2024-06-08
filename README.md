@@ -67,10 +67,13 @@
 
 ### V 0.2
 
-- [ ] Refactor: Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead.
-- [ ] Refactor: Third-party cookie will be blocked. Learn more in the Issues tab.
+- [-] Refactor: Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead.
+Reason: Clerk bug
+- [-] Refactor: Third-party cookie will be blocked. Learn more in the Issues tab.
+Reason: Clerk bug
 - [x] Refactor: The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
-- [ ] Feature: auto upload image to course
+- [x] Feature: auto upload image to course
+- [x] Feature: Save course Loading icon
 
 ### V 0.X
 
@@ -90,6 +93,7 @@
 
 ### V 0.X
 
+- [ ] Features: Self implemented auth to be unreliant on third party
 - [ ] Features: Course page - questions to subChapters - backend
 - [ ] Update all dependencies
 

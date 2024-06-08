@@ -14,11 +14,16 @@ type Props = {
 };
 
 export default function CreatorDeleteVideoButton({
-  videoId, onVideoDeleted
+  videoId,
+  onVideoDeleted,
 }: Props) {
   const router = useRouter();
 
-  const { mutate: deleteVideo } = trpc.video.deleteVideo.useMutation({
+  const {
+    mutate: deleteVideo,
+    error,
+    isLoading,
+  } = trpc.video.deleteVideo.useMutation({
     onSuccess: () => {
       onVideoDeleted();
     },
@@ -33,15 +38,25 @@ export default function CreatorDeleteVideoButton({
     });
   };
 
+  if (error) {
+    toast.error("Error deleting video, try again later");
+    console.error(error);
+  }
+
   return (
     <Button
       onClick={handleDeleteVideo(videoId)}
       variant={"destructive"}
       size={"icon"}
       className="h-6 w-6"
+      disabled={isLoading}
       data-test="creator-videos-delete-button"
     >
-      <TrashIcon className="w-4 h-4" />
+      {isLoading ? (
+        <Loader2Icon className="w-4 h-4 animate-spin" />
+      ) : (
+        <TrashIcon className="w-4 h-4" />
+      )}
     </Button>
   );
 }
