@@ -177,6 +177,7 @@ Happy hacking! 🎭
 
 - @uploadthing/react": "^6.6.0" -> wait for fix first bugs
 -  uploadthing@latest -> wait for fix first bugs
+- "eslint": "^8.57.0", -> wait for fix bugs from version 9
 
 ## @next updates
 
