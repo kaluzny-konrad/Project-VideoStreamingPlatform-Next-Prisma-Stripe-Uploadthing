@@ -22,55 +22,58 @@
 ## Work progress
 
 ### V 0.1
+
 - [x] Setup Next.js
 - [x] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
 - [x] SetUp Video infra: UploadThing with Video component
 - [x] SetUp Deployment: Vercel
-- [X] SetUp Auth: NextAuth.js
-- [X] SetUp State: Trpc, Zod, Tanstack Query
-- [X] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
-- [X] SetUp Payments: Stripe
-- [X] Fix: Decimal price type issue (price should be Int * 100, not decimal)
-- [X] Features: Login/Logout context
-- [X] Features: Layout (Navbar, Footer)
-- [X] Features: Meta data
-- [X] Refactor: Change Database provider to Supabase https://supabase.com/partners/integrations/prisma
-- [X] Features: Some headers Main Page
-- [X] Features: Admin access control
-- [X] Features: Upload Course admin page
-- [X] Features: Upload Courses list
-- [X] Features: Courses list row
-- [X] Security: Add Auth Guards to Creator and Admin Pages.
-- [X] Features: Uploaded Course - edit course - backend
-- [X] Features: Courses Page - backend MVP
-- [X] Features: Course page - video - backend MVP
-- [X] Features: Course page - list of videos - backend MVP
-- [X] Features: Admin Panel - delete owned courses
-- [X] Fix: Fixed currency
-- [X] Features: Marketplace - create session for buying course
-- [X] Features: Create Course - change video name, description and order
-- [X] Features: Delete data in uploadthing
-- [X] Features: Course page - dont load video, if subchapter has no video
-- [X] Features: Course page - reviews - backend
-- [X] Features: Course page - reviews - add info about reviewer
-- [X] Bug: Fix apos bug
-- [X] Refactor: Fix json types in trpc
-- [X] Styles: Add basic styles to all pages
-- [X] Features: Auth with login and password and email confirmation
-- [X] Bug: Adding chapters error
-- [X] SetUp Testing: Jest, Playwright
-- [X] Features: Course page - reviews - create use context for reviews
-- [X] Refactor: Undo all strings to correct types
-- [X] Features: nav - fix gap between mobile and desktop version
-- [X] Update all dependencies
+- [x] SetUp Auth: NextAuth.js
+- [x] SetUp State: Trpc, Zod, Tanstack Query
+- [x] SetUp GUI: Shadcn/ui, Sonner (Toasts), Tailwind CSS, Swiper
+- [x] SetUp Payments: Stripe
+- [x] Fix: Decimal price type issue (price should be Int \* 100, not decimal)
+- [x] Features: Login/Logout context
+- [x] Features: Layout (Navbar, Footer)
+- [x] Features: Meta data
+- [x] Refactor: Change Database provider to Supabase https://supabase.com/partners/integrations/prisma
+- [x] Features: Some headers Main Page
+- [x] Features: Admin access control
+- [x] Features: Upload Course admin page
+- [x] Features: Upload Courses list
+- [x] Features: Courses list row
+- [x] Security: Add Auth Guards to Creator and Admin Pages.
+- [x] Features: Uploaded Course - edit course - backend
+- [x] Features: Courses Page - backend MVP
+- [x] Features: Course page - video - backend MVP
+- [x] Features: Course page - list of videos - backend MVP
+- [x] Features: Admin Panel - delete owned courses
+- [x] Fix: Fixed currency
+- [x] Features: Marketplace - create session for buying course
+- [x] Features: Create Course - change video name, description and order
+- [x] Features: Delete data in uploadthing
+- [x] Features: Course page - dont load video, if subchapter has no video
+- [x] Features: Course page - reviews - backend
+- [x] Features: Course page - reviews - add info about reviewer
+- [x] Bug: Fix apos bug
+- [x] Refactor: Fix json types in trpc
+- [x] Styles: Add basic styles to all pages
+- [x] Features: Auth with login and password and email confirmation
+- [x] Bug: Adding chapters error
+- [x] SetUp Testing: Jest, Playwright
+- [x] Features: Course page - reviews - create use context for reviews
+- [x] Refactor: Undo all strings to correct types
+- [x] Features: nav - fix gap between mobile and desktop version
+- [x] Update all dependencies
 
 ### V 0.2
+
 - [ ] Refactor: Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead.
 - [ ] Refactor: Third-party cookie will be blocked. Learn more in the Issues tab.
-- [X] Refactor: The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+- [x] Refactor: The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
 - [ ] Feature: auto upload image to course
 
 ### V 0.X
+
 - [ ] Features: Creator Panel - List of courses - as table
 - [ ] Features: Admin - list of courses should be table and should be deletable (deep delete)
 - [ ] Features: Delete data in stripe, when course is deleted
@@ -86,6 +89,7 @@
 - [ ] Big Feature: Add user progress in course
 
 ### V 0.X
+
 - [ ] Features: Course page - questions to subChapters - backend
 - [ ] Update all dependencies
 
@@ -119,7 +123,7 @@ effect: secret to .env.local
 ### Stripe:
 
 1. Create account and secret key:
-<https://dashboard.stripe.com/>
+   <https://dashboard.stripe.com/>
 
 2. Create webhook for `checkout.session.completed`
 
@@ -127,51 +131,55 @@ effect: secret to .env.local
 
 effect: secret and webhook secret to .env.local
 
-
 # Tests
 
 ## Playright
 
 Inside that directory, you can run several commands:
 
-  npx playwright test
-    Runs the end-to-end tests.
+npx playwright test
+Runs the end-to-end tests.
 
-  npx playwright test --ui
-    Starts the interactive UI mode.
+npx playwright test --ui
+Starts the interactive UI mode.
 
-  npx playwright test --project=chromium
-    Runs the tests only on Desktop Chrome.
+npx playwright test --project=chromium
+Runs the tests only on Desktop Chrome.
 
-  npx playwright test example
-    Runs the tests in a specific file.
+npx playwright test example
+Runs the tests in a specific file.
 
-  npx playwright test --debug
-    Runs the tests in debug mode.
+npx playwright test --debug
+Runs the tests in debug mode.
 
-  npx playwright codegen
-    Auto generate tests with Codegen.
+npx playwright codegen
+Auto generate tests with Codegen.
 
 We suggest that you begin by typing:
 
     npx playwright test
 
 And check out the following files:
-  - .\tests\example.spec.ts - Example end-to-end test
-  - .\tests-examples\demo-todo-app.spec.ts - Demo Todo App end-to-end tests
-  - .\playwright.config.ts - Playwright Test configuration
+
+- .\tests\example.spec.ts - Example end-to-end test
+- .\tests-examples\demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+- .\playwright.config.ts - Playwright Test configuration
 
 Visit https://playwright.dev/docs/intro for more information. ✨
 
 Happy hacking! 🎭
 
-
 # Updates bun
 
 ## Dont update:
 
+## Wait with updates:
+
+- @uploadthing/react": "^6.6.0" -> wait for fix first bugs
+-  uploadthing@latest -> wait for fix first bugs
 
 ## @next updates
+
 ```
 bun add @vidstack/react@next
 ```
@@ -179,7 +187,7 @@ bun add @vidstack/react@next
 ## Deps
 
 ```
-bun add @clerk/localizations@latest @clerk/nextjs@latest @hello-pangea/dnd@latest @hookform/resolvers@latest @next-auth/prisma-adapter@latest @next/bundle-analyzer@latest @prisma/client@latest @radix-ui/react-avatar@latest @radix-ui/react-checkbox@latest @radix-ui/react-dialog@latest @radix-ui/react-dropdown-menu@latest @radix-ui/react-label@latest @radix-ui/react-progress@latest @radix-ui/react-radio-group@latest @radix-ui/react-select@latest @radix-ui/react-slot@latest @radix-ui/react-switch@latest @radix-ui/react-tabs@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest @uploadthing/react@latest bcrypt@latest class-variance-authority@latest clsx@latest date-fns@latest lucide-react@latest next@latest next-themes@latest react@latest react-beautiful-dnd@latest react-dom@latest react-hook-form@latest recoil@latest sonner@latest stripe@latest superjson@latest svix@latest swiper@latest tailwind-merge@latest tailwindcss-animate@latest uploadthing@latest zod@latest
+bun add @clerk/localizations@latest @clerk/nextjs@latest @hello-pangea/dnd@latest @hookform/resolvers@latest @next-auth/prisma-adapter@latest @next/bundle-analyzer@latest @prisma/client@latest @radix-ui/react-avatar@latest @radix-ui/react-checkbox@latest @radix-ui/react-dialog@latest @radix-ui/react-dropdown-menu@latest @radix-ui/react-label@latest @radix-ui/react-progress@latest @radix-ui/react-radio-group@latest @radix-ui/react-select@latest @radix-ui/react-slot@latest @radix-ui/react-switch@latest @radix-ui/react-tabs@latest @trpc/client@latest @trpc/next@latest @trpc/react-query@latest @trpc/server@latest bcrypt@latest class-variance-authority@latest clsx@latest date-fns@latest lucide-react@latest next@latest next-themes@latest react@latest react-beautiful-dnd@latest react-dom@latest react-hook-form@latest recoil@latest sonner@latest stripe@latest superjson@latest svix@latest swiper@latest tailwind-merge@latest tailwindcss-animate@latest  zod@latest
 ```
 
 ## DevDeps
