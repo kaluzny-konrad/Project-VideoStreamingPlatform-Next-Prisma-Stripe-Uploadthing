@@ -21,6 +21,7 @@
 
 ## Work progress
 
+### V 0.1
 - [x] Setup Next.js
 - [x] SetUp Files infra: Prisma, Mongo, PlanetScale, UploadThing with Image component for start
 - [x] SetUp Video infra: UploadThing with Video component
@@ -58,22 +59,27 @@
 - [X] Features: Auth with login and password and email confirmation
 - [X] Bug: Adding chapters error
 - [X] SetUp Testing: Jest, Playwright
-- [ ] Features: Add base content to all pages
-- [ ] Features: Course page - reviews - create use context for reviews
-- [ ] Refactor: Undo all strings to correct types
-- [ ] Features: nav - fix gap between mobile and desktop version
-- [ ] Features: Course page - questions to subChapters - backend
-- [ ] Features: Uploaded Course - stats - backend
-- [ ] Features: Creator Panel - List of courses - backend
-- [ ] Features: Admin Panel - deep delete backend
-- [ ] Features: Delete data in stripe
+- [X] Features: Course page - reviews - create use context for reviews
+- [X] Refactor: Undo all strings to correct types
+- [X] Features: nav - fix gap between mobile and desktop version
+- [X] Update all dependencies
+
+### V 0.2
+- [ ] Refactor: Clerk: The prop "afterSignInUrl" is deprecated and should be replaced with the new "fallbackRedirectUrl" or "forceRedirectUrl" props instead.
+- [ ] Refactor: Third-party cookie will be blocked. Learn more in the Issues tab.
+
+### V 0.X
+- [ ] Features: Creator Panel - List of courses - as table
+- [ ] Features: Admin - list of courses should be table and should be deletable (deep delete)
+- [ ] Features: Delete data in stripe, when course is deleted
 - [ ] Fix: Images should have default ratio 16:9
-- [ ] Styling: all pages
-- [ ] SetUp CI/CD: Github Actions
-- [ ] SetUp Mailing: SendGrid
+- [ ] Fix: Creator Dashboard correct rating calculate
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
 - [ ] The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+
+### V 0.X
+- [ ] Features: Course page - questions to subChapters - backend
 - [ ] Update all dependencies
 
 ## Providers config:
