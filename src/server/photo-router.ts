@@ -50,8 +50,14 @@ export const photoRouter = router({
         });
       }
 
+      if(photo.key === "seeded") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Cannot delete seeded photo",
+        });
+      }
+      
       const isPhotoDeleted = await utapi.deleteFiles(photo.key);
-
       if (!isPhotoDeleted) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

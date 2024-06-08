@@ -16,6 +16,25 @@ import {
 } from "@/lib/validators/chapter";
 
 export const chapterRouter = router({
+  getSubChapter: privateProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      const subChapter = await db.subChapter.findFirst({
+        where: {
+          id: input,
+        },
+        include: {
+          Videos: true,
+        }
+      });
+
+      if (!subChapter) {
+        throw new Error("No subchapter found");
+      }
+
+      return subChapter;
+    }),
+
   getChaptersState: privateProcedure
     .input(GetChaptersStateValidator)
     .query(async ({ input }) => {
@@ -181,11 +200,17 @@ export const chapterRouter = router({
   deleteSubChapter: privateProcedure
     .input(DeleteSubChapterValidator)
     .mutation(async ({ input }) => {
+      const { id } = input;
+
       const subChapter = await db.subChapter.delete({
         where: {
-          id: input.id,
+          id,
+        },
+        include: {
+          Videos: true,
         },
       });
+
       return subChapter;
     }),
 

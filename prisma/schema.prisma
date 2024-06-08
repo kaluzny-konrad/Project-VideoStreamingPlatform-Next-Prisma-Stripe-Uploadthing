@@ -45,7 +45,7 @@ model Course {
 
   ChapterIdsOrder String[]
 
-  Categories   Category[]
+  Categories Category[]
 
   Reviews Review[]
   Photos  Photo[]
@@ -70,7 +70,7 @@ model SubChapter {
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String
 
-  Video Video?
+  Videos Video[]
 
   @@index([courseId])
 }
@@ -104,10 +104,7 @@ model Video {
   fileName  String
   url       String
 
-  SubChapter   SubChapter @relation(fields: [subChapterId], references: [id])
-  subChapterId String     @unique
-
-  @@index([subChapterId])
+  SubChapters   SubChapter[]
 }
 
 model Photo {

@@ -17,7 +17,7 @@ export default async function WatchSubChapterPage({ params }: Props) {
       id: subChapterId,
     },
     include: {
-      Video: true,
+      Videos: true,
     }
   });
 
@@ -28,7 +28,7 @@ export default async function WatchSubChapterPage({ params }: Props) {
   return (
     <>
       <h1 className="text-lg font-bold text-slate-800">Watch Course</h1>
-      {subChapter?.Video && <CourseVideo subChapterId={subChapterId} />}
+      {subChapter.Videos[0] && <CourseVideo video={subChapter.Videos[0]} />}
     </>
   );
 }

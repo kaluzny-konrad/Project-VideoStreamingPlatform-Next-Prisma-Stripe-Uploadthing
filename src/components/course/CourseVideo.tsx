@@ -1,29 +1,16 @@
 "use client";
 
 import { trpc } from "@/server/client";
+import { Video } from "@prisma/client";
 
 type Props = {
-  subChapterId: string;
+  video: Video;
 };
 
-export default function CourseVideo({ subChapterId }: Props) {
-  const {
-    data: video,
-    error,
-    isLoading,
-  } = trpc.video.getVideo.useQuery({
-    subChapterId,
-  });
-
+export default function CourseVideo({ video }: Props) {
   return (
     <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : video ? (
-        <div>
-          <video src={video.url} controls></video>
-        </div>
-      ) : null}
+      <video src={video.url} controls></video>
     </div>
   );
 }

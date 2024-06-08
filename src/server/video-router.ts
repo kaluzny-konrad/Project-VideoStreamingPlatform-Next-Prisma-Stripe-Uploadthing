@@ -11,33 +11,7 @@ import {
 import { utapi } from "./uploadthing";
 
 export const videoRouter = router({
-  getVideo: privateProcedure
-    .input(
-      z.object({
-        subChapterId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { subChapterId } = input;
-      const { user } = ctx;
-
-      const video = await db.video.findUnique({
-        where: {
-          subChapterId: subChapterId,
-        },
-      });
-
-      if (!video) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Video not found",
-        });
-      }
-
-      return video;
-    }),
-
-  connectVideoWithCourse: privateProcedure
+  addVideoToCourse: privateProcedure
     .input(ConnectVideoWithCourseValidator)
     .mutation(async ({ input, ctx }) => {
       const { videoId, subChapterId } = input;
@@ -56,14 +30,14 @@ export const videoRouter = router({
         });
       }
 
-      await db.subChapter.update({
+      await db.video.update({
         where: {
-          id: subChapterId,
+          id: videoId,
         },
         data: {
-          Video: {
+          SubChapters: {
             connect: {
-              id: videoId,
+              id: subChapterId,
             },
           },
         },
@@ -72,31 +46,15 @@ export const videoRouter = router({
       return video;
     }),
 
-  deleteVideoFromCourse: privateProcedure
+  deleteVideo: privateProcedure
     .input(DeleteVideoValidator)
     .mutation(async ({ input, ctx }) => {
-      const { subChapterId, videoId } = input;
+      const { id } = input;
       const { user } = ctx;
 
-      // Ensure the course exists
-      const subChapter = await db.subChapter.findUnique({
-        where: {
-          id: subChapterId,
-        },
-      });
-
-      if (!subChapter) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Sub Chapter not found",
-        });
-      }
-
-      // Ensure the video exists
       const video = await db.video.findUnique({
         where: {
-          id: videoId,
-          subChapterId: subChapterId,
+          id,
         },
       });
 
@@ -107,13 +65,27 @@ export const videoRouter = router({
         });
       }
 
+      if (video.key === "seeded") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Cannot delete seeded video",
+        });
+      }
+
+      const isVideoDeleted = await utapi.deleteFiles(video.key);
+
+      if (!isVideoDeleted) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to delete video",
+        });
+      }
+
       await db.video.delete({
         where: {
-          id: videoId,
+          id,
         },
       });
-
-      utapi.deleteFiles(video.fileName);
 
       return video;
     }),
@@ -121,25 +93,12 @@ export const videoRouter = router({
   editVideo: privateProcedure
     .input(VideoEditValidator)
     .mutation(async ({ input, ctx }) => {
-      const { subChapterId, videoId, name } = input;
+      const { id, name } = input;
       const { user } = ctx;
-
-      const subChapter = await db.subChapter.findUnique({
-        where: {
-          id: subChapterId,
-        },
-      });
-
-      if (!subChapter) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Sub Chapter not found",
-        });
-      }
 
       const video = await db.video.findUnique({
         where: {
-          id: videoId,
+          id,
         },
       });
 
@@ -152,7 +111,7 @@ export const videoRouter = router({
 
       const updatedVideo = await db.video.update({
         where: {
-          id: videoId,
+          id,
         },
         data: {
           videoName: name,

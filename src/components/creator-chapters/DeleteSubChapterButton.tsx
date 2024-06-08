@@ -21,11 +21,21 @@ export default function DeleteSubChapterButton({
 }: Props) {
   const { mutate: deleteSubChapter } =
     trpc.chapter.deleteSubChapter.useMutation({
-      onSuccess: () => {
+      onSuccess: (res) => {
         toast.success("SubChapter deleted");
         deleteSubChapterFromChaptersState(subChapterId);
+        if (res.Videos[0]) deleteVideo({ id: res.Videos[0].id });
       },
     });
+
+  const { mutate: deleteVideo } = trpc.video.deleteVideo.useMutation({
+    onSuccess: () => {
+      toast.success("Video deleted");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   async function handleDeleteSubChapter() {
     const data: DeleteSubChapterRequest = {

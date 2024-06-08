@@ -1,4 +1,4 @@
-import SubChapterVideo from "@/components/video/SubChapterVideo";
+import FormManageVideo from "@/components/video/FormManageVideo";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import EditSubChapterForm from "@/components/creator-chapters/EditSubChapterForm";
@@ -26,7 +26,7 @@ export default function CreatorSubChapterPage({ params }: Props) {
         Back to course
       </Link>
 
-      <SubChapterVideo subChapterId={subChapterId} />
+      <FormManageVideo subChapterId={subChapterId} />
     </div>
   );
 }

@@ -10,28 +10,26 @@ import { Button } from "@/components/ui/button";
 
 type Props = {
   videoId: string;
-  subChapterId: string;
+  onVideoDeleted: () => void;
 };
 
-export default function CreatorDeleteVideoButton({ videoId, subChapterId }: Props) {
+export default function CreatorDeleteVideoButton({
+  videoId, onVideoDeleted
+}: Props) {
   const router = useRouter();
 
-  const { mutate: deleteVideo } = trpc.video.deleteVideoFromCourse.useMutation(
-    {
-      onSuccess: () => {
-        toast("Video deleted");
-        router.refresh();
-      },
-      onError: (error) => {
-        console.error(error);
-      },
-    }
-  );
+  const { mutate: deleteVideo } = trpc.video.deleteVideo.useMutation({
+    onSuccess: () => {
+      onVideoDeleted();
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   const handleDeleteVideo = (videoId: string) => async () => {
     deleteVideo({
-      videoId,
-      subChapterId
+      id: videoId,
     });
   };
 

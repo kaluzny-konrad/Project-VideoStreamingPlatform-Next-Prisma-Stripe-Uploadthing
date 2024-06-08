@@ -56,8 +56,8 @@
 - [X] Refactor: Fix json types in trpc
 - [X] Styles: Add basic styles to all pages
 - [X] Features: Auth with login and password and email confirmation
-- [ ] Bug: Adding chapters error
-- [ ] SetUp Testing: Jest, Cypress
+- [X] Bug: Adding chapters error
+- [X] SetUp Testing: Jest, Playwright
 - [ ] Features: Add base content to all pages
 - [ ] Features: Course page - reviews - create use context for reviews
 - [ ] Refactor: Undo all strings to correct types

@@ -6,7 +6,7 @@ const f = createUploadthing();
 
 const middleware = async () => {
   const user = await currentUser();
-  
+
   if (!user || !user.id) throw new Error("Unauthorized");
 
   return { userId: user.id };
@@ -30,11 +30,10 @@ const onVideoUploadComplete = async ({
         fileName: file.name,
         url: file.url,
         videoName: file.name,
-        subChapterId: "",
       },
     });
 
-    return { fileId: uploadedFile.id };
+    return { uploadedFile };
   } catch (error) {
     console.error(error);
   }

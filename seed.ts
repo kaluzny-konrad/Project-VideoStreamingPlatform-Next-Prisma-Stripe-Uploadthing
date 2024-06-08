@@ -33,7 +33,7 @@ const main = async () => {
   const userImage = process.env.SEED_INITIAL_USER_IMAGE!;
   const now = new Date();
 
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       id: userId,
       name: userName,
@@ -95,7 +95,7 @@ const main = async () => {
       id: course.id,
     },
     data: {
-      ChapterIdsOrder: [course.id],
+      ChapterIdsOrder: [chapter.id],
     },
   });
 
@@ -106,36 +106,15 @@ const main = async () => {
     },
   });
 
-  const subChapter2 = await prisma.subChapter.create({
-    data: {
-      name: "Test2",
-      courseId: course.id,
-    },
-  });
-
   await prisma.video.create({
     data: {
       key: "seeded",
       videoName: "Test",
       fileName: "test.mp4",
       url: mockedMovie,
-      SubChapter: {
+      SubChapters: {
         connect: {
           id: subChapter.id,
-        },
-      },
-    },
-  });
-
-  await prisma.video.create({
-    data: {
-      key: "seeded2",
-      videoName: "Test",
-      fileName: "test.mp4",
-      url: mockedMovie,
-      SubChapter: {
-        connect: {
-          id: subChapter2.id,
         },
       },
     },
@@ -146,7 +125,7 @@ const main = async () => {
       id: chapter.id,
     },
     data: {
-      SubChapterIdsOrder: [subChapter.id, subChapter2.id],
+      SubChapterIdsOrder: [subChapter.id],
     },
   });
 

@@ -14,16 +14,16 @@ const nextConfig = {
       "img.clerk.com",
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !! ToDo: find way to fix snaplet seed build error
-    ignoreBuildErrors: true,
-  },
+  // eslint: {
+  //   ignoreDuringBuilds: true,
+  // },
+  // typescript: {
+  //   // !! WARN !!
+  //   // Dangerously allow production builds to successfully complete even if
+  //   // your project has type errors.
+  //   // !! WARN !! ToDo: find way to fix snaplet seed build error
+  //   ignoreBuildErrors: true,
+  // },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

@@ -832,20 +832,6 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
-        },
-        {
-          "id": "public.Video.subChapterId",
-          "name": "subChapterId",
-          "columnName": "subChapterId",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
         }
       ],
       "uniqueConstraints": [
@@ -860,13 +846,6 @@
           "name": "Video_key_key",
           "fields": [
             "key"
-          ],
-          "nullNotDistinct": false
-        },
-        {
-          "name": "Video_subChapterId_key",
-          "fields": [
-            "subChapterId"
           ],
           "nullNotDistinct": false
         }
@@ -1044,6 +1023,51 @@
       "uniqueConstraints": [
         {
           "name": "_CourseToUser_AB_unique",
+          "fields": [
+            "A",
+            "B"
+          ],
+          "nullNotDistinct": false
+        }
+      ]
+    },
+    "_SubChapterToVideo": {
+      "id": "public._SubChapterToVideo",
+      "schemaName": "public",
+      "tableName": "_SubChapterToVideo",
+      "fields": [
+        {
+          "id": "public._SubChapterToVideo.A",
+          "name": "A",
+          "columnName": "A",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "public._SubChapterToVideo.B",
+          "name": "B",
+          "columnName": "B",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "_SubChapterToVideo_AB_unique",
           "fields": [
             "A",
             "B"

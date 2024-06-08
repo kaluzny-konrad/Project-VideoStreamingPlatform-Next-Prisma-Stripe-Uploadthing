@@ -18,10 +18,6 @@ test.describe("Admin functions tests", () => {
   test("Create and delete category", async ({ page }) => {
     await OpenAdminPage(page);
     await CreateCategory(page, categoryName, slug);
-  });
-
-  test.afterEach(async ({ page }) => {
-    await OpenAdminPage(page);
     await DeleteCategory(page, slug);
   });
 });
