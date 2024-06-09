@@ -105,9 +105,9 @@ export default function EditChapterModal({
     form.setValue("name", subChapter.name);
   }, [subChapter, form.setValue, form]);
 
-  if (!subChapter) return null;
-
   const closeDialogButtonRef = useRef<HTMLButtonElement>(null);
+
+  if (!subChapter) return null;
 
   return (
     <Dialog>

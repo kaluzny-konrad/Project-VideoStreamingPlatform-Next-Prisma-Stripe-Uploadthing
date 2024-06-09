@@ -6,6 +6,7 @@ import { Chapter } from "@prisma/client";
 import { trpc } from "@/server/client";
 
 import CourseChaptersList from "@/components/course/CourseChaptersList";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   courseId: string;
@@ -21,43 +22,48 @@ export default function CourseChapters({ courseId, closeModal }: Props) {
     courseId,
   });
 
-  if (error) {
-    toast.error("Error loading chapters");
-    console.error(error);
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        <>
+          <Skeleton className="mt-4 h-24 w-full rounded-lg" />
+          <Skeleton className="mt-4 h-24 w-full rounded-lg" />
+        </>
+      </div>
+    );
   }
 
+  if (error) {
+    toast.error("Error loading chapters");
+    return;
+  }
+
+  if (!chaptersState) return;
+
   return (
-    <div className="flex flex-col">
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : chaptersState ? (
-        <>
-          {chaptersState.ChapterIdsOrder.map((chapterId) => {
-            const chapter = chaptersState.Chapters.find(
-              (chapter) => chapter.id === chapterId
-            );
-            if (!chapter) {
-              return null;
-            }
+    <>
+      {chaptersState.ChapterIdsOrder.map((chapterId) => {
+        const chapter = chaptersState.Chapters.find(
+          (chapter) => chapter.id === chapterId,
+        );
+        if (!chapter) return;
 
-            const subChapters = chapter.SubChapterIdsOrder.map((subChapterId) =>
-              chaptersState.SubChapters.find(
-                (subChapter) => subChapter.id === subChapterId
-              )
-            ).filter(Boolean) as Chapter[];
+        const subChapters = chapter.SubChapterIdsOrder.map((subChapterId) =>
+          chaptersState.SubChapters.find(
+            (subChapter) => subChapter.id === subChapterId,
+          ),
+        ).filter(Boolean) as typeof chaptersState.SubChapters;
 
-            return (
-                <CourseChaptersList
-                    key={chapter.id}
-                    courseId={courseId}
-                    chapter={chapter}
-                    subChapters={subChapters}
-                    closeModal={closeModal}
-                />
-            )
-          })}
-        </>
-      ) : null}
-    </div>
+        return (
+          <CourseChaptersList
+            key={chapter.id}
+            courseId={courseId}
+            chapter={chapter}
+            subChapters={subChapters}
+            closeModal={closeModal}
+          />
+        );
+      })}
+    </>
   );
 }

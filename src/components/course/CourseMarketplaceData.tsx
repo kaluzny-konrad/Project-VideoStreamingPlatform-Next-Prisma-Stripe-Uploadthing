@@ -11,7 +11,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { buttonVariants } from "@/components/ui/button";
 import ReviewsAll from "@/components/review/ReviewsAll";
 import TextHeader from "@/components/base/TextHeader";
-import TextSubHeader from "@/components/base/TextSubHeader";
 import CourseWatchButton from "@/components/course/CourseWatchButton";
 import CourseStatsRow from "@/components/course/CourseStatsRow";
 import CourseCreator from "@/components/course/CourseCreator";
@@ -35,12 +34,14 @@ export default function CourseMarketplaceData({ courseId, isLoggedIn }: Props) {
     });
 
   if (isLoading) {
-    <div className="space-y-4">
-      <>
-        <Skeleton className="w-full h-24 mt-4 rounded-lg" />
-        <Skeleton className="w-full h-24 mt-4 rounded-lg" />
-      </>
-    </div>;
+    return (
+      <div className="space-y-4">
+        <>
+          <Skeleton className="mt-4 h-24 w-full rounded-lg" />
+          <Skeleton className="mt-4 h-24 w-full rounded-lg" />
+        </>
+      </div>
+    );
   }
 
   if (error) {

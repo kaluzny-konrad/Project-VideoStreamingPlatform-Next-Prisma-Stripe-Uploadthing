@@ -76,8 +76,10 @@ Reason: Clerk bug
 - [x] Feature: Save course Loading icon
 
 ### V 0.3
-- [X] Feature: Edit modals should be closed after save
-- [X] Features: Edit SubChapter as modals
+- [x] Feature: Edit modals should be closed after save
+- [x] Features: Edit SubChapter as modals
+- [x] Cleanup: Delete subchapter edit page
+- [x] Features: Add sub nav to admin and creator layout in mobile version
 - [ ] Deploy: Check build on Vercel
 
 ### V 0.X
