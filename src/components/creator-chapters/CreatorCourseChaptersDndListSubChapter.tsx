@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import DeleteSubChapterButton from "@/components/creator-chapters/DeleteSubChapterButton";
 import { Button } from "@/components/ui/button";
-
+import { EditIcon } from "lucide-react";
 
 type Props = {
   subChapter: SubChapter;
@@ -24,7 +24,7 @@ export default function CreatorCourseChaptersDndListSubChapter({
   courseId,
 }: Props) {
   const router = useRouter();
-  
+
   const handleEditButton = () => {
     router.push(`/creator/courses/${courseId}/subchapters/${subChapter.id}`);
   };
@@ -38,31 +38,33 @@ export default function CreatorCourseChaptersDndListSubChapter({
       {(providedDraggableSubChapter, snapshotDraggableSubChapter) => (
         <div
           className={cn(
-            "p-2 m-2 border bg-white flex items-center grow",
-            snapshotDraggableSubChapter.isDragging && "bg-indigo-100"
+            "mx-2 flex max-h-10 grow items-center justify-between border-b-2 border-dotted bg-white py-2",
           )}
           ref={providedDraggableSubChapter.innerRef}
           {...providedDraggableSubChapter.draggableProps}
           {...providedDraggableSubChapter.dragHandleProps}
         >
-          {`${subChapter.name}`}
+          <p className="text-sm">{`${subChapter.name}`}</p>
 
-          <Button
-            onClick={handleEditButton}
-            className="ml-auto"
-            variant="secondary"
-            data-test="creator-course-chapters-dnd-list-subchapter-edit"
-          >
-            Edit
-          </Button>
+          <div className="flex items-center justify-end gap-2">
+            <Button
+              onClick={handleEditButton}
+              className="h-6 w-6"
+              size={"icon"}
+              variant={"ghost"}
+              data-test="creator-course-chapters-dnd-list-subchapter-edit"
+            >
+              <EditIcon className="h-4 w-4" />
+            </Button>
 
-          <DeleteSubChapterButton
-            subChapterId={subChapter.id}
-            deleteSubChapterFromChaptersState={
-              deleteSubChapterFromChaptersState
-            }
-            disabled={snapshotDraggableSubChapter.isDragging}
-          />
+            <DeleteSubChapterButton
+              subChapterId={subChapter.id}
+              deleteSubChapterFromChaptersState={
+                deleteSubChapterFromChaptersState
+              }
+              disabled={false}
+            />
+          </div>
         </div>
       )}
     </Draggable>

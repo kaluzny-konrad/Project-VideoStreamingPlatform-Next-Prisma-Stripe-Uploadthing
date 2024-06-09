@@ -18,7 +18,7 @@ type Props = {
   subChapters: SubChapter[];
   pushSubChapterToChaptersState: (
     subChapter: SubChapter,
-    chapterId: string
+    chapterId: string,
   ) => void;
   deleteChapterFromChaptersState: (chapterId: string) => void;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
@@ -35,7 +35,6 @@ export default function CreatorCourseChaptersDndListChapter({
   deleteSubChapterFromChaptersState,
   editChapter,
 }: Props) {
-  
   function onChapterChanged(chapter: Chapter) {
     editChapter(chapter);
   }
@@ -44,20 +43,36 @@ export default function CreatorCourseChaptersDndListChapter({
     <Draggable key={chapter.id} draggableId={chapter.id} index={chapterIndex}>
       {(providedDraggableChapter, snapshotDraggableChapter) => (
         <div
-          className="pt-4 m-2 border bg-white"
+          className="mb-2 bg-white"
           ref={providedDraggableChapter.innerRef}
           {...providedDraggableChapter.draggableProps}
         >
-          <h3
-            className="mb-4 ml-2 font-bold"
+          <div
             {...providedDraggableChapter.dragHandleProps}
+            className="flex justify-between bg-slate-100 p-2"
           >
-            {chapter.name}
-            <EditChapterModal
-              chapter={chapter}
-              onChapterChanged={onChapterChanged}
-            />
-          </h3>
+            <p className="font-bold">{chapter.name}</p>
+
+            <div className="flex items-center gap-2">
+              <CreateSubChapterButton
+                courseId={courseId}
+                chapterId={chapter.id}
+                pushSubChapterToChaptersState={pushSubChapterToChaptersState}
+              />
+
+              <EditChapterModal
+                chapter={chapter}
+                onChapterChanged={onChapterChanged}
+              />
+
+              <DeleteChapterButton
+                chapterId={chapter.id}
+                deleteChapterFromChaptersState={deleteChapterFromChaptersState}
+                disabled={subChapters.length > 0}
+              />
+            </div>
+          </div>
+
           <Droppable
             droppableId={chapter.id}
             type={ChapterActionTypes.MOVE_SUB_CHAPTER}
@@ -66,10 +81,7 @@ export default function CreatorCourseChaptersDndListChapter({
               <div
                 ref={providedDroppableSubChapter.innerRef}
                 {...providedDroppableSubChapter.droppableProps}
-                className={cn(
-                  "p-2 border-t bg-white flex flex-col h-full",
-                  snapshotDroppableSubChapter.isDraggingOver && "bg-yellow-50"
-                )}
+                className={cn("flex h-full flex-col")}
               >
                 {subChapters.map((subChapter, subChapterIndex) => (
                   <CreatorCourseChaptersDndListSubChapter
@@ -84,24 +96,6 @@ export default function CreatorCourseChaptersDndListChapter({
                 ))}
 
                 {providedDroppableSubChapter.placeholder}
-
-                <div className="flex">
-                  <CreateSubChapterButton
-                    courseId={courseId}
-                    chapterId={chapter.id}
-                    pushSubChapterToChaptersState={
-                      pushSubChapterToChaptersState
-                    }
-                  />
-
-                  <DeleteChapterButton
-                    chapterId={chapter.id}
-                    deleteChapterFromChaptersState={
-                      deleteChapterFromChaptersState
-                    }
-                    disabled={subChapters.length > 0}
-                  />
-                </div>
               </div>
             )}
           </Droppable>

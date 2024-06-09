@@ -77,14 +77,17 @@ Reason: Clerk bug
 
 ### V 0.3
 - [ ] Features: Walk by site and fix Styles
-- [ ] Features: Creator Panel - List of courses - as table
+- [ ] Feature: Edit modals should be closed after save
+- [ ] Features: Edit SubChapter as modals
 
 ### V 0.X
 
+- [ ] Features: Creator Panel - List of courses - as table
+- [ ] Styles: Fix font colors
 - [ ] Features: Admin - list of courses should be table and should be deletable (deep delete)
 - [ ] Features: Tables with pagination
-- [ ] Features: Courses List with pagination
 - [ ] Features: Universal Delete and Edit buttons with modals
+- [ ] Features: Courses List with pagination
 - [ ] Features: Delete data in stripe, when course is deleted
 - [ ] Fix: Images should have default ratio 16:9
 - [ ] Fix: Video ratio for fill page
@@ -92,7 +95,6 @@ Reason: Clerk bug
 - [ ] SetUp Cache: Redis, Upstash (?)
 - [ ] SetUp Logs: Add logs to the app
 - [ ] Feature: when u end one subchapter, then is auto redirect to next after X seconds.
-- [ ] Feature: Edit modals should be closed after save
 - [ ] Feature: Adding files to Course
 - [ ] Feature: Subchapter edited by modal
 - [ ] Feature: Subchapter - add video modal
