@@ -164,6 +164,14 @@
     "tableName": "Photo",
     "predictions": [
       {
+        "input": "public photo file_name",
+        "column": "fileName",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.9787382483482361,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
         "input": "public photo id",
         "column": "id",
         "shape": "UUID",
@@ -262,6 +270,14 @@
         "confidence": 0.43231400847435,
         "context": "GENERAL",
         "confidenceContext": 0
+      },
+      {
+        "input": "public sub_chapter video_id",
+        "column": "videoId",
+        "shape": "UUID",
+        "confidence": 0.9939086437225342,
+        "context": "GENERAL",
+        "confidenceContext": 0
       }
     ]
   },
@@ -344,14 +360,6 @@
         "column": "url",
         "shape": "MEDIA_LINK",
         "confidence": 0.8669668436050415,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public video video_name",
-        "column": "videoName",
-        "shape": "MOVIE_TITLE",
-        "confidence": 0.1924378126859665,
         "context": "GENERAL",
         "confidenceContext": 0
       }
@@ -440,28 +448,6 @@
         "column": "B",
         "shape": "DATABASE_COLUMN",
         "confidence": 0.8953250050544739,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      }
-    ]
-  },
-  {
-    "schemaName": "public",
-    "tableName": "_SubChapterToVideo",
-    "predictions": [
-      {
-        "input": "public sub_chapter_to_video a",
-        "column": "A",
-        "shape": "SYSTEM_FILE_PATH",
-        "confidence": 0.1815793663263321,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
-        "input": "public sub_chapter_to_video b",
-        "column": "B",
-        "shape": "DATABASE_COLUMN",
-        "confidence": 0.1567598432302475,
         "context": "GENERAL",
         "confidenceContext": 0
       }

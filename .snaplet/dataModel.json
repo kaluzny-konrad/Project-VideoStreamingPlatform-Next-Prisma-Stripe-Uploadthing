@@ -441,6 +441,20 @@
           "maxLength": null
         },
         {
+          "id": "public.Photo.fileName",
+          "name": "fileName",
+          "columnName": "fileName",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "id": "public.Photo.url",
           "name": "url",
           "columnName": "url",
@@ -632,6 +646,20 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": null
+        },
+        {
+          "id": "public.SubChapter.videoId",
+          "name": "videoId",
+          "columnName": "videoId",
+          "type": "text",
+          "isRequired": false,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
         }
       ],
       "uniqueConstraints": [
@@ -781,20 +809,6 @@
           "id": "public.Video.key",
           "name": "key",
           "columnName": "key",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false,
-          "maxLength": null
-        },
-        {
-          "id": "public.Video.videoName",
-          "name": "videoName",
-          "columnName": "videoName",
           "type": "text",
           "isRequired": true,
           "kind": "scalar",
@@ -1023,51 +1037,6 @@
       "uniqueConstraints": [
         {
           "name": "_CourseToUser_AB_unique",
-          "fields": [
-            "A",
-            "B"
-          ],
-          "nullNotDistinct": false
-        }
-      ]
-    },
-    "_SubChapterToVideo": {
-      "id": "public._SubChapterToVideo",
-      "schemaName": "public",
-      "tableName": "_SubChapterToVideo",
-      "fields": [
-        {
-          "id": "public._SubChapterToVideo.A",
-          "name": "A",
-          "columnName": "A",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": true,
-          "maxLength": null
-        },
-        {
-          "id": "public._SubChapterToVideo.B",
-          "name": "B",
-          "columnName": "B",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": true,
-          "maxLength": null
-        }
-      ],
-      "uniqueConstraints": [
-        {
-          "name": "_SubChapterToVideo_AB_unique",
           "fields": [
             "A",
             "B"
