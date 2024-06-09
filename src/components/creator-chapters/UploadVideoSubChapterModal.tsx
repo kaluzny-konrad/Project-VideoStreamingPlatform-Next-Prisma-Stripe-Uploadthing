@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { SubChapter, Video } from "@prisma/client";
-import { CircleDashedIcon, FileIcon, MoveRightIcon, UploadIcon, VideoIcon } from "lucide-react";
+import {
+  CircleDashedIcon,
+  FileIcon,
+  MoveRightIcon,
+  UploadIcon,
+  VideoIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { trpc } from "@/server/client";
@@ -22,7 +28,7 @@ import CreatorDeleteVideoButton from "@/components/video/DeleteVideoButton";
 import VideoUploadZone from "@/components/video/VideoUploadZone";
 
 type Props = {
-  subChapter: SubChapter;
+  subChapter: SubChapter & { Video: Video | null };
   onChange: (video: Video | undefined, isLoading: boolean) => void;
   disabled: boolean;
   setOptimisticUpdateLoading: (loading: boolean) => void;
@@ -34,18 +40,18 @@ export default function UploadVideoSubChapterModal({
   disabled,
   setOptimisticUpdateLoading,
 }: Props) {
-  const [videoId, setVideoId] = useState<string | undefined>(undefined);
+  const [video, setVideo] = useState<Video | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { mutate: connectVideoWithCourse } =
     trpc.video.addVideoToCourse.useMutation({
       onSuccess: (res) => {
         toast.success("Video added to course");
-        setVideoId(res.id);
+        setVideo(res);
       },
       onError: (error) => {
         toast.error("Something went wrong");
-        setVideoId(undefined);
+        setVideo(null);
       },
       onSettled: () => {
         setOptimisticUpdateLoading(false);
@@ -59,18 +65,18 @@ export default function UploadVideoSubChapterModal({
   }
 
   function onClientUploadCompleted(video: Video) {
-    setVideoId(video.id);
+    setVideo(video);
     connectVideoWithCourse({ subChapterId: subChapter.id, videoId: video.id });
   }
 
   function handleVideoDeleted() {
     toast.success("Video deleted");
-    setVideoId(undefined);
+    setVideo(null);
   }
 
   useEffect(() => {
     if (subChapter.videoId) {
-      setVideoId(subChapter.videoId);
+      setVideo(subChapter.Video);
     }
   }, [subChapter]);
 
@@ -82,13 +88,13 @@ export default function UploadVideoSubChapterModal({
           variant={"ghost"}
           className="h-6 w-6"
           data-test="edit-chapter-modal-trigger"
-          disabled={!isLoading && disabled}
+          disabled={disabled}
         >
           {isLoading ? (
             <CircleDashedIcon className="h-4 w-4 animate-spin" />
           ) : (
             <>
-              {videoId ? (
+              {video ? (
                 <VideoIcon className="h-4 w-4" />
               ) : (
                 <UploadIcon className="h-4 w-4" />
@@ -99,19 +105,28 @@ export default function UploadVideoSubChapterModal({
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
-        <DialogTitle>
-          {videoId ? "Uploaded video" : "Upload video"} - {subChapter.name}
-        </DialogTitle>
-        {videoId ? (
-          <CreatorDeleteVideoButton
-            videoId={videoId}
-            onVideoDeleted={handleVideoDeleted}
-          />
+        {video ? (
+          <>
+            <DialogTitle>Uploaded video - {subChapter.name}</DialogTitle>
+            <div>
+              <div className="flex items-center gap-2">
+                <FileIcon className="h-4 w-4" />
+                <p>{video.fileName}</p>
+                <CreatorDeleteVideoButton
+                  videoId={video.id}
+                  onVideoDeleted={handleVideoDeleted}
+                />
+              </div>
+            </div>
+          </>
         ) : (
-          <VideoUploadZone
-            onClientUploadCompleted={onClientUploadCompleted}
-            onBeforeUploadBegined={onBeforeUploadBegined}
-          />
+          <>
+            <DialogTitle>Upload video - {subChapter.name}</DialogTitle>
+            <VideoUploadZone
+              onClientUploadCompleted={onClientUploadCompleted}
+              onBeforeUploadBegined={onBeforeUploadBegined}
+            />
+          </>
         )}
       </DialogContent>
     </Dialog>

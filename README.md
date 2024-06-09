@@ -83,6 +83,9 @@ Reason: Clerk bug
 - [ ] Deploy: Check build on Vercel
 
 ### V 0.X
+- [ ] Features: vercel speed-insights
+- [ ] Features: vercel analytics
+
 - [ ] Features: Walk by site and fix Styles
 
 - [ ] Features: Creator Panel - List of courses - as table

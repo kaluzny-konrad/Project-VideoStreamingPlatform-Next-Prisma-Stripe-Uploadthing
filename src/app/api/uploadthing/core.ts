@@ -29,7 +29,6 @@ const onVideoUploadComplete = async ({
         key: file.key,
         fileName: file.name,
         url: file.url,
-        videoName: file.name,
       },
     });
 
@@ -54,6 +53,7 @@ const onPhotoUploadComplete = async ({
     const uploadedFile = await db.photo.create({
       data: {
         key: file.key,
+        fileName: file.name,
         url: file.url,
       },
     });

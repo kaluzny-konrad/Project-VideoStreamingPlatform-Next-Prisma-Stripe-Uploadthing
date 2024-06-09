@@ -92,35 +92,4 @@ export const videoRouter = router({
 
       return video;
     }),
-
-  editVideo: privateProcedure
-    .input(VideoEditValidator)
-    .mutation(async ({ input, ctx }) => {
-      const { id, name } = input;
-      const { user } = ctx;
-
-      const video = await db.video.findUnique({
-        where: {
-          id,
-        },
-      });
-
-      if (!video) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Video not found",
-        });
-      }
-
-      const updatedVideo = await db.video.update({
-        where: {
-          id,
-        },
-        data: {
-          videoName: name,
-        },
-      });
-
-      return updatedVideo;
-    }),
 });

@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
-import { SubChapter } from "@prisma/client";
+import { SubChapter, Video } from "@prisma/client";
 import { PlusIcon } from "lucide-react";
 
 import { trpc } from "@/server/client";
@@ -13,7 +13,7 @@ type Props = {
   courseId: string;
   chapterId: string;
   pushSubChapterToChaptersState: (
-    SubChapter: SubChapter,
+    SubChapter: SubChapter & { Video: Video | null },
     chapterId: string
   ) => void;
   disabled: boolean;

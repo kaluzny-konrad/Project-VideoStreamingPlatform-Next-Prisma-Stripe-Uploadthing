@@ -11,7 +11,7 @@ import EditSubChapterModal from "@/components/creator-chapters/EditSubChapterMod
 import UploadVideoSubChapterModal from "./UploadVideoSubChapterModal";
 
 type Props = {
-  subChapter: SubChapter;
+  subChapter: SubChapter & { Video: Video | null };
   subChapterIndex: number;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
   editSubChapter: (subChapter: SubChapter) => void;

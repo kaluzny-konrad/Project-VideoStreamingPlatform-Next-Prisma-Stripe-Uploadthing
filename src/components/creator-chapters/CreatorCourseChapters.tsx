@@ -33,7 +33,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     data: chaptersInitialState,
     isLoading: chaptersLoading,
     error: chaptersError,
-  } = trpc.chapter.getChaptersState.useQuery({ courseId });
+  } = trpc.chapter.getChaptersStateWithVideo.useQuery({ courseId });
 
   const [chaptersState, setChaptersState] = useState<
     typeof chaptersInitialState | undefined
@@ -223,7 +223,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
   };
 
   const pushSubChapterToChaptersState = (
-    subChapter: SubChapter,
+    subChapter: SubChapter & { Video: Video | null },
     chapterId: string,
   ) => {
     if (!chaptersState) {
@@ -319,10 +319,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
-  const setSubChapterVideo = (
-    subChapterId: string,
-    videoId: string | null,
-  ) => {
+  const setSubChapterVideo = (subChapterId: string, videoId: string | null) => {
     if (!chaptersState) {
       console.error("No chapters state");
       return;
@@ -375,7 +372,9 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                         chaptersState.SubChapters.find(
                           (subChapter) => subChapter.id === subChapterId,
                         ),
-                    ).filter(Boolean) as SubChapter[];
+                    ).filter(Boolean) as (SubChapter & {
+                      Video: Video | null;
+                    })[];
 
                     return (
                       <CreatorCourseChaptersDndListChapter

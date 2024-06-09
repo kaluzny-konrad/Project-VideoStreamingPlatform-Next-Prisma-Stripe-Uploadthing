@@ -109,10 +109,9 @@
 //   await prisma.video.create({
 //     data: {
 //       key: "seeded",
-//       videoName: "Test",
 //       fileName: "test.mp4",
 //       url: mockedMovie,
-//       SubChapters: {
+//       SubChapter: {
 //         connect: {
 //           id: subChapter.id,
 //         },

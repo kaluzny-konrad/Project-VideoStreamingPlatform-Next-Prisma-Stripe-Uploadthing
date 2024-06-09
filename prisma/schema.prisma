@@ -102,7 +102,6 @@ enum OrderStatus {
 model Video {
   id         String       @id @default(cuid())
   key        String       @unique
-  videoName  String
   fileName   String
   url        String
   
@@ -112,6 +111,7 @@ model Video {
 model Photo {
   id  String @id @default(cuid())
   key String @unique
+  fileName   String
   url String
 
   isMainPhoto Boolean @default(false)

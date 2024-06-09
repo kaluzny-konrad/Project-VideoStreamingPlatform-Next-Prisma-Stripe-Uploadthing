@@ -16,19 +16,16 @@ type Props = {
   courseId: string;
   chapter: Chapter;
   chapterIndex: number;
-  subChapters: SubChapter[];
+  subChapters: (SubChapter & { Video: Video | null })[];
   pushSubChapterToChaptersState: (
-    subChapter: SubChapter,
+    subChapter: SubChapter & { Video: Video | null },
     chapterId: string,
   ) => void;
   deleteChapterFromChaptersState: (chapterId: string) => void;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
   editChapter: (chapter: Chapter) => void;
   editSubChapter: (subChapter: SubChapter) => void;
-  setSubChapterVideo: (
-    subChapterId: string,
-    videoId: string | null,
-  ) => void;
+  setSubChapterVideo: (subChapterId: string, videoId: string | null) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({

@@ -14,6 +14,7 @@ import {
   UpdateSubChapterIdsOrderValidator,
   UpdateSubChapterValidator,
 } from "@/lib/validators/chapter";
+import { SubChapter, Video } from "@prisma/client";
 
 export const chapterRouter = router({
   getSubChapter: privateProcedure.input(z.string()).query(async ({ input }) => {
@@ -45,6 +46,32 @@ export const chapterRouter = router({
         include: {
           Chapters: true,
           SubChapters: true,
+        },
+      });
+
+      if (!course) {
+        throw new Error("No chapters state");
+      }
+
+      return course;
+    }),
+
+  getChaptersStateWithVideo: privateProcedure
+    .input(GetChaptersStateValidator)
+    .query(async ({ input }) => {
+      const { courseId } = input;
+
+      const course = await db.course.findFirst({
+        where: {
+          id: courseId,
+        },
+        include: {
+          Chapters: true,
+          SubChapters: {
+            include: {
+              Video: true,
+            },
+          },
         },
       });
 
@@ -172,12 +199,15 @@ export const chapterRouter = router({
 
   createSubChapter: privateProcedure
     .input(CreateSubChapterValidator)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input }): Promise<SubChapter & { Video: Video | null }> => {
       const { courseId, name, chapterId } = input;
       const subChapter = await db.subChapter.create({
         data: {
           courseId,
           name,
+        },
+        include: {
+          Video: true,
         },
       });
 
