@@ -8,20 +8,22 @@ export default async function CreatorLayout({
   children: React.ReactNode;
 }) {
   return (
-    <WrapperMaxWidth>
-      <div className="flex flex-col lg:flex-row">
-        <div>
-          <div className="mr-4 hidden lg:block">
-            <CreatorPanel />
-          </div>
-          <div className="block mb-4 lg:hidden">
-            <CreatorPanelMobileModal />
-          </div>
-        </div>
-        <div className="w-full rounded-xl bg-white p-4">
-          {children}
-        </div>
+    <>
+      <div className="m-4 block lg:hidden">
+        <CreatorPanelMobileModal />
       </div>
-    </WrapperMaxWidth>
+      <WrapperMaxWidth className="my-4 bg-white py-4 lg:bg-transparent">
+        <div className="mb-4 flex flex-col lg:flex-row">
+          <div>
+            <div className="mr-4 hidden lg:block">
+              <CreatorPanel />
+            </div>
+          </div>
+          <div className="w-full rounded-xl bg-none lg:bg-white lg:p-4">
+            {children}
+          </div>
+        </div>
+      </WrapperMaxWidth>
+    </>
   );
 }

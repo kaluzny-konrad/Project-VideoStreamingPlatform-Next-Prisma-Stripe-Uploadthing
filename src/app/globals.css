@@ -76,3 +76,11 @@
   background: #fff !important;
   scale: 1 !important;
 }
+
+.button-default-size {
+  @apply h-8 w-8 lg:h-6 lg:w-6;
+}
+
+.button-default-icon-size {
+  @apply h-6 w-6 lg:h-4 lg:w-4;
+}

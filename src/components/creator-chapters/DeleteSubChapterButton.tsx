@@ -47,13 +47,13 @@ export default function DeleteSubChapterButton({
   return (
     <Button
       onClick={handleDeleteSubChapter}
-      className="h-6 w-6"
       variant={"destructive"}
+      className="button-default-size"
       disabled={disabled}
       size={"icon"}
       data-test="delete-sub-chapter-button"
     >
-      <Trash2Icon className="h-4 w-4" />
+      <Trash2Icon className="button-default-icon-size" />
     </Button>
   );
 }

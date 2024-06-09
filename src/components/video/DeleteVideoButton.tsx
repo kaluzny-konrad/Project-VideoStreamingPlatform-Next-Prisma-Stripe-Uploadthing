@@ -48,14 +48,14 @@ export default function CreatorDeleteVideoButton({
       onClick={handleDeleteVideo(videoId)}
       variant={"destructive"}
       size={"icon"}
-      className="h-6 w-6"
+      className="button-default-size"
       disabled={isLoading}
       data-test="creator-videos-delete-button"
     >
       {isLoading ? (
-        <Loader2Icon className="w-4 h-4 animate-spin" />
+        <Loader2Icon className="button-default-icon-size animate-spin" />
       ) : (
-        <TrashIcon className="w-4 h-4" />
+        <TrashIcon className="button-default-icon-size" />
       )}
     </Button>
   );

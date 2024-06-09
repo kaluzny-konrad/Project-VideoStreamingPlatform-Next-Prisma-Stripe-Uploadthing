@@ -42,14 +42,14 @@ export default function PhotoDeleteButton({ Photo, onPhotoDeleted }: Props) {
       onClick={onDeleteButtonClick}
       variant={"destructive"}
       size={"icon"}
-      className="h-6 w-6 m-2"
+      className="button-default-size m-2"
       disabled={isLoading}
       data-test="photo-delete-button"
     >
       {isLoading ? (
-        <Loader2Icon className="w-4 h-4 animate-spin" />
+        <Loader2Icon className="button-default-icon-size animate-spin" />
       ) : (
-        <TrashIcon className="w-4 h-4" />
+        <TrashIcon className="button-default-icon-size" />
       )}
     </Button>
   );

@@ -56,7 +56,7 @@ export default function CreatorCourseChaptersDndListChapter({
         >
           <div
             {...providedDraggableChapter.dragHandleProps}
-            className="flex justify-between bg-slate-100 p-2"
+            className="flex justify-between bg-slate-100 p-2 items-center"
           >
             <p className="font-bold">{chapter.name}</p>
 

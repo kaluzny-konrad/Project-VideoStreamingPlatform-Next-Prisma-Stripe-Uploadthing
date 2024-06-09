@@ -14,7 +14,7 @@ export default function CreatorCoursePage({ params }: Props) {
   const { courseId } = params;
 
   return (
-    <div className="p-4 bg-white rounded-xl min-h-96">
+    <div className="p-0 lg:p-4 bg-white rounded-xl min-h-96">
       <h2 className="mb-6 text-lg font-bold text-slate-800">Edit course</h2>
 
       <h2 className="mb-4 font-bold text-slate-600">Course info</h2>

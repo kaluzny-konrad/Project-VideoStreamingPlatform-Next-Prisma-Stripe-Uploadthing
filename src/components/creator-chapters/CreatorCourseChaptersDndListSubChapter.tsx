@@ -49,13 +49,13 @@ export default function CreatorCourseChaptersDndListSubChapter({
       {(providedDraggableSubChapter, snapshotDraggableSubChapter) => (
         <div
           className={cn(
-            "mx-2 flex max-h-10 grow items-center justify-between border-b-2 border-dotted bg-white py-2",
+            "mx-2 flex max-h-12 lg:max-h-10 grow items-center justify-between border-b-2 border-dotted bg-white py-2",
           )}
           ref={providedDraggableSubChapter.innerRef}
           {...providedDraggableSubChapter.draggableProps}
           {...providedDraggableSubChapter.dragHandleProps}
         >
-          <p className="text-sm">{`${subChapter.name}`}</p>
+          <p className="text-sm line-clamp-2">{`${subChapter.name}`}</p>
 
           <div className="flex items-center justify-end gap-2">
             <UploadVideoSubChapterModal

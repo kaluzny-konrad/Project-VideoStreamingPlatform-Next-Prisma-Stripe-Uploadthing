@@ -130,10 +130,10 @@ export default function ReviewEditButton({
           disabled={optimisticUpdateLoading}
           size={"icon"}
           variant={"ghost"}
-          className="h-6 w-6"
+          className="button-default-size"
           data-test="edit-video-modal-trigger"
         >
-          <EditIcon className="h-4 w-4" />
+          <EditIcon className="button-default-icon-size" />
         </Button>
       </DialogTrigger>
       <DialogContent>

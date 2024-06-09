@@ -46,11 +46,10 @@ export default function CreateSubChapterButton({
     <Button
       onClick={handleCreateSubChapter}
       size={"icon"}
-      className="h-6 w-6"
-      data-test="create-sub-chapter-button"
+      className="button-default-size"
       disabled={disabled}
     >
-      <PlusIcon className="w-4 h-4" />
+      <PlusIcon className="button-default-icon-size" />
     </Button>
   );
 }

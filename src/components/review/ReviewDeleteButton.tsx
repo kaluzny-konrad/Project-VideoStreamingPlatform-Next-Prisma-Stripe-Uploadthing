@@ -64,11 +64,11 @@ export default function ReviewDeleteButton({
         <Button
           variant={"destructive"}
           size={"icon"}
-          className="h-6 w-6"
+          className="button-default-size"
           disabled={optimisticUpdateLoading}
           data-test="review-delete-trigger"
         >
-          <TrashIcon className="w-4 h-4" />
+          <TrashIcon className="button-default-icon-size" />
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -91,7 +91,7 @@ export default function UploadVideoSubChapterModal({
         <Button
           size={"icon"}
           variant={"ghost"}
-          className="h-6 w-6"
+          className="button-default-size"
           data-test="edit-chapter-modal-trigger"
           disabled={disabled}
         >
@@ -103,9 +103,9 @@ export default function UploadVideoSubChapterModal({
           ) : (
             <>
               {video ? (
-                <VideoIcon className="h-4 w-4" />
+                <VideoIcon className="button-default-icon-size" />
               ) : (
-                <UploadIcon className="h-4 w-4" />
+                <UploadIcon className="button-default-icon-size" />
               )}
             </>
           )}
@@ -118,7 +118,7 @@ export default function UploadVideoSubChapterModal({
             <DialogTitle>Uploaded video - {subChapter.name}</DialogTitle>
             <div>
               <div className="flex items-center gap-2">
-                <FileIcon className="h-4 w-4" />
+                <FileIcon className="button-default-icon-size" />
                 <p>{video.fileName}</p>
                 <CreatorDeleteVideoButton
                   videoId={video.id}

@@ -115,11 +115,11 @@ export default function EditChapterModal({
         <Button
           size={"icon"}
           variant={"ghost"}
-          className="h-6 w-6"
+          className="button-default-size"
           data-test="edit-subChapter-modal-trigger"
           disabled={disabled}
         >
-          <EditIcon className="h-4 w-4" />
+          <EditIcon className="button-default-icon-size" />
         </Button>
       </DialogTrigger>
 
