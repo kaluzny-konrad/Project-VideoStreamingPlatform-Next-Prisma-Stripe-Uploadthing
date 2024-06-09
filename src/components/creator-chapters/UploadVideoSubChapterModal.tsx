@@ -42,6 +42,7 @@ export default function UploadVideoSubChapterModal({
 }: Props) {
   const [video, setVideo] = useState<Video | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [videoUploadProgress, setVideoUploadProgress] = useState(0);
 
   const { mutate: connectVideoWithCourse } =
     trpc.video.addVideoToCourse.useMutation({
@@ -74,6 +75,10 @@ export default function UploadVideoSubChapterModal({
     setVideo(null);
   }
 
+  function handleUploadProgress(progress: number) {
+    setVideoUploadProgress(progress);
+  }
+
   useEffect(() => {
     if (subChapter.videoId) {
       setVideo(subChapter.Video);
@@ -91,7 +96,10 @@ export default function UploadVideoSubChapterModal({
           disabled={disabled}
         >
           {isLoading ? (
-            <CircleDashedIcon className="h-4 w-4 animate-spin" />
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-xs">{videoUploadProgress}%</p>
+              <CircleDashedIcon className="h-4 w-4 animate-spin" />
+            </div>
           ) : (
             <>
               {video ? (
@@ -125,6 +133,7 @@ export default function UploadVideoSubChapterModal({
             <VideoUploadZone
               onClientUploadCompleted={onClientUploadCompleted}
               onBeforeUploadBegined={onBeforeUploadBegined}
+              handleUploadProgress={handleUploadProgress}
             />
           </>
         )}

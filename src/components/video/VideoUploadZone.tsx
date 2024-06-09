@@ -9,11 +9,13 @@ import { UploadButton } from "@/lib/uploadthing";
 type Props = {
   onClientUploadCompleted: (video: Video) => void;
   onBeforeUploadBegined: () => void;
+  handleUploadProgress: (progress: number) => void;
 };
 
 export default function VideoUploadZone({
   onClientUploadCompleted,
   onBeforeUploadBegined,
+  handleUploadProgress,
 }: Props) {
   const router = useRouter();
 
@@ -23,6 +25,9 @@ export default function VideoUploadZone({
       onBeforeUploadBegin={(files: File[]) => {
         onBeforeUploadBegined();
         return files;
+      }}
+      onUploadProgress={(progress) => {
+        handleUploadProgress(progress);
       }}
       onClientUploadComplete={(res) => {
         if (typeof res === "undefined") return;
