@@ -29,7 +29,7 @@ import VideoUploadZone from "@/components/video/VideoUploadZone";
 
 type Props = {
   subChapter: SubChapter & { Video: Video | null };
-  onChange: (video: Video | undefined, isLoading: boolean) => void;
+  onChange: (video: Video | null) => void;
   disabled: boolean;
   setOptimisticUpdateLoading: (loading: boolean) => void;
 };
@@ -48,10 +48,12 @@ export default function UploadVideoSubChapterModal({
     trpc.video.addVideoToCourse.useMutation({
       onSuccess: (res) => {
         toast.success("Video added to course");
+        onChange(res);
         setVideo(res);
       },
       onError: (error) => {
         toast.error("Something went wrong");
+        onChange(null);
         setVideo(null);
       },
       onSettled: () => {
@@ -66,12 +68,16 @@ export default function UploadVideoSubChapterModal({
   }
 
   function onClientUploadCompleted(video: Video) {
+    // Optimistic update
     setVideo(video);
+
+    // Real update
     connectVideoWithCourse({ subChapterId: subChapter.id, videoId: video.id });
   }
 
   function handleVideoDeleted() {
     toast.success("Video deleted");
+    onChange(null);
     setVideo(null);
   }
 

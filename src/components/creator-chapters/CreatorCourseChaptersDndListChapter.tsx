@@ -25,7 +25,7 @@ type Props = {
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
   editChapter: (chapter: Chapter) => void;
   editSubChapter: (subChapter: SubChapter) => void;
-  setSubChapterVideo: (subChapterId: string, videoId: string | null) => void;
+  setSubChapterVideo: (subChapterId: string, Video: Video | null) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({

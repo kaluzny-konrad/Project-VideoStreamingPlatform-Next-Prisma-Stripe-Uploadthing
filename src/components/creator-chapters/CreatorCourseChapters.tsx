@@ -319,7 +319,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
-  const setSubChapterVideo = (subChapterId: string, videoId: string | null) => {
+  const setSubChapterVideo = (subChapterId: string, Video: Video | null) => {
     if (!chaptersState) {
       console.error("No chapters state");
       return;
@@ -327,10 +327,19 @@ export default function CreatorCourseChapters({ courseId }: Props) {
 
     const newSubChapters = chaptersState.SubChapters.map((subChapter) => {
       if (subChapter.id === subChapterId) {
-        return {
-          ...subChapter,
-          videoId,
-        };
+        if (Video) {
+          return {
+            ...subChapter,
+            videoId: Video.id,
+            Video,
+          };
+        } else {
+          return {
+            ...subChapter,
+            videoId: null,
+            Video: null,
+          };
+        }
       }
 
       return subChapter;

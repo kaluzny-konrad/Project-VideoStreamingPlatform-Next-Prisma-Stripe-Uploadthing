@@ -47,7 +47,7 @@ export default function DeleteSubChapterButton({
   return (
     <Button
       onClick={handleDeleteSubChapter}
-      variant={"destructive"}
+      variant={disabled ? "ghost" : "destructive"}
       className="button-default-size"
       disabled={disabled}
       size={"icon"}

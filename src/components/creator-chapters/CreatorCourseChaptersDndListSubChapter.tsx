@@ -15,10 +15,7 @@ type Props = {
   subChapterIndex: number;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
   editSubChapter: (subChapter: SubChapter) => void;
-  setSubChapterVideo: (
-    subChapterId: string,
-    videoId: string | null,
-  ) => void;
+  setSubChapterVideo: (subChapterId: string, Video: Video | null) => void;
 };
 
 export default function CreatorCourseChaptersDndListSubChapter({
@@ -34,10 +31,8 @@ export default function CreatorCourseChaptersDndListSubChapter({
     editSubChapter(subChapter);
   };
 
-  const onVideoChanged = (video: Video | undefined) => {
-    const subChapterId = subChapter.id;
-    const videoId = video?.id ?? null;
-    setSubChapterVideo(subChapterId, videoId);
+  const onVideoChanged = (video: Video | null) => {
+    setSubChapterVideo(subChapter.id, video);
   };
 
   return (
@@ -49,13 +44,13 @@ export default function CreatorCourseChaptersDndListSubChapter({
       {(providedDraggableSubChapter, snapshotDraggableSubChapter) => (
         <div
           className={cn(
-            "mx-2 flex max-h-12 lg:max-h-10 grow items-center justify-between border-b-2 border-dotted bg-white py-2",
+            "mx-2 flex max-h-12 grow items-center justify-between border-b-2 border-dotted bg-white py-2 lg:max-h-10",
           )}
           ref={providedDraggableSubChapter.innerRef}
           {...providedDraggableSubChapter.draggableProps}
           {...providedDraggableSubChapter.dragHandleProps}
         >
-          <p className="text-sm line-clamp-2">{`${subChapter.name}`}</p>
+          <p className="line-clamp-2 text-sm">{`${subChapter.name}`}</p>
 
           <div className="flex items-center justify-end gap-2">
             <UploadVideoSubChapterModal
@@ -77,7 +72,7 @@ export default function CreatorCourseChaptersDndListSubChapter({
               deleteSubChapterFromChaptersState={
                 deleteSubChapterFromChaptersState
               }
-              disabled={optimisticUpdateLoading}
+              disabled={subChapter.videoId != null || optimisticUpdateLoading}
             />
           </div>
         </div>
