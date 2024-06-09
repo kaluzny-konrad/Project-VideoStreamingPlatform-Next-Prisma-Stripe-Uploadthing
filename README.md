@@ -75,10 +75,16 @@ Reason: Clerk bug
 - [x] Feature: auto upload image to course
 - [x] Feature: Save course Loading icon
 
+### V 0.3
+- [ ] Features: Walk by site and fix Styles
+- [ ] Features: Creator Panel - List of courses - as table
+
 ### V 0.X
 
-- [ ] Features: Creator Panel - List of courses - as table
 - [ ] Features: Admin - list of courses should be table and should be deletable (deep delete)
+- [ ] Features: Tables with pagination
+- [ ] Features: Courses List with pagination
+- [ ] Features: Universal Delete and Edit buttons with modals
 - [ ] Features: Delete data in stripe, when course is deleted
 - [ ] Fix: Images should have default ratio 16:9
 - [ ] Fix: Video ratio for fill page

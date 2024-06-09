@@ -123,11 +123,16 @@ export default function ReviewEditButton({
 
   return (
     <Dialog>
-      <DialogTrigger
-        disabled={optimisticUpdateLoading}
-        className={buttonVariants({ variant: 'secondary', size: "icon"})}
-      >
-        <EditIcon />
+      <DialogTrigger asChild>
+        <Button
+          disabled={optimisticUpdateLoading}
+          size={"icon"}
+          variant={"ghost"}
+          className="h-6 w-6"
+          data-test="edit-video-modal-trigger"
+        >
+          <EditIcon className="w-4 h-4" />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -188,15 +193,20 @@ export default function ReviewEditButton({
             />
 
             <DialogFooter className="grid grid-cols-2 gap-2">
-              <Button type="submit" disabled={editReviewLoading}
+              <Button
+                type="submit"
+                disabled={editReviewLoading}
                 data-test="review-edit-button"
               >
                 {(editReviewLoading && "Saving...") || "Save changes"}
               </Button>
               <DialogClose asChild ref={closeDialogButtonRef}>
-                <Button variant="secondary"
+                <Button
+                  variant="secondary"
                   data-test="review-edit-cancel-button"
-                >Cancel</Button>
+                >
+                  Cancel
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

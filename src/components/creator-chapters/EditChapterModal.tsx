@@ -84,6 +84,7 @@ export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
       <DialogTrigger asChild>
         <Button
           size={"icon"}
+          variant={"ghost"}
           className="h-6 w-6"
           data-test="edit-chapter-modal-trigger"
         >

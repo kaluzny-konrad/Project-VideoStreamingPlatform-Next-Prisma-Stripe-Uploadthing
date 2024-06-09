@@ -60,16 +60,16 @@ export default function ReviewDeleteButton({
 
   return (
     <Dialog>
-      <DialogTrigger
-        disabled={optimisticUpdateLoading}
-        className={cn(
-          buttonVariants({
-            variant: "destructive",
-            size: "icon",
-          })
-        )}
-      >
-        <TrashIcon />
+      <DialogTrigger asChild>
+        <Button
+          variant={"destructive"}
+          size={"icon"}
+          className="h-6 w-6"
+          disabled={optimisticUpdateLoading}
+          data-test="review-delete-trigger"
+        >
+          <TrashIcon className="w-4 h-4" />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -89,9 +89,9 @@ export default function ReviewDeleteButton({
             Delete review
           </Button>
           <DialogClose asChild ref={closeDialogButtonRef}>
-            <Button variant="secondary"
-              data-test="review-delete-cancel-button"
-            >Cancel</Button>
+            <Button variant="secondary" data-test="review-delete-cancel-button">
+              Cancel
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
