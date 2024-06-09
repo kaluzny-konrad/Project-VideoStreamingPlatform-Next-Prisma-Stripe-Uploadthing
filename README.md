@@ -76,11 +76,11 @@ Reason: Clerk bug
 - [x] Feature: Save course Loading icon
 
 ### V 0.3
-- [ ] Features: Walk by site and fix Styles
-- [ ] Feature: Edit modals should be closed after save
-- [ ] Features: Edit SubChapter as modals
+- [X] Feature: Edit modals should be closed after save
+- [X] Features: Edit SubChapter as modals
 
 ### V 0.X
+- [ ] Features: Walk by site and fix Styles
 
 - [ ] Features: Creator Panel - List of courses - as table
 - [ ] Styles: Fix font colors
