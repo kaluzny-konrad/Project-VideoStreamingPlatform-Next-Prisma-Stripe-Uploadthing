@@ -24,7 +24,7 @@ export default function DeleteSubChapterButton({
       onSuccess: (res) => {
         toast.success("SubChapter deleted");
         deleteSubChapterFromChaptersState(subChapterId);
-        if (res.Videos[0]) deleteVideo({ id: res.Videos[0].id });
+        if (res.Video) deleteVideo({ id: res.Video.id });
       },
     });
 
@@ -47,13 +47,13 @@ export default function DeleteSubChapterButton({
   return (
     <Button
       onClick={handleDeleteSubChapter}
-      variant={disabled ? "ghost" : "destructive"}
       className="h-6 w-6"
+      variant={"destructive"}
       disabled={disabled}
       size={"icon"}
       data-test="delete-sub-chapter-button"
     >
-      <Trash2Icon className="w-4 h-4" />
+      <Trash2Icon className="h-4 w-4" />
     </Button>
   );
 }

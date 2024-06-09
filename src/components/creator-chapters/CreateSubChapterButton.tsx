@@ -16,12 +16,14 @@ type Props = {
     SubChapter: SubChapter,
     chapterId: string
   ) => void;
+  disabled: boolean;
 };
 
 export default function CreateSubChapterButton({
   courseId,
   chapterId,
   pushSubChapterToChaptersState,
+  disabled,
 }: Props) {
   const { mutate: createSubChapter } =
     trpc.chapter.createSubChapter.useMutation({
@@ -46,6 +48,7 @@ export default function CreateSubChapterButton({
       size={"icon"}
       className="h-6 w-6"
       data-test="create-sub-chapter-button"
+      disabled={disabled}
     >
       <PlusIcon className="w-4 h-4" />
     </Button>

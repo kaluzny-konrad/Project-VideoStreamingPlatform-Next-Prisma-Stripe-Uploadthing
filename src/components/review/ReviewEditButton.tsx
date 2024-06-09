@@ -74,35 +74,6 @@ export default function ReviewEditButton({
     }
   }, [form.formState.errors]);
 
-  function isReviewChanged(updatedReviewFormData: EditReviewRequest) {
-    return (
-      updatedReviewFormData.rating !== initialReview.rating.toString() ||
-      updatedReviewFormData.title !== initialReview.title ||
-      updatedReviewFormData.comment !== initialReview.comment
-    );
-  }
-
-  async function onSubmit(updatedReviewFormData: EditReviewRequest) {
-    if (!isReviewChanged(updatedReviewFormData)) {
-      toast.error("No changes detected");
-      closeDialogButtonRef.current?.click();
-      return;
-    }
-
-    setOptimisticUpdateLoading(true);
-    const optimisticReview: Review = {
-      id: initialReview.id,
-      rating: parseInt(updatedReviewFormData.rating, 10),
-      title: updatedReviewFormData.title || "",
-      comment: updatedReviewFormData.comment || "",
-      userId: initialReview.userId,
-      courseId: initialReview.courseId,
-    };
-    setUserReview(optimisticReview);
-    editReview(updatedReviewFormData);
-    closeDialogButtonRef.current?.click();
-  }
-
   const { mutate: editReview, isLoading: editReviewLoading } =
     trpc.review.editReview.useMutation({
       onSuccess: (updatedReviewDb: Review) => {
@@ -118,6 +89,37 @@ export default function ReviewEditButton({
         setOptimisticUpdateLoading(false);
       },
     });
+    
+  function isReviewChanged(updatedReviewFormData: EditReviewRequest) {
+    return (
+      updatedReviewFormData.rating !== initialReview.rating.toString() ||
+      updatedReviewFormData.title !== initialReview.title ||
+      updatedReviewFormData.comment !== initialReview.comment
+    );
+  }
+
+  async function onSubmit(updatedReviewFormData: EditReviewRequest) {
+    // Check if review has changed
+    if (!isReviewChanged(updatedReviewFormData)) {
+      toast.info("No changes detected");
+      closeDialogButtonRef.current?.click();
+      return;
+    }
+
+    // Optimistic update
+    setOptimisticUpdateLoading(true);
+    const optimisticReview: Review = {
+      ...initialReview,
+      rating: parseInt(updatedReviewFormData.rating, 10),
+      title: updatedReviewFormData.title || "",
+      comment: updatedReviewFormData.comment || "",
+    };
+    setUserReview(optimisticReview);
+    closeDialogButtonRef.current?.click();
+
+    // Real update
+    editReview(updatedReviewFormData);
+  }
 
   const closeDialogButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -131,7 +133,7 @@ export default function ReviewEditButton({
           className="h-6 w-6"
           data-test="edit-video-modal-trigger"
         >
-          <EditIcon className="w-4 h-4" />
+          <EditIcon className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -193,13 +195,6 @@ export default function ReviewEditButton({
             />
 
             <DialogFooter className="grid grid-cols-2 gap-2">
-              <Button
-                type="submit"
-                disabled={editReviewLoading}
-                data-test="review-edit-button"
-              >
-                {(editReviewLoading && "Saving...") || "Save changes"}
-              </Button>
               <DialogClose asChild ref={closeDialogButtonRef}>
                 <Button
                   variant="secondary"
@@ -208,6 +203,13 @@ export default function ReviewEditButton({
                   Cancel
                 </Button>
               </DialogClose>
+              <Button
+                type="submit"
+                disabled={editReviewLoading}
+                data-test="review-edit-button"
+              >
+                {(editReviewLoading && "Saving...") || "Save changes"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

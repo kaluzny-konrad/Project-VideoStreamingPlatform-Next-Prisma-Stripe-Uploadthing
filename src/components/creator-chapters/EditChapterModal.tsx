@@ -2,8 +2,7 @@
 
 import { EditIcon } from "lucide-react";
 import { Chapter } from "@prisma/client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -34,12 +33,17 @@ import {
 
 type Props = {
   chapter: Chapter;
-  onChapterChanged: (chapter: Chapter) => void;
+  onChange: (chapter: Chapter) => void;
+  disabled: boolean;
+  setOptimisticUpdateLoading: (loading: boolean) => void;
 };
 
-export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
-  const router = useRouter();
-
+export default function EditChapterModal({
+  chapter,
+  onChange,
+  disabled,
+  setOptimisticUpdateLoading,
+}: Props) {
   const form = useForm<UpdateChapterRequest>({
     resolver: zodResolver(UpdateChapterValidator),
     defaultValues: {
@@ -58,17 +62,41 @@ export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
 
   const { mutate: editChapter } = trpc.chapter.updateChapter.useMutation({
     onSuccess: (res) => {
-      toast.success(`Chapter changes saved.`);
-      onChapterChanged(res);
-      router.refresh();
+      toast.success(`Changes saved`);
+      onChange(res);
     },
     onError: (err) => {
       toast.error(`Something went wrong.`);
       console.error(err);
+      onChange(chapter);
+    },
+    onSettled: () => {
+      setOptimisticUpdateLoading(false);
     },
   });
 
+  function isChapterChanged(formData: UpdateChapterRequest) {
+    return formData.name !== chapter.name;
+  }
+
   async function onSubmit(data: UpdateChapterRequest) {
+    closeDialogButtonRef.current?.click();
+
+    // Check if the chapter has changed
+    if (!isChapterChanged(data)) {
+      toast.info("No changes detected");
+      return;
+    }
+
+    // Optimistic update
+    setOptimisticUpdateLoading(true);
+    const optimisticReview: Chapter = {
+      ...chapter,
+      name: data.name,
+    };
+    onChange(optimisticReview);
+
+    // Real update
     editChapter(data);
   }
 
@@ -79,6 +107,8 @@ export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
 
   if (!chapter) return null;
 
+  const closeDialogButtonRef = useRef<HTMLButtonElement>(null);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -87,8 +117,9 @@ export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
           variant={"ghost"}
           className="h-6 w-6"
           data-test="edit-chapter-modal-trigger"
+          disabled={disabled}
         >
-          <EditIcon className="w-4 h-4" />
+          <EditIcon className="h-4 w-4" />
         </Button>
       </DialogTrigger>
 
@@ -114,7 +145,7 @@ export default function EditChapterModal({ chapter, onChapterChanged }: Props) {
             />
 
             <DialogFooter>
-              <DialogClose asChild>
+              <DialogClose asChild ref={closeDialogButtonRef}>
                 <Button
                   variant={"ghost"}
                   data-test="edit-chapter-modal-cancel-button"

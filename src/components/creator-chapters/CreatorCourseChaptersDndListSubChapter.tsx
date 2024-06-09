@@ -1,32 +1,43 @@
 "use client";
 
-import { SubChapter } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { SubChapter, Video } from "@prisma/client";
+import { useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 
 import { cn } from "@/lib/utils";
 
 import DeleteSubChapterButton from "@/components/creator-chapters/DeleteSubChapterButton";
-import { Button } from "@/components/ui/button";
-import { EditIcon } from "lucide-react";
+import EditSubChapterModal from "@/components/creator-chapters/EditSubChapterModal";
+import UploadVideoSubChapterModal from "./UploadVideoSubChapterModal";
 
 type Props = {
   subChapter: SubChapter;
   subChapterIndex: number;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
-  courseId: string;
+  editSubChapter: (subChapter: SubChapter) => void;
+  setSubChapterVideo: (
+    subChapterId: string,
+    videoId: string | null,
+  ) => void;
 };
 
 export default function CreatorCourseChaptersDndListSubChapter({
   subChapter,
   subChapterIndex,
   deleteSubChapterFromChaptersState,
-  courseId,
+  editSubChapter,
+  setSubChapterVideo,
 }: Props) {
-  const router = useRouter();
+  const [optimisticUpdateLoading, setOptimisticUpdateLoading] = useState(false);
 
-  const handleEditButton = () => {
-    router.push(`/creator/courses/${courseId}/subchapters/${subChapter.id}`);
+  const onSubChapterChanged = (subChapter: SubChapter) => {
+    editSubChapter(subChapter);
+  };
+
+  const onVideoChanged = (video: Video | undefined) => {
+    const subChapterId = subChapter.id;
+    const videoId = video?.id ?? null;
+    setSubChapterVideo(subChapterId, videoId);
   };
 
   return (
@@ -47,22 +58,26 @@ export default function CreatorCourseChaptersDndListSubChapter({
           <p className="text-sm">{`${subChapter.name}`}</p>
 
           <div className="flex items-center justify-end gap-2">
-            <Button
-              onClick={handleEditButton}
-              className="h-6 w-6"
-              size={"icon"}
-              variant={"ghost"}
-              data-test="creator-course-chapters-dnd-list-subchapter-edit"
-            >
-              <EditIcon className="h-4 w-4" />
-            </Button>
+            <UploadVideoSubChapterModal
+              subChapter={subChapter}
+              onChange={onVideoChanged}
+              disabled={optimisticUpdateLoading}
+              setOptimisticUpdateLoading={setOptimisticUpdateLoading}
+            />
+
+            <EditSubChapterModal
+              subChapter={subChapter}
+              onChange={onSubChapterChanged}
+              disabled={optimisticUpdateLoading}
+              setOptimisticUpdateLoading={setOptimisticUpdateLoading}
+            />
 
             <DeleteSubChapterButton
               subChapterId={subChapter.id}
               deleteSubChapterFromChaptersState={
                 deleteSubChapterFromChaptersState
               }
-              disabled={false}
+              disabled={optimisticUpdateLoading}
             />
           </div>
         </div>

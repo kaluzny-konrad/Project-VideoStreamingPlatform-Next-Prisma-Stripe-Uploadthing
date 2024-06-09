@@ -1,7 +1,8 @@
 "use client";
 
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { Chapter, SubChapter } from "@prisma/client";
+import { useState } from "react";
+import { Chapter, SubChapter, Video } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,11 @@ type Props = {
   deleteChapterFromChaptersState: (chapterId: string) => void;
   deleteSubChapterFromChaptersState: (subChapterId: string) => void;
   editChapter: (chapter: Chapter) => void;
+  editSubChapter: (subChapter: SubChapter) => void;
+  setSubChapterVideo: (
+    subChapterId: string,
+    videoId: string | null,
+  ) => void;
 };
 
 export default function CreatorCourseChaptersDndListChapter({
@@ -34,7 +40,11 @@ export default function CreatorCourseChaptersDndListChapter({
   deleteChapterFromChaptersState,
   deleteSubChapterFromChaptersState,
   editChapter,
+  editSubChapter,
+  setSubChapterVideo,
 }: Props) {
+  const [optimisticUpdateLoading, setOptimisticUpdateLoading] = useState(false);
+
   function onChapterChanged(chapter: Chapter) {
     editChapter(chapter);
   }
@@ -58,17 +68,20 @@ export default function CreatorCourseChaptersDndListChapter({
                 courseId={courseId}
                 chapterId={chapter.id}
                 pushSubChapterToChaptersState={pushSubChapterToChaptersState}
+                disabled={optimisticUpdateLoading}
               />
 
               <EditChapterModal
                 chapter={chapter}
-                onChapterChanged={onChapterChanged}
+                onChange={onChapterChanged}
+                disabled={optimisticUpdateLoading}
+                setOptimisticUpdateLoading={setOptimisticUpdateLoading}
               />
 
               <DeleteChapterButton
                 chapterId={chapter.id}
                 deleteChapterFromChaptersState={deleteChapterFromChaptersState}
-                disabled={subChapters.length > 0}
+                disabled={subChapters.length > 0 || optimisticUpdateLoading}
               />
             </div>
           </div>
@@ -91,7 +104,8 @@ export default function CreatorCourseChaptersDndListChapter({
                     deleteSubChapterFromChaptersState={
                       deleteSubChapterFromChaptersState
                     }
-                    courseId={courseId}
+                    editSubChapter={editSubChapter}
+                    setSubChapterVideo={setSubChapterVideo}
                   />
                 ))}
 

@@ -30,20 +30,23 @@ export const videoRouter = router({
         });
       }
 
-      await db.video.update({
+      const updatedVideo = await db.video.update({
         where: {
           id: videoId,
         },
         data: {
-          SubChapters: {
+          SubChapter: {
             connect: {
               id: subChapterId,
             },
           },
         },
+        include: {
+          SubChapter: true,
+        },
       });
 
-      return video;
+      return updatedVideo;
     }),
 
   deleteVideo: privateProcedure

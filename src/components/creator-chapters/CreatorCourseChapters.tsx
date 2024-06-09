@@ -7,7 +7,7 @@ import {
   Droppable,
   ResponderProvided,
 } from "@hello-pangea/dnd";
-import { Chapter, SubChapter } from "@prisma/client";
+import { Chapter, SubChapter, Video } from "@prisma/client";
 import { toast } from "sonner";
 
 import { trpc } from "@/server/client";
@@ -95,11 +95,11 @@ export default function CreatorCourseChapters({ courseId }: Props) {
       return;
     } else if (type === ChapterActionTypes.MOVE_SUB_CHAPTER) {
       const startChapter = chaptersState.Chapters.find(
-        (chapter) => chapter.id === source.droppableId
+        (chapter) => chapter.id === source.droppableId,
       );
 
       const finishChapter = chaptersState.Chapters.find(
-        (chapter) => chapter.id === destination.droppableId
+        (chapter) => chapter.id === destination.droppableId,
       );
 
       if (!startChapter || !finishChapter) {
@@ -143,7 +143,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
         };
 
         const finishSubChapterIds = Array.from(
-          finishChapter.SubChapterIdsOrder
+          finishChapter.SubChapterIdsOrder,
         );
         finishSubChapterIds.splice(destination.index, 0, draggableId);
 
@@ -212,10 +212,10 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       ChapterIdsOrder: chaptersState.ChapterIdsOrder.filter(
-        (id) => id !== chapterId
+        (id) => id !== chapterId,
       ),
       Chapters: chaptersState.Chapters.filter(
-        (chapter) => chapter.id !== chapterId
+        (chapter) => chapter.id !== chapterId,
       ),
     };
 
@@ -224,7 +224,7 @@ export default function CreatorCourseChapters({ courseId }: Props) {
 
   const pushSubChapterToChaptersState = (
     subChapter: SubChapter,
-    chapterId: string
+    chapterId: string,
   ) => {
     if (!chaptersState) {
       console.error("No chapters state");
@@ -258,13 +258,13 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     const newChaptersState: typeof chaptersInitialState = {
       ...chaptersState,
       SubChapters: chaptersState.SubChapters.filter(
-        (subChapter) => subChapter.id !== subChapterId
+        (subChapter) => subChapter.id !== subChapterId,
       ),
       Chapters: chaptersState.Chapters.map((chapter) => {
         return {
           ...chapter,
           SubChapterIdsOrder: chapter.SubChapterIdsOrder.filter(
-            (id) => id !== subChapterId
+            (id) => id !== subChapterId,
           ),
         };
       }),
@@ -296,6 +296,57 @@ export default function CreatorCourseChapters({ courseId }: Props) {
     setChaptersState(newChaptersState);
   };
 
+  const editSubChapter = (updatedSubChapter: SubChapter) => {
+    if (!chaptersState) {
+      console.error("No chapters state");
+      return;
+    }
+
+    const newChaptersState: typeof chaptersInitialState = {
+      ...chaptersState,
+      SubChapters: chaptersState.SubChapters.map((subChapter) => {
+        if (subChapter.id === updatedSubChapter.id) {
+          return {
+            ...subChapter,
+            name: updatedSubChapter.name,
+          };
+        }
+
+        return subChapter;
+      }),
+    };
+
+    setChaptersState(newChaptersState);
+  };
+
+  const setSubChapterVideo = (
+    subChapterId: string,
+    videoId: string | null,
+  ) => {
+    if (!chaptersState) {
+      console.error("No chapters state");
+      return;
+    }
+
+    const newSubChapters = chaptersState.SubChapters.map((subChapter) => {
+      if (subChapter.id === subChapterId) {
+        return {
+          ...subChapter,
+          videoId,
+        };
+      }
+
+      return subChapter;
+    });
+
+    const newChaptersState: typeof chaptersInitialState = {
+      ...chaptersState,
+      SubChapters: newSubChapters,
+    };
+
+    setChaptersState(newChaptersState);
+  };
+
   if (chaptersState) {
     return (
       <>
@@ -306,14 +357,14 @@ export default function CreatorCourseChapters({ courseId }: Props) {
           >
             {(providedDroppableChapter) => (
               <div
-                className="flex flex-col w-full"
+                className="flex w-full flex-col"
                 ref={providedDroppableChapter.innerRef}
                 {...providedDroppableChapter.droppableProps}
               >
                 {chaptersState.ChapterIdsOrder.map(
                   (chapterId, chapterIndex) => {
                     const chapter = chaptersState.Chapters.find(
-                      (chapter) => chapter.id === chapterId
+                      (chapter) => chapter.id === chapterId,
                     );
                     if (!chapter) {
                       return null;
@@ -322,8 +373,8 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                     const subChapters = chapter.SubChapterIdsOrder.map(
                       (subChapterId) =>
                         chaptersState.SubChapters.find(
-                          (subChapter) => subChapter.id === subChapterId
-                        )
+                          (subChapter) => subChapter.id === subChapterId,
+                        ),
                     ).filter(Boolean) as SubChapter[];
 
                     return (
@@ -343,9 +394,11 @@ export default function CreatorCourseChapters({ courseId }: Props) {
                           deleteSubChapterFromChaptersState
                         }
                         editChapter={editChapter}
+                        editSubChapter={editSubChapter}
+                        setSubChapterVideo={setSubChapterVideo}
                       />
                     );
-                  }
+                  },
                 )}
                 {providedDroppableChapter.placeholder}
               </div>

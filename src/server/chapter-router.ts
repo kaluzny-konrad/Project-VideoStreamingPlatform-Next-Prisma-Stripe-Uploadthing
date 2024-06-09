@@ -16,24 +16,22 @@ import {
 } from "@/lib/validators/chapter";
 
 export const chapterRouter = router({
-  getSubChapter: privateProcedure
-    .input(z.string())
-    .query(async ({ input }) => {
-      const subChapter = await db.subChapter.findFirst({
-        where: {
-          id: input,
-        },
-        include: {
-          Videos: true,
-        }
-      });
+  getSubChapter: privateProcedure.input(z.string()).query(async ({ input }) => {
+    const subChapter = await db.subChapter.findFirst({
+      where: {
+        id: input,
+      },
+      include: {
+        Video: true,
+      },
+    });
 
-      if (!subChapter) {
-        throw new Error("No subchapter found");
-      }
+    if (!subChapter) {
+      throw new Error("No subchapter found");
+    }
 
-      return subChapter;
-    }),
+    return subChapter;
+  }),
 
   getChaptersState: privateProcedure
     .input(GetChaptersStateValidator)
@@ -126,7 +124,7 @@ export const chapterRouter = router({
       }
 
       const newChapterIdsOrder = course.ChapterIdsOrder.filter(
-        (chapterId) => chapterId !== id
+        (chapterId) => chapterId !== id,
       );
 
       await db.course.update({
@@ -207,7 +205,7 @@ export const chapterRouter = router({
           id,
         },
         include: {
-          Videos: true,
+          Video: true,
         },
       });
 
@@ -256,7 +254,7 @@ export const chapterRouter = router({
 
       const removeChapterIdsOrder =
         removeChapterBefore?.SubChapterIdsOrder.filter(
-          (subChapterId) => subChapterId !== moveSubChapterId
+          (subChapterId) => subChapterId !== moveSubChapterId,
         );
 
       await db.chapter.update({

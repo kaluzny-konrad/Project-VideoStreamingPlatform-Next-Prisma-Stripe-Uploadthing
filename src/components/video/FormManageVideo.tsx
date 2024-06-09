@@ -15,6 +15,7 @@ type Props = {
   subChapterId: string;
 };
 
+// ToDo: Delete
 export default function FormManageVideo({ subChapterId }: Props) {
   const router = useRouter();
   const [video, setVideo] = useState<Video | undefined>(undefined);
@@ -53,8 +54,8 @@ export default function FormManageVideo({ subChapterId }: Props) {
   }
 
   useEffect(() => {
-    if (subChapter?.Videos[0]) {
-      setVideo(subChapter.Videos[0]);
+    if (subChapter?.Video) {
+      setVideo(subChapter.Video);
     }
   }, [subChapter]);
 

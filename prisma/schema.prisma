@@ -70,9 +70,11 @@ model SubChapter {
   Course   Course @relation(fields: [courseId], references: [id])
   courseId String
 
-  Videos Video[]
+  Video   Video?  @relation(fields: [videoId], references: [id])
+  videoId String?
 
   @@index([courseId])
+  @@index([videoId])
 }
 
 model Order {
@@ -98,13 +100,13 @@ enum OrderStatus {
 }
 
 model Video {
-  id        String @id @default(cuid())
-  key       String @unique
-  videoName String
-  fileName  String
-  url       String
-
-  SubChapters   SubChapter[]
+  id         String       @id @default(cuid())
+  key        String       @unique
+  videoName  String
+  fileName   String
+  url        String
+  
+  SubChapter SubChapter[]
 }
 
 model Photo {
