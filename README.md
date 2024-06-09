@@ -78,6 +78,7 @@ Reason: Clerk bug
 ### V 0.3
 - [X] Feature: Edit modals should be closed after save
 - [X] Features: Edit SubChapter as modals
+- [ ] Deploy: Check build on Vercel
 
 ### V 0.X
 - [ ] Features: Walk by site and fix Styles

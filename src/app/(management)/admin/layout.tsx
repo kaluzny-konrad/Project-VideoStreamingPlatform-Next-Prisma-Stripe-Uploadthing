@@ -1,4 +1,5 @@
 import AdminPanel from "@/components/admin/AdminPanel";
+import AdminPanelMobileModal from "@/components/admin/AdminPanelMobileModal";
 import WrapperMaxWidth from "@/components/shared/WrapperMaxWidth";
 
 export default async function AdminLayout({
@@ -9,10 +10,17 @@ export default async function AdminLayout({
   return (
     <WrapperMaxWidth>
       <div className="flex flex-col lg:flex-row">
-        <div className="hidden w-1/4 lg:block mr-4">
-          <AdminPanel />
+        <div>
+          <div className="mr-4 hidden lg:block">
+            <AdminPanel />
+          </div>
+          <div className="block mb-4 lg:hidden">
+            <AdminPanelMobileModal />
+          </div>
         </div>
-        <div className="w-full lg:w-3/4 p-4 bg-white rounded-xl">{children}</div>
+        <div className="w-full rounded-xl bg-white p-4">
+          {children}
+        </div>
       </div>
     </WrapperMaxWidth>
   );
