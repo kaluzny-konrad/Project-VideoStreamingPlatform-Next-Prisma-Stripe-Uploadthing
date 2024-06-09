@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SubChapter, Video } from "@prisma/client";
-import { CircleDashedIcon, UploadIcon } from "lucide-react";
+import { CircleDashedIcon, FileIcon, MoveRightIcon, UploadIcon, VideoIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { trpc } from "@/server/client";
@@ -35,22 +35,28 @@ export default function UploadVideoSubChapterModal({
   setOptimisticUpdateLoading,
 }: Props) {
   const [videoId, setVideoId] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    mutate: connectVideoWithCourse,
-    isLoading,
-    error,
-  } = trpc.video.addVideoToCourse.useMutation({
-    onSuccess: (res) => {
-      toast.success("Video added to course");
-    },
-    onError: (error) => {
-      toast.error("Something went wrong");
-      setVideoId(undefined);
-    },
-  });
+  const { mutate: connectVideoWithCourse } =
+    trpc.video.addVideoToCourse.useMutation({
+      onSuccess: (res) => {
+        toast.success("Video added to course");
+        setVideoId(res.id);
+      },
+      onError: (error) => {
+        toast.error("Something went wrong");
+        setVideoId(undefined);
+      },
+      onSettled: () => {
+        setOptimisticUpdateLoading(false);
+        setIsLoading(false);
+      },
+    });
 
-  function onBeforeUploadBegined() {}
+  function onBeforeUploadBegined() {
+    setIsLoading(true);
+    setOptimisticUpdateLoading(true);
+  }
 
   function onClientUploadCompleted(video: Video) {
     setVideoId(video.id);
@@ -68,10 +74,6 @@ export default function UploadVideoSubChapterModal({
     }
   }, [subChapter]);
 
-  if (error) {
-    toast.error("Something went wrong");
-  }
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -80,19 +82,25 @@ export default function UploadVideoSubChapterModal({
           variant={"ghost"}
           className="h-6 w-6"
           data-test="edit-chapter-modal-trigger"
-          disabled={disabled}
+          disabled={!isLoading && disabled}
         >
           {isLoading ? (
             <CircleDashedIcon className="h-4 w-4 animate-spin" />
           ) : (
-            <UploadIcon className="h-4 w-4" />
+            <>
+              {videoId ? (
+                <VideoIcon className="h-4 w-4" />
+              ) : (
+                <UploadIcon className="h-4 w-4" />
+              )}
+            </>
           )}
         </Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
         <DialogTitle>
-          {videoId ? "Upload video" : "Uploaded video"} - {subChapter.name}
+          {videoId ? "Uploaded video" : "Upload video"} - {subChapter.name}
         </DialogTitle>
         {videoId ? (
           <CreatorDeleteVideoButton
