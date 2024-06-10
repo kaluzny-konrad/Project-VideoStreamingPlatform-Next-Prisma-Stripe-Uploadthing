@@ -45,7 +45,6 @@
     "lucide-react": "^0.390.0",
     "next": "^14.2.3",
     "next-themes": "^0.3.0",
-    "prettier-plugin-tailwindcss": "^0.6.2",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.1",
@@ -63,6 +62,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.6.2",
     "@clerk/clerk-js": "^5.6.0",
     "@playwright/test": "^1.44.1",
     "@snaplet/copycat": "^5.0.0",

@@ -9,6 +9,7 @@ describe("getMainPhotoUrl", () => {
     id: "1",
     key: "key",
     url: "mockedMainPhotoUrl",
+    fileName: "mockedMainPhotoFileName.jpg",
     isMainPhoto: true,
   };
 
@@ -16,6 +17,7 @@ describe("getMainPhotoUrl", () => {
     id: "2",
     key: "key",
     url: "mockedNotMainPhotoUrl",
+    fileName: "mockedNotMainPhotoFileName.jpg",
     isMainPhoto: false,
   };
 
@@ -26,6 +28,7 @@ describe("getMainPhotoUrl", () => {
         id: randomUUID(),
         key: "key",
         url: randomUUID(),
+        fileName: randomUUID(),
         isMainPhoto: false,
       });
     }
